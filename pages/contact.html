@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SMIŽ - Kontakt i podrška. Stupite u kontakt sa našim timom za ponude, projektovanje i servis.">
+    <meta property="og:title" content="SMIŽ - Kontakt">
+    <meta property="og:description" content="Pišite nam za ponude, servis ili partnerstva. Dostupni smo na više kanala i pokrivamo region.">
+    <meta property="og:type" content="website">
+    <title>SMIŽ - Kontakt</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚪</text></svg>">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../index.html#home" class="logo">
+                    <img src="../assets/logo.svg" alt="SMIŽ Logo" class="logo-img">
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="../index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">O nama</a></li>
+                    <li class="nav-item-dropdown">
+                        <a href="../index.html#proizvodi" class="nav-link nav-link-dropdown" id="productsDropdown">
+                            Proizvodi
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <ul class="dropdown-menu" id="productsDropdownMenu">
+                            <li><a href="automatska-vrata.html" class="dropdown-link">Automatska vrata</a></li>
+                            <li><a href="unutrasnja-vrata.html" class="dropdown-link">Unutrašnja vrata</a></li>
+                            <li><a href="industrijska-vrata.html" class="dropdown-link">Industrijska i garažna vrata</a></li>
+                            <li><a href="bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
+                            <li><a href="primax.html" class="dropdown-link">PRIMAX zaštitna rešenja</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact-hero" class="nav-link active">Kontakt</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero contact-hero" id="contact-hero">
+            <div class="page-hero-overlay"></div>
+            <div class="page-hero-content container">
+                <p class="eyebrow">Kontakt i podrška</p>
+                <h1>Brzo odgovaramo na svako pitanje o vratima i zaštiti</h1>
+                <p class="page-hero-subtitle">
+                    Pošaljite nam upit i odgovorićemo vam u najkraćem roku.
+                </p>
+            </div>
+        </section>
+
+        <section class="section section-alt" id="formular">
+            <div class="container">
+                <div class="contact-wrapper contact-page-wrapper">
+                    <div class="contact-form-wrapper">
+                        <p class="contact-intro">Pošaljite nam upit i odgovorićemo vam u najkraćem roku.</p>
+                        <form class="contact-form" id="contactForm">
+                            <input type="text" name="_honey" class="honey" tabindex="-1" aria-hidden="true" autocomplete="off">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Ime i prezime *</label>
+                                    <input type="text" id="name" name="name" required aria-required="true" autocomplete="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">Kompanija / ustanova</label>
+                                    <input type="text" id="company" name="company" autocomplete="organization">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required aria-required="true" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" autocomplete="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Telefon</label>
+                                    <input type="tel" id="phone" name="phone" pattern="[0-9+\s\-]+" autocomplete="tel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="topic">Vrsta upita</label>
+                                <select id="topic" name="topic" autocomplete="off">
+                                    <option value="ponuda">Ponuda / projekat</option>
+                                    <option value="servis">Servis / održavanje</option>
+                                    <option value="partnerstvo">Partnerstvo / distribucija</option>
+                                    <option value="ostalo">Ostalo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Poruka *</label>
+                                <textarea id="message" name="message" rows="6" required aria-required="true" autocomplete="off"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Pošalji upit</button>
+                        </form>
+                    </div>
+                    <div class="contact-info contact-panel">
+                        <h3>Kontakt informacije</h3>
+                        <div class="info-item">
+                            <strong>Adresa:</strong>
+                            <p>Užice, Srbija</p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Radno vreme:</strong>
+                            <p>Ponedeljak - Petak: 08:00 - 16:00<br>Subota: 08:00 - 12:00</p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Telefon:</strong>
+                            <p><a href="tel:+381123456789">+381 12 345 6789</a></p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Email:</strong>
+                            <p><a href="mailto:info@smiz.rs">info@smiz.rs</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <img src="../assets/logo.svg" alt="SMIŽ Logo" class="footer-logo">
+                    <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju i servis vrata i zaštitnih rešenja.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigacija</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#home">Home</a></li>
+                        <li><a href="about.html">O nama</a></li>
+                        <li><a href="../index.html#proizvodi">Proizvodi</a></li>
+                        <li><a href="#contact-hero">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kontakt</h4>
+                    <p>Užice, Srbija</p>
+                    <p>Tel: +381 12 345 6789</p>
+                    <p>Email: info@smiz.rs</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> SMIŽ. Sva prava zadržana.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast" role="alert" aria-live="polite">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
+
