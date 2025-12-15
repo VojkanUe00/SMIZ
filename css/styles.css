@@ -1669,16 +1669,27 @@ ul {
     }
 }
 
+.footer-logo-wrapper {
+    background-color: var(--white);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    display: inline-block;
+    margin-bottom: var(--spacing-md);
+}
+
 .footer-logo {
     height: 50px;
     width: auto;
-    margin-bottom: var(--spacing-md);
-    filter: brightness(0) invert(1);
+    display: block;
 }
 
-.footer-col p {
+.footer-col p, .footer-col ul{
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: var(--spacing-sm);
+}
+
+.footer-col li{
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-col h4 {
@@ -1701,6 +1712,7 @@ ul {
     color: var(--white);
     padding-left: var(--spacing-xs);
 }
+
 
 .footer-bottom {
     text-align: center;
