@@ -530,7 +530,7 @@ function initProductsSlider() {
                 // Na desktopu i tabletima prikaži tri kartice
                 const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
                 const nextIndex = (currentIndex + 1) % totalCards;
-                
+
                 if (index === currentIndex) {
                     card.classList.add('active');
                 } else if (index === prevIndex) {

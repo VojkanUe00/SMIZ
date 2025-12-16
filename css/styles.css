@@ -567,9 +567,10 @@ ul {
    ============================================ */
 .page-hero {
     position: relative;
-    min-height: 70vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
     color: var(--white);
     background: radial-gradient(circle at top right, rgba(0, 188, 212, 0.3), transparent 50%),
@@ -582,14 +583,36 @@ ul {
     background-image: url('assets/bg-hero.svg');
     background-size: cover;
     background-position: center;
-    opacity: 0.2;
+    opacity: 0.1;
 }
 
 .page-hero-content {
     position: relative;
     padding: var(--spacing-2xl) 0;
-    text-align: left;
-    max-width: 900px;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+}
+
+.page-hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 640px) {
+    .page-hero-content h1 {
+        font-size: 4.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-hero-content h1 {
+        font-size: 5.5rem;
+    }
 }
 
 .eyebrow {
@@ -600,12 +623,6 @@ ul {
     color: var(--accent);
     display: inline-block;
     margin-bottom: var(--spacing-sm);
-}
-
-.page-hero-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: var(--spacing-xl);
 }
 
 .hero-metrics {
@@ -634,11 +651,6 @@ ul {
     opacity: 0.9;
 }
 
-@media (max-width: 639px) {
-    .page-hero-content {
-        text-align: center;
-    }
-}
 
 .intro-grid {
     display: grid;
@@ -1061,8 +1073,7 @@ ul {
    Kontakt stranica
    ============================================ */
 .contact-hero {
-    background: radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 40%),
-                linear-gradient(120deg, #0f172a, var(--blue-900));
+    background: linear-gradient(135deg, #5d4037 0%, #6d4c41 50%, #8d6e63 100%);
 }
 
 .contact-methods {
@@ -1615,17 +1626,16 @@ ul {
     padding: var(--spacing-lg);
 }
 
-.partner-logo-placeholder {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--blue-900);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+.partner-logo {
+    max-width: 100%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     transition: var(--transition);
 }
 
-.partner-card:hover .partner-logo-placeholder {
-    color: var(--blue-700);
+.partner-card:hover .partner-logo {
     transform: scale(1.05);
 }
 
