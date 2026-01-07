@@ -15,6 +15,9 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚪</text></svg>">
 </head>
 <body>
+    <!-- Site Background -->
+    <div class="site-background" aria-hidden="true"></div>
+    
     <!-- Header / Navigacija -->
     <header class="header" id="header">
         <div class="container">
@@ -55,7 +58,7 @@
         <div class="hero-content">
             <div class="container">
                 <h1 class="hero-title">SMIŽ – vrata, rešenja i zaštita</h1>
-                <p class="hero-subtitle">Profesionalna proizvodnja, ugradnja i servis različitih tipova vrata sa 30 godina iskustva</p>
+                <p class="hero-subtitle">Proizvodnja, ugradnja i servis različitih tipova vrata sa 30 godina iskustva</p>
                 <div class="hero-cta">
                     <a href="pages/contact.html" class="btn btn-primary">Zatraži ponudu</a>
                     <a href="#proizvodi" class="btn btn-outline">Naši proizvodi</a>
@@ -78,7 +81,7 @@
                 <div class="products-slider" id="productsSlider">
                     <div class="products-slider-track" id="sliderTrack">
                         <!-- Automatska vrata -->
-                        <a href="pages/automatska-vrata.html" class="product-card-link">
+                        <div class="product-card-link">
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <img src="assets/product-1.svg" alt="Automatska vrata" class="product-image" loading="lazy">
@@ -86,12 +89,13 @@
                                 <div class="product-content">
                                     <h3 class="product-title">Automatska vrata</h3>
                                     <p class="product-intro">Moderna i elegantna rešenja koja štede prostor, pružajući bezbednost i udobnost. Idealna za javne objekte, bolnice, poslovne zgrade i trgovine.</p>
+                                    <a href="pages/automatska-vrata.html" class="product-detail-btn">Detaljnije</a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                         <!-- Unutrašnja vrata -->
-                        <a href="pages/unutrasnja-vrata.html" class="product-card-link">
+                        <div class="product-card-link">
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <img src="assets/product-1.svg" alt="Unutrašnja vrata" class="product-image" loading="lazy">
@@ -99,12 +103,13 @@
                                 <div class="product-content">
                                     <h3 class="product-title">Unutrašnja vrata</h3>
                                     <p class="product-intro">Širok asortiman unutrašnjih vrata za različite namene, od stambenih do javnih objekata. Proizvodnja po meri sa vrhunskim kvalitetom.</p>
+                                    <a href="pages/unutrasnja-vrata.html" class="product-detail-btn">Detaljnije</a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                         <!-- Industrijska i garažna vrata -->
-                        <a href="pages/industrijska-vrata.html" class="product-card-link">
+                        <div class="product-card-link">
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <img src="assets/product-3.svg" alt="Industrijska i garažna vrata" class="product-image" loading="lazy">
@@ -112,12 +117,13 @@
                                 <div class="product-content">
                                     <h3 class="product-title">Industrijska i garažna vrata</h3>
                                     <p class="product-intro">Robusna i pouzdana rešenja za industrijske objekte, garaže i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.</p>
+                                    <a href="pages/industrijska-vrata.html" class="product-detail-btn">Detaljnije</a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                         <!-- Bolnička vrata -->
-                        <a href="pages/bolnicka-vrata.html" class="product-card-link">
+                        <div class="product-card-link">
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <img src="assets/product-2.svg" alt="Bolnička vrata" class="product-image" loading="lazy">
@@ -125,12 +131,13 @@
                                 <div class="product-content">
                                     <h3 class="product-title">Bolnička vrata</h3>
                                     <p class="product-intro">Specijalizovana rešenja za zdravstvene ustanove, sa fokusom na higijenu, bezbednost i funkcionalnost. Više od 20 godina iskustva.</p>
+                                    <a href="pages/bolnicka-vrata.html" class="product-detail-btn">Detaljnije</a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                         <!-- PRIMAX zaštitna rešenja -->
-                        <a href="pages/primax.html" class="product-card-link">
+                        <div class="product-card-link">
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <img src="assets/product-2.svg" alt="PRIMAX zaštitna rešenja" class="product-image" loading="lazy">
@@ -138,9 +145,10 @@
                                 <div class="product-content">
                                     <h3 class="product-title">PRIMAX zaštitna rešenja</h3>
                                     <p class="product-intro">Kompletan program zaštitne opreme i sredstava od jonizujućeg zračenja za zdravstvene ustanove, laboratorije i industrijske objekte.</p>
+                                    <a href="pages/primax.html" class="product-detail-btn">Detaljnije</a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -174,6 +182,12 @@
                     </div>
                     <h3 class="partner-name">PRIMAX</h3>
                 </a>
+                <a href="https://www.vrata-derzic.si/" target="_blank" rel="noopener noreferrer" class="partner-card">
+                    <div class="partner-logo-wrapper">
+                        <img src="images/derzic.png" alt="DERŽIČ Logo" class="partner-logo partner-logo-derzic">
+                    </div>
+                    <h3 class="partner-name">DERŽIČ</h3>
+                </a>
             </div>
         </div>
     </section>
@@ -186,7 +200,7 @@
                     <div class="footer-logo-wrapper">
                         <img src="images/smiz_transparent.png" alt="SMIŽ Logo" class="footer-logo">
                     </div>
-                    <p>SMIŽ je porodična firma iz Užica, osnovana 1996. godine. Bavimo se proizvodnjom, ugradnjom i servisom različitih tipova vrata i zaštitnih rešenja.</p>
+                    <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Navigacija</h4>
