@@ -1614,7 +1614,6 @@ ul {
 
 @media (max-width: 767px) {
     .products-hero-slider {
-        min-height: 90vh;
         padding-bottom: 240px;
         padding-top: 24px;
         margin-bottom: var(--spacing-xl);
