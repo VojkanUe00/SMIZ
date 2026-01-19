@@ -1630,6 +1630,7 @@ ul {
 
     .products-hero-slider:focus {
         outline: none;
+        border-radius: 0 !important;
     }
 
     .products-hero-controls {
