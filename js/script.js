@@ -18,21 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentYear) {
         currentYear.textContent = new Date().getFullYear();
     }
-    
+
     // Inicijalizuj lazy loading slika
     initLazyLoading();
-    
+
     // Inicijalizuj smooth scroll
     initSmoothScroll();
-    
+
     // Inicijalizuj aktivni link tracking
     initActiveLinkTracking();
-    
+
     // Inicijalizuj header scroll efekat
     initHeaderScroll();
-    
-    // Inicijalizuj products slider
-    initProductsSlider();
+
+    // Inicijalizuj hero slider za proizvode
+    initProductsHeroSlider();
 });
 
 // ============================================
@@ -43,7 +43,7 @@ if (hamburger && navMenu) {
         const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
         hamburger.setAttribute('aria-expanded', !isExpanded);
         navMenu.classList.toggle('active');
-        
+
         // Prevencija scroll-a kada je meni otvoren
         if (!isExpanded) {
             document.body.style.overflow = 'hidden';
@@ -51,7 +51,7 @@ if (hamburger && navMenu) {
             document.body.style.overflow = '';
         }
     });
-    
+
     // Zatvori meni kada se klikne na link
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -60,11 +60,11 @@ if (hamburger && navMenu) {
             document.body.style.overflow = '';
         });
     });
-    
+
     // Zatvori meni kada se klikne van njega
     document.addEventListener('click', (e) => {
-        if (navMenu.classList.contains('active') && 
-            !navMenu.contains(e.target) && 
+        if (navMenu.classList.contains('active') &&
+            !navMenu.contains(e.target) &&
             !hamburger.contains(e.target)) {
             hamburger.setAttribute('aria-expanded', 'false');
             navMenu.classList.remove('active');
@@ -85,11 +85,11 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
     navItemDropdown.addEventListener('mouseenter', () => {
         navItemDropdown.classList.add('active');
     });
-    
+
     navItemDropdown.addEventListener('mouseleave', () => {
         navItemDropdown.classList.remove('active');
     });
-    
+
     // Mobile: click
     productsDropdown.addEventListener('click', (e) => {
         if (window.innerWidth <= 1023) {
@@ -97,7 +97,7 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
             navItemDropdown.classList.toggle('active');
         }
     });
-    
+
     // Zatvori dropdown kada se klikne na link
     const dropdownLinks = productsDropdownMenu.querySelectorAll('.dropdown-link');
     dropdownLinks.forEach(link => {
@@ -111,7 +111,7 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
             }
         });
     });
-    
+
     // Zatvori dropdown kada se klikne van njega
     document.addEventListener('click', (e) => {
         if (!navItemDropdown.contains(e.target) && window.innerWidth > 1023) {
@@ -126,9 +126,9 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
 function initSmoothScroll() {
     // Smooth scroll za sve anchor linkove
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            
+
             // Preskoči prazne hash-ove
             if (href === '#' || href === '#home') {
                 e.preventDefault();
@@ -138,13 +138,13 @@ function initSmoothScroll() {
                 });
                 return;
             }
-            
+
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
                 const headerHeight = header ? header.offsetHeight : 0;
                 const targetPosition = target.offsetTop - headerHeight;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -162,7 +162,7 @@ function initActiveLinkTracking() {
     const currentPath = window.location.pathname;
     const currentPage = currentPath.split('/').pop() || 'index.html';
     const currentHref = window.location.href;
-    
+
     // Ako smo na about.html ili contact.html, postavi active klasu
     if (currentPage === 'about.html' || currentHref.includes('about.html') || currentHref.includes('pages/about.html')) {
         navLinks.forEach(link => {
@@ -187,17 +187,17 @@ function initActiveLinkTracking() {
             }
         });
     }
-    
+
     const sections = document.querySelectorAll('section[id]');
-    
+
     if (sections.length === 0) return;
-    
+
     const observerOptions = {
         root: null,
         rootMargin: '-20% 0px -70% 0px',
         threshold: 0
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -210,9 +210,9 @@ function initActiveLinkTracking() {
                     }
                     // Ne menjaj active ako je link ka trenutnoj stranici (about.html ili contact.html)
                     const isAboutLink = (href === '#about-hero' || href === 'about.html' || href === 'pages/about.html' ||
-                                        (href.includes('about.html') && !href.includes('index.html')));
+                        (href.includes('about.html') && !href.includes('index.html')));
                     const isContactLink = (href === '#contact-hero' || href === 'contact.html' || href === 'pages/contact.html' ||
-                                           (href.includes('contact.html') && !href.includes('index.html')));
+                        (href.includes('contact.html') && !href.includes('index.html')));
                     if ((currentPage === 'about.html' || currentHref.includes('about.html') || currentHref.includes('pages/about.html')) && isAboutLink) {
                         return;
                     }
@@ -227,11 +227,11 @@ function initActiveLinkTracking() {
             }
         });
     }, observerOptions);
-    
+
     sections.forEach(section => {
         observer.observe(section);
     });
-    
+
     // Fallback za home sekciju
     window.addEventListener('scroll', () => {
         if (window.scrollY < 100 && (currentPage === 'index.html' || currentPage === '')) {
@@ -256,18 +256,18 @@ function initActiveLinkTracking() {
 // ============================================
 function initHeaderScroll() {
     if (!header) return;
-    
+
     let lastScroll = 0;
-    
+
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-        
+
         if (currentScroll > 20) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-        
+
         lastScroll = currentScroll;
     }, { passive: true });
 }
@@ -277,7 +277,7 @@ function initHeaderScroll() {
 // ============================================
 function initLazyLoading() {
     const images = document.querySelectorAll('img[loading="lazy"]');
-    
+
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -290,7 +290,7 @@ function initLazyLoading() {
         }, {
             rootMargin: '50px'
         });
-        
+
         images.forEach(img => {
             imageObserver.observe(img);
         });
@@ -308,46 +308,46 @@ function initLazyLoading() {
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         // Validacija polja
         const name = document.getElementById('name');
         const email = document.getElementById('email');
         const message = document.getElementById('message');
         const submitButton = contactForm.querySelector('button[type="submit"]');
-        
+
         let isValid = true;
-        
+
         // Reset prethodnih grešaka
         [name, email, message].forEach(field => {
             if (field) {
                 field.setCustomValidity('');
             }
         });
-        
+
         // Validacija imena
         if (name && name.value.trim().length < 2) {
             name.setCustomValidity('Ime mora imati najmanje 2 karaktera');
             isValid = false;
         }
-        
+
         // Validacija email-a
         if (email && !email.validity.valid) {
             email.setCustomValidity('Unesite validnu email adresu');
             isValid = false;
         }
-        
+
         // Validacija poruke
         if (message && message.value.trim().length < 10) {
             message.setCustomValidity('Poruka mora imati najmanje 10 karaktera');
             isValid = false;
         }
-        
+
         // Proveri validnost forme
         if (!contactForm.checkValidity() || !isValid) {
             contactForm.reportValidity();
             return;
         }
-        
+
         // EmailJS konfiguracija
         // ZAMENI OVE VREDNOSTI SA SVOJIM EmailJS PODACIMA:
         // 1. Registruj se na https://www.emailjs.com/
@@ -358,23 +358,23 @@ if (contactForm) {
         const EMAILJS_SERVICE_ID = 'service_af4uwr7'; // Zameni sa svojim Service ID
         const EMAILJS_TEMPLATE_ID = 'template_a0ozy1d'; // Zameni sa svojim Template ID
         const RECIPIENT_EMAIL = 'vojkan.panic@gmail.com'; // Email na koji se šalje
-        
+
         // Inicijalizuj EmailJS
         if (typeof emailjs !== 'undefined') {
             emailjs.init(EMAILJS_PUBLIC_KEY);
         }
-        
+
         if (submitButton) {
             submitButton.disabled = true;
             submitButton.textContent = 'Slanje...';
         }
-        
+
         try {
             // Proveri da li je EmailJS učitan
             if (typeof emailjs === 'undefined') {
                 throw new Error('EmailJS nije učitan. Proveri da li je script tag dodat u HTML.');
             }
-            
+
             // Pripremi podatke za EmailJS
             const templateParams = {
                 to_email: RECIPIENT_EMAIL,
@@ -386,22 +386,22 @@ if (contactForm) {
                 message: message ? message.value.trim() : '',
                 subject: 'SMIŽ kontakt forma'
             };
-            
+
             // Pošalji email preko EmailJS
             await emailjs.send(
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 templateParams
             );
-            
+
             showToast('Poruka uspešno poslata. Hvala na poverenju!');
             contactForm.reset();
         } catch (error) {
             console.error('Form submission error:', error);
-            
+
             // Ako EmailJS nije konfigurisan, prikaži uputstva
-            if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY' || 
-                EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' || 
+            if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY' ||
+                EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' ||
                 EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
                 showToast('EmailJS nije konfigurisan. Proveri script.js za uputstva.', 6000);
                 console.log('📧 EmailJS Setup Instructions:');
@@ -421,7 +421,7 @@ if (contactForm) {
             }
         }
     });
-    
+
     // Ukloni custom validaciju na input
     const formInputs = contactForm.querySelectorAll('input, textarea');
     formInputs.forEach(input => {
@@ -436,15 +436,15 @@ if (contactForm) {
 // ============================================
 function showToast(message, duration = 3000) {
     if (!toast || !toastMessage) return;
-    
+
     toastMessage.textContent = message;
     toast.classList.add('show');
-    
+
     // Sakrij toast nakon određenog vremena
     setTimeout(() => {
         toast.classList.remove('show');
     }, duration);
-    
+
     // Sakrij toast na klik
     toast.addEventListener('click', () => {
         toast.classList.remove('show');
@@ -500,143 +500,199 @@ window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
 // ============================================
 // Products Slider
 // ============================================
-function initProductsSlider() {
-    const sliderTrack = document.getElementById('sliderTrack');
-    const sliderPrev = document.getElementById('sliderPrev');
-    const sliderNext = document.getElementById('sliderNext');
-    
-    if (!sliderTrack || !sliderPrev || !sliderNext) return;
-    
-    const cards = sliderTrack.querySelectorAll('.product-card-link');
-    if (cards.length === 0) return;
-    
-    let currentIndex = 0;
-    const totalCards = cards.length;
-    
-    // Funkcija za ažuriranje klasa kartica
-    function updateCards() {
-        const isMobile = window.innerWidth <= 767;
-        const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1023;
-        
-        cards.forEach((card, index) => {
-            card.classList.remove('active', 'prev', 'next');
-            
-            if (isMobile) {
-                // Na mobilnim uređajima prikaži samo aktivnu karticu
-                if (index === currentIndex) {
-                    card.classList.add('active');
-                }
-            } else {
-                // Na desktopu i tabletima prikaži tri kartice
-                const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
-                const nextIndex = (currentIndex + 1) % totalCards;
+function initProductsHeroSlider() {
+    const slider = document.getElementById('productsHero');
+    const cardsContainer = document.getElementById('productsHeroCards');
+    const prevButton = document.getElementById('productsHeroPrev');
+    const nextButton = document.getElementById('productsHeroNext');
+    const titleEl = document.getElementById('productsHeroTitle');
+    const descriptionEl = document.getElementById('productsHeroDescription');
+    const ctaEl = document.getElementById('productsHeroCta');
+    const bgLayers = slider ? slider.querySelectorAll('.products-hero-bg-layer') : [];
 
-                if (index === currentIndex) {
-                    card.classList.add('active');
-                } else if (index === prevIndex) {
-                    card.classList.add('prev');
-                } else if (index === nextIndex) {
-                    card.classList.add('next');
-                }
-            }
-        });
-        
-        // Centriranje aktivne kartice
-        if (isMobile) {
-            // Na mobilnim uređajima jednostavno pomeri track
-            // Koristimo requestAnimationFrame da osiguramo da su sve kartice renderovane
-            requestAnimationFrame(() => {
-                const container = sliderTrack.parentElement;
-                const containerWidth = container.offsetWidth;
-                const offset = currentIndex * containerWidth;
-                sliderTrack.style.transform = `translateX(-${offset}px)`;
-            });
-        } else {
-            // Na desktopu i tabletima centriraj aktivnu karticu
-            // Koristimo requestAnimationFrame da osiguramo da su sve kartice renderovane
-            requestAnimationFrame(() => {
-                const container = sliderTrack.parentElement;
-                const containerWidth = container.offsetWidth;
-                
-                // Širine kartica i gap (iz CSS-a)
-                const sideCardWidth = isTablet ? 320 : 300;
-                const activeCardWidth = isTablet ? 360 : 380;
-                const gap = 16; // var(--spacing-md)
-                
-                // Izračunaj offset za centriranje aktivne kartice
-                // Sve kartice pre aktivne su side kartice (iste širine)
-                const offsetBeforeActive = currentIndex * (sideCardWidth + gap);
-                
-                // Centriraj aktivnu karticu
-                const centerOffset = (containerWidth / 2) - (activeCardWidth / 2);
-                const finalOffset = centerOffset - offsetBeforeActive;
-                
-                sliderTrack.style.transform = `translateX(${finalOffset}px)`;
-            });
+    if (!slider || !cardsContainer || !prevButton || !nextButton || bgLayers.length < 2) return;
+
+    // Jedinstveni izvor podataka za proizvode
+    const products = [
+        {
+            title: 'Automatska vrata',
+            description: 'Moderna i elegantna rešenja koja štede prostor, pružajući bezbednost i udobnost. Idealna za javne objekte, bolnice, poslovne zgrade i trgovine.',
+            image: 'assets/product-1.svg',
+            link: 'pages/automatska-vrata.html'
+        },
+        {
+            title: 'Unutrašnja vrata',
+            description: 'Širok asortiman unutrašnjih vrata za različite namene, od stambenih do javnih objekata. Proizvodnja po meri sa vrhunskim kvalitetom.',
+            image: 'assets/product-1.svg',
+            link: 'pages/unutrasnja-vrata.html'
+        },
+        {
+            title: 'Industrijska i garažna vrata',
+            description: 'Robusna i pouzdana rešenja za industrijske objekte, garaže i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.',
+            image: 'assets/product-3.svg',
+            link: 'pages/industrijska-vrata.html'
+        },
+        {
+            title: 'Bolnička vrata',
+            description: 'Specijalizovana rešenja za zdravstvene ustanove, sa fokusom na higijenu, bezbednost i funkcionalnost. Više od 20 godina iskustva.',
+            image: 'assets/product-2.svg',
+            link: 'pages/bolnicka-vrata.html'
+        },
+        {
+            title: 'Olovna stakla i  olovni limovi',
+            description: 'Olovna stakla, olovni limovi, ploče i prizme za zaštitu od jonizujućeg zračenja. Za zdravstvene ustanove, laboratorije i industrijske objekte.',
+            image: 'assets/product-2.svg',
+            link: 'pages/zastita-od-radijacije.html'
+        },
+        {
+            title: 'PRIMAX zaštitna rešenja',
+            description: 'Kompletan program zaštitne opreme i sredstava od jonizujućeg zračenja za zdravstvene ustanove, laboratorije i industrijske objekte.',
+            image: 'assets/product-2.svg',
+            link: 'pages/primax.html'
         }
+    ];
+
+    let activeIndex = 0;
+    let activeLayerIndex = 0;
+
+    // Render mini kartica na dnu hero slider-a
+    function renderCards() {
+        cardsContainer.innerHTML = products
+            .map((product, index) => `
+                <div class="products-hero-card" data-index="${index}" role="option" tabindex="0" aria-selected="false">
+                    <div class="products-hero-card-media">
+                        <img src="${product.image}" alt="${product.title}" loading="lazy">
+                    </div>
+                    <div class="products-hero-card-title">${product.title}</div>
+                    <a href="${product.link}" class="product-detail-btn">Detaljnije</a>
+                </div>
+            `)
+            .join('');
     }
-    
-    // Funkcija za pomeranje na sledeću karticu
-    function nextCard() {
-        currentIndex = (currentIndex + 1) % totalCards;
-        updateCards();
+
+    // Fade efekat za pozadinu (crossfade između dva sloja)
+    function updateBackground(imageUrl) {
+        const nextLayerIndex = (activeLayerIndex + 1) % bgLayers.length;
+        const nextLayer = bgLayers[nextLayerIndex];
+        const currentLayer = bgLayers[activeLayerIndex];
+
+        nextLayer.style.backgroundImage = `url('${imageUrl}')`;
+        nextLayer.classList.add('is-visible');
+        currentLayer.classList.remove('is-visible');
+        activeLayerIndex = nextLayerIndex;
     }
-    
-    // Funkcija za pomeranje na prethodnu karticu
-    function prevCard() {
-        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-        updateCards();
+
+    // Ažuriranje aktivnog sadržaja i stanja kartica
+    function updateActiveState() {
+        const product = products[activeIndex];
+        const cards = cardsContainer.querySelectorAll('.products-hero-card');
+
+        if (titleEl) titleEl.textContent = product.title;
+        if (descriptionEl) descriptionEl.textContent = product.description;
+        if (ctaEl) ctaEl.setAttribute('href', product.link);
+
+        updateBackground(product.image);
+
+        cards.forEach((card, index) => {
+            const isActive = index === activeIndex;
+            card.classList.toggle('is-active', isActive);
+            card.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        // Scrolluj aktivnu karticu u vidno polje kada je red skrolabilan
+        requestAnimationFrame(() => {
+            const activeCard = cardsContainer.querySelector(`.products-hero-card[data-index="${activeIndex}"]`);
+            if (!activeCard || cardsContainer.scrollWidth <= cardsContainer.clientWidth) return;
+
+            if (activeIndex === 0) {
+                cardsContainer.scrollLeft = 0;
+                return;
+            }
+
+            activeCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
     }
-    
-    // Event listeneri za dugmad
-    sliderNext.addEventListener('click', nextCard);
-    sliderPrev.addEventListener('click', prevCard);
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            prevCard();
-        } else if (e.key === 'ArrowRight') {
-            nextCard();
+
+    function setActiveIndex(index) {
+        const newIndex = (index + products.length) % products.length;
+        if (newIndex === activeIndex) return;
+        activeIndex = newIndex;
+        updateActiveState();
+    }
+
+    function nextSlide() {
+        setActiveIndex(activeIndex + 1);
+    }
+
+    function prevSlide() {
+        setActiveIndex(activeIndex - 1);
+    }
+
+    // Event listeneri za strelice
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+
+    // Klik na karticu menja aktivni proizvod
+    cardsContainer.addEventListener('click', (event) => {
+        const card = event.target.closest('.products-hero-card');
+        if (!card) return;
+        const index = Number(card.dataset.index);
+        if (!Number.isNaN(index)) {
+            setActiveIndex(index);
         }
     });
-    
-    // Swipe gesture za mobilne uređaje
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    sliderTrack.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-    
-    sliderTrack.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                nextCard();
-            } else {
-                prevCard();
+
+    // Keyboard navigacija za kartice
+    cardsContainer.addEventListener('keydown', (event) => {
+        if (event.target.classList.contains('products-hero-card') &&
+            (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault();
+            const index = Number(event.target.dataset.index);
+            if (!Number.isNaN(index)) {
+                setActiveIndex(index);
             }
         }
-    }
-    
+    });
+
+    // ArrowLeft / ArrowRight dok je slider fokusiran
+    slider.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            prevSlide();
+        } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            nextSlide();
+        }
+    });
+
+    // Swipe/drag podrška za mobilne uređaje
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+
+    cardsContainer.addEventListener('pointerdown', (event) => {
+        pointerStartX = event.clientX;
+        pointerStartY = event.clientY;
+    });
+
+    cardsContainer.addEventListener('pointerup', (event) => {
+        const diffX = pointerStartX - event.clientX;
+        const diffY = pointerStartY - event.clientY;
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    });
+
     // Inicijalizacija
-    updateCards();
-    
-    // Ažuriraj na resize
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            updateCards();
-        }, 250);
+    renderCards();
+    bgLayers[0].style.backgroundImage = `url('${products[0].image}')`;
+    bgLayers[0].classList.add('is-visible');
+    updateActiveState();
+    requestAnimationFrame(() => {
+        cardsContainer.scrollLeft = 0;
     });
 }
 
