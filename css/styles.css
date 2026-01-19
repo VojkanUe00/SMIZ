@@ -670,6 +670,10 @@ ul {
     background-color: var(--gray-50);
 }
 
+#proizvodi.section-alt {
+    padding-bottom: 0;
+}
+
 .section-title {
     font-size: 2.5rem;
     font-weight: 700;
@@ -1614,9 +1618,9 @@ ul {
 
 @media (max-width: 767px) {
     .products-hero-slider {
-        padding-bottom: 240px;
+        padding-bottom: 200px;
         padding-top: 24px;
-        margin-bottom: var(--spacing-xl);
+        margin-bottom: 0;
         border-radius: 0 !important;
         box-shadow: none;
     }
@@ -1636,6 +1640,7 @@ ul {
         width: 100%;
         padding: 0 var(--spacing-sm);
         gap: var(--spacing-xs);
+        bottom: 16px;
     }
 
     .products-hero-arrow {
