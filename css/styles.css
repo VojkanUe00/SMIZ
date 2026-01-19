@@ -1614,9 +1614,21 @@ ul {
 
 @media (max-width: 767px) {
     .products-hero-slider {
-        min-height: 70vh;
-        padding-bottom: 220px;
+        min-height: 90vh;
+        padding-bottom: 240px;
         padding-top: 24px;
+        margin-bottom: var(--spacing-xl);
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .products-hero-bg,
+    .products-hero-overlay {
+        border-radius: 0;
+    }
+
+    .products-hero-slider:focus {
+        outline: none;
     }
 
     .products-hero-controls {
