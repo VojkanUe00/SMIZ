@@ -515,43 +515,13 @@ function initHeroSlider() {
 
     const imagePaths = [
         'images/door/AKV staklena.jpeg',
-        'images/door/AKV.jpeg',
-        'images/door/akv.jpg',
-        'images/door/akv(1).jpg',
-        'images/door/akv(2).jpg',
-        'images/door/akv(3).jpg',
-        'images/door/akv(4).jpg',
         'images/door/harmonika.jpeg',
-        'images/door/harmonika(1).jpeg',
-        'images/door/harmonika(2).jpeg',
-        'images/door/harmonika(3).jpeg',
-        'images/door/Hermetik 1.jpeg',
-        'images/door/hermetik i akv stakleni.jpeg',
         'images/door/Hermetik staklena.jpeg',
-        'images/door/hermetik.jpeg',
-        'images/door/Hermetik(1).jpeg',
-        'images/door/hermetik(2).jpeg',
         'images/door/klizna (zavesa).jpg',
-        'images/door/klizna (zavesa)(1).jpg',
-        'images/door/RKV .jpeg',
         'images/door/RKV hodnik.jpeg',
-        'images/door/RKV hodnik(1).jpeg',
         'images/door/rkv olovna.jpg',
-        'images/door/rkv olovna(1).jpg',
-        'images/door/rkv olovna(2).jpg',
-        'images/door/rkv olovna(3).jpg',
-        'images/door/RKV.jpeg',
-        'images/door/RKV(1).jpeg',
-        'images/door/Teleskop akv.jpeg',
-        'images/door/zaokretna .jpg',
-        'images/door/Zaokretna 2 kom.jpg',
         'images/door/zaokretna automatska.jpg',
-        'images/door/zaokretna hodnik.jpeg',
-        'images/door/zaokretna plus rkv hodnik.jpg',
-        'images/door/Zaokretna staklena.jpeg',
-        'images/door/zaokretna.jpeg',
-        'images/door/Zaokretna.jpg',
-        'images/door/zaokretnba plus rkv hodnik.jpg'
+        'images/door/Zaokretna staklena.jpeg'
     ];
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -778,57 +748,83 @@ function initProductsHeroSlider() {
         {
             title: 'Automatska vrata',
             description: 'Moderna i elegantna rešenja koja štede prostor, pružajući bezbednost i udobnost. Idealna za javne objekte, bolnice, poslovne zgrade i trgovine.',
-            image: 'assets/product-1.svg',
+            image: 'images/door/zaokretna automatska.jpg',
             link: 'pages/automatska-vrata.html'
         },
         {
             title: 'Unutrašnja vrata',
             description: 'Širok asortiman unutrašnjih vrata za različite namene, od stambenih do javnih objekata. Proizvodnja po meri sa vrhunskim kvalitetom.',
-            image: 'assets/product-1.svg',
+            image: 'images/door/klizna (zavesa).jpg',
             link: 'pages/unutrasnja-vrata.html'
         },
         {
             title: 'Industrijska i garažna vrata',
             description: 'Robusna i pouzdana rešenja za industrijske objekte, garaže i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.',
-            image: 'assets/product-3.svg',
+            image: 'images/door/RKV hodnik.jpeg',
             link: 'pages/industrijska-vrata.html'
         },
         {
             title: 'Bolnička vrata',
             description: 'Specijalizovana rešenja za zdravstvene ustanove, sa fokusom na higijenu, bezbednost i funkcionalnost. Više od 20 godina iskustva.',
-            image: 'assets/product-2.svg',
+            image: 'images/door/hermetik.jpeg',
             link: 'pages/bolnicka-vrata.html'
         },
         {
             title: 'Olovna stakla i  olovni limovi',
             description: 'Olovna stakla, olovni limovi, ploče i prizme za zaštitu od jonizujućeg zračenja. Za zdravstvene ustanove, laboratorije i industrijske objekte.',
-            image: 'assets/product-2.svg',
+            image: 'images/door/rkv olovna.jpg',
             link: 'pages/zastita-od-radijacije.html'
         },
         {
             title: 'PRIMAX zaštitna rešenja',
             description: 'Kompletan program zaštitne opreme i sredstava od jonizujućeg zračenja za zdravstvene ustanove, laboratorije i industrijske objekte.',
-            image: 'assets/product-2.svg',
+            image: 'images/door/AKV staklena.jpeg',
             link: 'pages/primax.html'
         }
     ];
 
+    const productsWithSrc = products.map((product) => ({
+        ...product,
+        imageSrc: encodeURI(product.image)
+    }));
+    const preloaded = new Set();
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let activeIndex = 0;
     let activeLayerIndex = 0;
+    let cards = [];
+
+    function preloadImage(src) {
+        if (preloaded.has(src)) return Promise.resolve();
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = src;
+            if (img.complete) {
+                preloaded.add(src);
+                resolve();
+            } else {
+                img.onload = () => {
+                    preloaded.add(src);
+                    resolve();
+                };
+                img.onerror = () => resolve();
+            }
+        });
+    }
 
     // Render mini kartica na dnu hero slider-a
     function renderCards() {
-        cardsContainer.innerHTML = products
+        cardsContainer.innerHTML = productsWithSrc
             .map((product, index) => `
                 <div class="products-hero-card" data-index="${index}" role="option" tabindex="0" aria-selected="false">
                     <div class="products-hero-card-media">
-                        <img src="${product.image}" alt="${product.title}" loading="lazy">
+                        <img src="${product.imageSrc}" alt="${product.title}" loading="lazy">
                     </div>
                     <div class="products-hero-card-title">${product.title}</div>
                     <a href="${product.link}" class="product-detail-btn">Detaljnije</a>
                 </div>
             `)
             .join('');
+        cards = Array.from(cardsContainer.querySelectorAll('.products-hero-card'));
     }
 
     // Fade efekat za pozadinu (crossfade između dva sloja)
@@ -845,14 +841,15 @@ function initProductsHeroSlider() {
 
     // Ažuriranje aktivnog sadržaja i stanja kartica
     function updateActiveState() {
-        const product = products[activeIndex];
-        const cards = cardsContainer.querySelectorAll('.products-hero-card');
+        const product = productsWithSrc[activeIndex];
 
         if (titleEl) titleEl.textContent = product.title;
         if (descriptionEl) descriptionEl.textContent = product.description;
         if (ctaEl) ctaEl.setAttribute('href', product.link);
 
-        updateBackground(product.image);
+        preloadImage(product.imageSrc).finally(() => {
+            updateBackground(product.imageSrc);
+        });
 
         cards.forEach((card, index) => {
             const isActive = index === activeIndex;
@@ -861,17 +858,13 @@ function initProductsHeroSlider() {
         });
 
         // Scrolluj aktivnu karticu u vidno polje kada je red skrolabilan
-        requestAnimationFrame(() => {
-            const activeCard = cardsContainer.querySelector(`.products-hero-card[data-index="${activeIndex}"]`);
-            if (!activeCard || cardsContainer.scrollWidth <= cardsContainer.clientWidth) return;
-
-            if (activeIndex === 0) {
-                cardsContainer.scrollLeft = 0;
-                return;
-            }
-
-            activeCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        });
+        const activeCard = cards[activeIndex];
+        if (!activeCard || cardsContainer.scrollWidth <= cardsContainer.clientWidth) return;
+        const targetLeft = activeCard.offsetLeft - (cardsContainer.clientWidth - activeCard.offsetWidth) / 2;
+        const clampedLeft = Math.max(0, Math.min(targetLeft, cardsContainer.scrollWidth - cardsContainer.clientWidth));
+        if (Math.abs(cardsContainer.scrollLeft - clampedLeft) > 1) {
+            cardsContainer.scrollTo({ left: clampedLeft, behavior: prefersReducedMotion.matches ? 'auto' : 'auto' });
+        }
     }
 
     function setActiveIndex(index) {
@@ -879,6 +872,10 @@ function initProductsHeroSlider() {
         if (newIndex === activeIndex) return;
         activeIndex = newIndex;
         updateActiveState();
+        const nextIndex = (activeIndex + 1) % productsWithSrc.length;
+        const prevIndex = (activeIndex - 1 + productsWithSrc.length) % productsWithSrc.length;
+        preloadImage(productsWithSrc[nextIndex].imageSrc);
+        preloadImage(productsWithSrc[prevIndex].imageSrc);
     }
 
     function nextSlide() {
@@ -949,11 +946,15 @@ function initProductsHeroSlider() {
 
     // Inicijalizacija
     renderCards();
-    bgLayers[0].style.backgroundImage = `url('${products[0].image}')`;
+    bgLayers[0].style.backgroundImage = `url('${productsWithSrc[0].imageSrc}')`;
     bgLayers[0].classList.add('is-visible');
     updateActiveState();
     requestAnimationFrame(() => {
         cardsContainer.scrollLeft = 0;
+    });
+
+    productsWithSrc.slice(1, 4).forEach((product) => {
+        preloadImage(product.imageSrc);
     });
 }
 
