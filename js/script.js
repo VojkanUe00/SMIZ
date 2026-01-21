@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicijalizuj header scroll efekat
     initHeaderScroll();
 
+    // Inicijalizuj hero slider
+    initHeroSlider();
+
     // Inicijalizuj hero slider za proizvode
     initProductsHeroSlider();
 });
@@ -500,6 +503,264 @@ window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
 // ============================================
 // Products Slider
 // ============================================
+function initHeroSlider() {
+    const hero = document.querySelector('.hero-slider');
+    if (!hero) return;
+
+    const layers = hero.querySelectorAll('.hero-slide');
+    const dotsContainer = document.getElementById('heroDots');
+    const announcementEl = document.getElementById('heroSlideAnnouncement');
+
+    if (layers.length < 2 || !dotsContainer) return;
+
+    const imagePaths = [
+        'images/door/AKV staklena.jpeg',
+        'images/door/AKV.jpeg',
+        'images/door/akv.jpg',
+        'images/door/akv(1).jpg',
+        'images/door/akv(2).jpg',
+        'images/door/akv(3).jpg',
+        'images/door/akv(4).jpg',
+        'images/door/harmonika.jpeg',
+        'images/door/harmonika(1).jpeg',
+        'images/door/harmonika(2).jpeg',
+        'images/door/harmonika(3).jpeg',
+        'images/door/Hermetik 1.jpeg',
+        'images/door/hermetik i akv stakleni.jpeg',
+        'images/door/Hermetik staklena.jpeg',
+        'images/door/hermetik.jpeg',
+        'images/door/Hermetik(1).jpeg',
+        'images/door/hermetik(2).jpeg',
+        'images/door/klizna (zavesa).jpg',
+        'images/door/klizna (zavesa)(1).jpg',
+        'images/door/RKV .jpeg',
+        'images/door/RKV hodnik.jpeg',
+        'images/door/RKV hodnik(1).jpeg',
+        'images/door/rkv olovna.jpg',
+        'images/door/rkv olovna(1).jpg',
+        'images/door/rkv olovna(2).jpg',
+        'images/door/rkv olovna(3).jpg',
+        'images/door/RKV.jpeg',
+        'images/door/RKV(1).jpeg',
+        'images/door/Teleskop akv.jpeg',
+        'images/door/zaokretna .jpg',
+        'images/door/Zaokretna 2 kom.jpg',
+        'images/door/zaokretna automatska.jpg',
+        'images/door/zaokretna hodnik.jpeg',
+        'images/door/zaokretna plus rkv hodnik.jpg',
+        'images/door/Zaokretna staklena.jpeg',
+        'images/door/zaokretna.jpeg',
+        'images/door/Zaokretna.jpg',
+        'images/door/zaokretnba plus rkv hodnik.jpg'
+    ];
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const preloaded = new Set();
+    const slides = imagePaths.map((path) => ({
+        src: encodeURI(path),
+        label: formatLabel(path)
+    }));
+
+    if (!slides.length) return;
+
+    let activeIndex = 0;
+    let activeLayer = 0;
+    let timer = null;
+    let isPaused = prefersReducedMotion.matches;
+    let isTransitioning = false;
+    let pendingIndex = null;
+    const interval = 3000;
+
+    function formatLabel(path) {
+        const filename = path.split('/').pop() || '';
+        const base = filename.replace(/\.[^/.]+$/, '');
+        const cleaned = base
+            .replace(/\(.*?\)/g, '')
+            .replace(/\s+/g, ' ')
+            .replace(/[_-]+/g, ' ')
+            .trim();
+
+        if (!cleaned) return 'Specijalna vrata';
+
+        return cleaned
+            .split(' ')
+            .map(word => {
+                if (word.length <= 3) return word.toUpperCase();
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            })
+            .join(' ');
+    }
+
+    function preloadImage(src) {
+        if (preloaded.has(src)) return Promise.resolve();
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = src;
+            if (img.complete) {
+                preloaded.add(src);
+                resolve();
+            } else {
+                img.onload = () => {
+                    preloaded.add(src);
+                    resolve();
+                };
+                img.onerror = () => resolve();
+            }
+        });
+    }
+
+    function updateDots() {
+        const dots = dotsContainer.querySelectorAll('.hero-dot');
+        dots.forEach((dot, index) => {
+            const isActive = index === activeIndex;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+    }
+
+    function announceSlide(label) {
+        if (!announcementEl) return;
+        announcementEl.textContent = `Prikaz: ${label}`;
+    }
+
+    function applySlide(index, shouldAnnounce = true) {
+        const slide = slides[index];
+        const nextLayerIndex = (activeLayer + 1) % layers.length;
+        const nextLayer = layers[nextLayerIndex];
+        const currentLayer = layers[activeLayer];
+
+        nextLayer.style.backgroundImage = `url('${slide.src}')`;
+        nextLayer.classList.add('is-visible');
+        currentLayer.classList.remove('is-visible');
+        activeLayer = nextLayerIndex;
+
+        if (shouldAnnounce) {
+            announceSlide(slide.label);
+        }
+        updateDots();
+    }
+
+    function setActiveIndex(index, options = {}) {
+        const newIndex = (index + slides.length) % slides.length;
+        if (newIndex === activeIndex && hero.classList.contains('is-ready')) return;
+
+        if (isTransitioning) {
+            pendingIndex = newIndex;
+            return;
+        }
+
+        isTransitioning = true;
+        const { announce = true } = options;
+        const slide = slides[newIndex];
+
+        preloadImage(slide.src).finally(() => {
+            activeIndex = newIndex;
+            applySlide(activeIndex, announce);
+            isTransitioning = false;
+
+            if (pendingIndex !== null && pendingIndex !== activeIndex) {
+                const next = pendingIndex;
+                pendingIndex = null;
+                setActiveIndex(next, { announce: true });
+            }
+        });
+    }
+
+    function nextSlide() {
+        setActiveIndex(activeIndex + 1);
+    }
+
+    function prevSlide() {
+        setActiveIndex(activeIndex - 1);
+    }
+
+    function startAuto() {
+        if (timer || isPaused || slides.length < 2) return;
+        timer = setInterval(nextSlide, interval);
+    }
+
+    function stopAuto() {
+        if (!timer) return;
+        clearInterval(timer);
+        timer = null;
+    }
+
+    function initDots() {
+        dotsContainer.innerHTML = slides
+            .map((slide, index) => `
+                <button class="hero-dot" type="button" data-index="${index}" aria-label="Prikaži ${slide.label}"></button>
+            `)
+            .join('');
+    }
+
+    dotsContainer.addEventListener('click', (event) => {
+        const dot = event.target.closest('.hero-dot');
+        if (!dot) return;
+        const index = Number(dot.dataset.index);
+        if (!Number.isNaN(index)) {
+            setActiveIndex(index);
+            stopAuto();
+            if (!prefersReducedMotion.matches) {
+                startAuto();
+            }
+        }
+    });
+
+    hero.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            nextSlide();
+        } else if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            prevSlide();
+        }
+    });
+
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+
+    hero.addEventListener('pointerdown', (event) => {
+        pointerStartX = event.clientX;
+        pointerStartY = event.clientY;
+    });
+
+    hero.addEventListener('pointerup', (event) => {
+        const diffX = pointerStartX - event.clientX;
+        const diffY = pointerStartY - event.clientY;
+        if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAuto();
+        } else if (!isPaused) {
+            startAuto();
+        }
+    });
+
+    initDots();
+    startAuto();
+    preloadImage(slides[0].src).finally(() => {
+        layers[0].style.backgroundImage = `url('${slides[0].src}')`;
+        layers[0].classList.add('is-visible');
+        hero.classList.add('is-ready');
+        announceSlide(slides[0].label);
+        updateDots();
+
+        slides.slice(1, 4).forEach((slide) => {
+            preloadImage(slide.src);
+        });
+
+        startAuto();
+    });
+}
+
 function initProductsHeroSlider() {
     const slider = document.getElementById('productsHero');
     const cardsContainer = document.getElementById('productsHeroCards');

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="sr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SMIŽ - vrata, rešenja i zaštita. Proizvodnja, ugradnja i servis različitih tipova vrata. Automatska vrata, bolnička vrata, industrijska vrata i zaštitna rešenja.">
+    <meta name="description"
+        content="SMIŽ - vrata, rešenja i zaštita. Proizvodnja, ugradnja i servis različitih tipova vrata. Automatska vrata, bolnička vrata, industrijska vrata i zaštitna rešenja.">
     <meta property="og:title" content="SMIŽ - Vrata, rešenja i zaštita">
-    <meta property="og:description" content="Porodična firma iz Užica, osnovana 1996. Proizvodnja, ugradnja i servis različitih tipova vrata.">
+    <meta property="og:description"
+        content="Porodična firma iz Užica, osnovana 1996. Proizvodnja, ugradnja i servis različitih tipova vrata.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="images/logo-mini.png">
     <title>SMIŽ - Vrata, rešenja i zaštita</title>
@@ -15,10 +18,11 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="images/logo-mini.png">
 </head>
+
 <body>
     <!-- Site Background -->
     <div class="site-background" aria-hidden="true"></div>
-    
+
     <!-- Header / Navigacija -->
     <header class="header" id="header">
         <div class="container">
@@ -37,9 +41,11 @@
                         <ul class="dropdown-menu" id="productsDropdownMenu">
                             <li><a href="pages/automatska-vrata.html" class="dropdown-link">Automatska vrata</a></li>
                             <li><a href="pages/unutrasnja-vrata.html" class="dropdown-link">Unutrašnja vrata</a></li>
-                            <li><a href="pages/industrijska-vrata.html" class="dropdown-link">Industrijska i garažna vrata</a></li>
+                            <li><a href="pages/industrijska-vrata.html" class="dropdown-link">Industrijska i garažna
+                                    vrata</a></li>
                             <li><a href="pages/bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
-                            <li><a href="pages/zastita-od-radijacije.html" class="dropdown-link">Olovna stakla i  olovni limovi</a></li>
+                            <li><a href="pages/zastita-od-radijacije.html" class="dropdown-link">Olovna stakla i olovni
+                                    limovi</a></li>
                             <li><a href="pages/primax.html" class="dropdown-link">PRIMAX zaštitna rešenja</a></li>
                         </ul>
                     </li>
@@ -55,16 +61,33 @@
     </header>
 
     <!-- Hero sekcija -->
-    <section class="hero" id="home">
-        <div class="hero-overlay"></div>
+    <section class="hero hero-slider" id="home" tabindex="0" aria-roledescription="carousel"
+        aria-label="Hero galerija vrata">
+        <div class="hero-slider-media" aria-hidden="true">
+            <div class="hero-slide is-visible"></div>
+            <div class="hero-slide"></div>
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
         <div class="hero-content">
             <div class="container">
-                <h1 class="hero-title">SMIŽ – vrata, rešenja i zaštita</h1>
-                <p class="hero-subtitle">Proizvodnja, ugradnja i servis različitih tipova vrata sa 30 godina iskustva</p>
-                <div class="hero-cta">
-                    <a href="pages/contact.html" class="btn btn-primary">Zatraži ponudu</a>
-                    <a href="#proizvodi" class="btn btn-outline">Naši proizvodi</a>
+                <div class="hero-inner">
+                    <div class="hero-badge">
+                        <span class="hero-eyebrow">SMIŽ</span>
+                    </div>
+                    <h1 class="hero-title">Visokotehnološka vrata za kritične prostore</h1>
+                    <p class="hero-subtitle">Projektovanje, proizvodnja, ugradnja i servis vrata sa fokusom na
+                        bezbednost, pouzdanost i dug vek trajanja.</p>
+                    <div class="hero-cta">
+                        <a href="pages/contact.html" class="btn btn-primary">Zatraži ponudu</a>
+                        <a href="#proizvodi" class="btn btn-outline">Naši proizvodi</a>
+                    </div>
+                    <p class="sr-only" id="heroSlideAnnouncement" aria-live="polite"></p>
                 </div>
+            </div>
+        </div>
+        <div class="hero-controls">
+            <div class="container hero-controls-inner">
+                <div class="hero-dots" id="heroDots" aria-label="Izaberite sliku hero sekcije"></div>
             </div>
         </div>
     </section>
@@ -125,7 +148,8 @@
                     </div>
                     <h3 class="partner-name">GEZE</h3>
                 </a>
-                <a href="https://primax-berlin.de/en/produkt/radiation-shielding-glass/" target="_blank" rel="noopener noreferrer" class="partner-card">
+                <a href="https://primax-berlin.de/en/produkt/radiation-shielding-glass/" target="_blank"
+                    rel="noopener noreferrer" class="partner-card">
                     <div class="partner-logo-wrapper">
                         <img src="images/primax-logo.svg" alt="PRIMAX Logo" class="partner-logo">
                     </div>
@@ -149,7 +173,8 @@
                     <div class="footer-logo-wrapper">
                         <img src="images/smiz.png" alt="SMIŽ Logo" class="footer-logo">
                     </div>
-                    <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.</p>
+                    <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.
+                    </p>
                 </div>
                 <div class="footer-col">
                     <h4>Navigacija</h4>
@@ -190,6 +215,5 @@
 
     <script src="js/script.js"></script>
 </body>
+
 </html>
-
-
