@@ -254,7 +254,7 @@ function initActiveLinkTracking() {
                 }
             });
         }
-    });
+    }, { passive: true });
 }
 
 // ============================================
@@ -653,7 +653,7 @@ function initBackgroundSlider({
     }
 
     function nextSlide() {
-        setActiveIndex(activeIndex + 1);
+        setActiveIndex(activeIndex + 1, { scrollToActive: true });
     }
 
     function prevSlide() {
@@ -887,7 +887,6 @@ function initProductsHeroSlider() {
         imageSrc: encodeURI(product.image)
     }));
     const preloaded = new Set();
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let activeIndex = 0;
     let activeLayerIndex = 0;
     let cards = [];
@@ -896,18 +895,49 @@ function initProductsHeroSlider() {
         if (preloaded.has(src)) return Promise.resolve();
         return new Promise((resolve) => {
             const img = new Image();
-            img.src = src;
-            if (img.complete) {
+            const finalize = () => {
                 preloaded.add(src);
                 resolve();
+            };
+            const decodeIfPossible = () => {
+                if (typeof img.decode === 'function') {
+                    img.decode().then(finalize).catch(finalize);
+                } else {
+                    finalize();
+                }
+            };
+            img.src = src;
+            if (img.complete) {
+                decodeIfPossible();
             } else {
-                img.onload = () => {
-                    preloaded.add(src);
-                    resolve();
-                };
-                img.onerror = () => resolve();
+                img.onload = decodeIfPossible;
+                img.onerror = finalize;
             }
         });
+    }
+
+    function scheduleThumbnailPreload() {
+        const preloadTask = () => {
+            const thumbnails = cardsContainer.querySelectorAll('.products-hero-card img');
+            thumbnails.forEach((img) => {
+                const src = img.currentSrc || img.src;
+                if (!src) return;
+                const preloader = new Image();
+                preloader.src = src; // Warm cache to avoid decode jank
+                if (typeof preloader.decode === 'function') {
+                    preloader.decode().catch(() => { });
+                }
+                if (typeof img.decode === 'function') {
+                    img.decode().catch(() => { });
+                }
+            });
+        };
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => Promise.resolve().then(preloadTask));
+        } else {
+            setTimeout(() => Promise.resolve().then(preloadTask), 0);
+        }
     }
 
     // Render mini kartica na dnu hero slider-a
@@ -916,7 +946,7 @@ function initProductsHeroSlider() {
             .map((product, index) => `
                 <div class="products-hero-card" data-index="${index}" role="option" tabindex="0" aria-selected="false">
                     <div class="products-hero-card-media">
-                        <img src="${product.imageSrc}" alt="${product.title}" loading="lazy" decoding="async"> <!-- Lazy/decode card images for smoother scroll -->
+                        <img src="${product.imageSrc}" alt="${product.title}" loading="eager" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''}> <!-- Eager + async decode for smooth drag -->
                     </div>
                     <div class="products-hero-card-title">${product.title}</div>
                     <a href="${product.link}" class="product-detail-btn">Detaljnije</a>
@@ -924,6 +954,7 @@ function initProductsHeroSlider() {
             `)
             .join('');
         cards = Array.from(cardsContainer.querySelectorAll('.products-hero-card'));
+        scheduleThumbnailPreload(); // Preload/decode thumbnails without blocking interaction
     }
 
     // Fade efekat za pozadinu (crossfade između dva sloja)
@@ -939,7 +970,7 @@ function initProductsHeroSlider() {
     }
 
     // Ažuriranje aktivnog sadržaja i stanja kartica
-    function updateActiveState() {
+    function updateActiveState({ scrollToActive = false } = {}) {
         const product = productsWithSrc[activeIndex];
 
         if (titleEl) titleEl.textContent = product.title;
@@ -955,22 +986,23 @@ function initProductsHeroSlider() {
             card.classList.toggle('is-active', isActive);
             card.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
-
-        // Scrolluj aktivnu karticu u vidno polje kada je red skrolabilan
-        const activeCard = cards[activeIndex];
-        if (!activeCard || cardsContainer.scrollWidth <= cardsContainer.clientWidth) return;
-        const targetLeft = activeCard.offsetLeft - (cardsContainer.clientWidth - activeCard.offsetWidth) / 2;
-        const clampedLeft = Math.max(0, Math.min(targetLeft, cardsContainer.scrollWidth - cardsContainer.clientWidth));
-        if (Math.abs(cardsContainer.scrollLeft - clampedLeft) > 1) {
-            cardsContainer.scrollTo({ left: clampedLeft, behavior: prefersReducedMotion.matches ? 'auto' : 'auto' });
+        if (scrollToActive) {
+            const activeCard = cards[activeIndex];
+            if (activeCard) {
+                activeCard.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                    block: 'nearest'
+                }); // Center active card after arrow navigation
+            }
         }
     }
 
-    function setActiveIndex(index) {
+    function setActiveIndex(index, options = {}) {
         const newIndex = (index + products.length) % products.length;
         if (newIndex === activeIndex) return;
         activeIndex = newIndex;
-        updateActiveState();
+        updateActiveState(options);
         const nextIndex = (activeIndex + 1) % productsWithSrc.length;
         const prevIndex = (activeIndex - 1 + productsWithSrc.length) % productsWithSrc.length;
         preloadImage(productsWithSrc[nextIndex].imageSrc);
@@ -982,12 +1014,34 @@ function initProductsHeroSlider() {
     }
 
     function prevSlide() {
-        setActiveIndex(activeIndex - 1);
+        setActiveIndex(activeIndex - 1, { scrollToActive: true });
     }
 
     // Event listeneri za strelice
-    nextButton.addEventListener('click', nextSlide);
-    prevButton.addEventListener('click', prevSlide);
+    function getScrollStep() {
+        const firstCard = cards[0];
+        if (!firstCard) return 0;
+        const cardRect = firstCard.getBoundingClientRect();
+        const containerStyles = window.getComputedStyle(cardsContainer);
+        const gap = parseFloat(containerStyles.columnGap || containerStyles.gap || '0') || 0;
+        return cardRect.width + gap;
+    }
+
+    nextButton.addEventListener('click', () => {
+        const maxScrollLeft = cardsContainer.scrollWidth - cardsContainer.clientWidth;
+        const isAtEnd = cardsContainer.scrollLeft >= maxScrollLeft - 2;
+        if (isAtEnd && activeIndex === productsWithSrc.length - 1) {
+            cardsContainer.scrollTo({ left: 0, behavior: 'smooth' }); // Wrap to start only after last card
+            setActiveIndex(0, { scrollToActive: true });
+            return;
+        }
+        cardsContainer.scrollBy({ left: getScrollStep(), behavior: 'smooth' }); // Native scroll helper
+        nextSlide();
+    });
+    prevButton.addEventListener('click', () => {
+        cardsContainer.scrollBy({ left: -getScrollStep(), behavior: 'smooth' }); // Native scroll helper
+        prevSlide();
+    });
 
     // Klik na karticu menja aktivni proizvod
     cardsContainer.addEventListener('click', (event) => {
@@ -995,7 +1049,7 @@ function initProductsHeroSlider() {
         if (!card) return;
         const index = Number(card.dataset.index);
         if (!Number.isNaN(index)) {
-            setActiveIndex(index);
+            setActiveIndex(index, { scrollToActive: true });
         }
     });
 
@@ -1022,35 +1076,11 @@ function initProductsHeroSlider() {
         }
     });
 
-    // Swipe/drag podrška za mobilne uređaje
-    let pointerStartX = 0;
-    let pointerStartY = 0;
-
-    cardsContainer.addEventListener('pointerdown', (event) => {
-        pointerStartX = event.clientX;
-        pointerStartY = event.clientY;
-    });
-
-    cardsContainer.addEventListener('pointerup', (event) => {
-        const diffX = pointerStartX - event.clientX;
-        const diffY = pointerStartY - event.clientY;
-        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > 0) {
-                nextSlide();
-            } else {
-                prevSlide();
-            }
-        }
-    });
-
     // Inicijalizacija
     renderCards();
     bgLayers[0].style.backgroundImage = `url('${productsWithSrc[0].imageSrc}')`;
     bgLayers[0].classList.add('is-visible');
     updateActiveState();
-    requestAnimationFrame(() => {
-        cardsContainer.scrollLeft = 0;
-    });
 
     productsWithSrc.slice(1, 4).forEach((product) => {
         preloadImage(product.imageSrc);

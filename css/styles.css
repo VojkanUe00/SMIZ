@@ -156,8 +156,7 @@ ul {
 .header.scrolled {
     box-shadow: var(--shadow-md);
     background-color: rgba(255, 255, 255, 0.98);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    /* Avoid backdrop-filter for smoother vertical scroll */
 }
 
 .nav {
@@ -623,8 +622,7 @@ ul {
         0 4px 16px rgba(59, 130, 246, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset,
         0 1px 0 rgba(255, 255, 255, 0.2) inset;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* Glass look without blur for better scroll performance */
 }
 
 .btn-primary::before {
@@ -674,8 +672,7 @@ ul {
     box-shadow:
         0 4px 16px rgba(0, 0, 0, 0.2),
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* Glass look without blur for better scroll performance */
 }
 
 .btn-outline::after {
@@ -1625,6 +1622,8 @@ ul {
     isolation: isolate;
     padding-bottom: clamp(200px, 22vw, 280px);
     padding-top: clamp(16px, 3vw, 32px);
+    --products-hero-bg-overlay: linear-gradient(180deg, rgba(5, 12, 30, 0.18) 0%, rgba(5, 12, 30, 0.16) 55%, rgba(5, 12, 30, 0.35) 100%);
+    /* Brighter background overlay for active slide */
 }
 
 .products-hero-slider:focus {
@@ -1658,7 +1657,7 @@ ul {
 .products-hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(5, 12, 30, 0.6) 0%, rgba(5, 12, 30, 0.55) 55%, rgba(5, 12, 30, 0.85) 100%);
+    background: var(--products-hero-bg-overlay);
     z-index: 2;
 }
 
@@ -1684,6 +1683,10 @@ ul {
     font-weight: 700;
     margin-bottom: var(--spacing-sm);
     max-width: 700px;
+    font-family: var(--font-heading);
+    letter-spacing: -0.03em;
+    text-shadow: 0 10px 30px rgba(6, 12, 22, 0.65);
+    /* Match homepage hero title style for active slide text */
 }
 
 .products-hero-description {
@@ -1691,6 +1694,8 @@ ul {
     font-size: 1rem;
     max-width: 680px;
     margin-bottom: var(--spacing-lg);
+    text-shadow: 0 6px 22px rgba(6, 12, 22, 0.6);
+    /* Match homepage hero subtitle glow */
 }
 
 .products-hero-cta {
@@ -1744,8 +1749,8 @@ ul {
     align-items: center;
     gap: var(--spacing-sm);
     overflow-x: auto;
+    /* Native horizontal scrolling */
     scrollbar-width: none;
-    scroll-snap-type: x mandatory;
     scroll-behavior: auto;
     padding: 0.75rem 3.5rem;
     scroll-padding-inline: 3.5rem;
@@ -1759,27 +1764,29 @@ ul {
 }
 
 .products-hero-card {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(8, 12, 22, 0.6);
+    /* Darker card overlay for better contrast */
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    /* Keep glass look via rgba + border; avoid blur */
     padding: 0.85rem;
-    min-width: 240px;
-    max-width: 270px;
-    min-height: 240px;
-    max-height: 240px;
+    min-width: 210px;
+    max-width: 235px;
+    min-height: 210px;
+    max-height: 210px;
     color: var(--white);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     cursor: pointer;
     transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
-    scroll-snap-align: center;
     opacity: 0.65;
     transform: none;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+    /* Minimal shadow for inactive cards */
     will-change: transform, opacity;
+    contain: paint;
+    /* Limit repaint scope during horizontal scrolling */
 }
 
 .products-hero-card.is-active {
@@ -1787,6 +1794,10 @@ ul {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(15, 23, 42, 0.35);
     border-color: rgba(255, 255, 255, 0.45);
+    background:
+        linear-gradient(120deg, rgba(7, 12, 22, 0.28) 0%, rgba(9, 18, 35, 0.24) 45%, rgba(7, 12, 22, 0.3) 80%),
+        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.34), transparent 55%);
+    /* Match homepage hero overlay for active card */
 }
 
 .products-hero-card:focus-visible {
@@ -1796,7 +1807,7 @@ ul {
 
 .products-hero-card-media {
     width: 100%;
-    height: 120px;
+    height: 105px;
     border-radius: 14px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.2);
@@ -1816,7 +1827,7 @@ ul {
     font-size: 1rem;
     font-weight: 600;
     color: var(--white);
-    min-height: 44px;
+    min-height: 40px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -1832,26 +1843,31 @@ ul {
 }
 
 @media (min-width: 1024px) {
+    .products-hero-slider {
+        min-height: clamp(620px, 78vh, 920px);
+        /* Fill more viewport on large screens */
+    }
+
     .products-hero-card {
-        min-width: 260px;
-        max-width: 300px;
-        min-height: 260px;
-        max-height: 260px;
+        min-width: 230px;
+        max-width: 265px;
+        min-height: 230px;
+        max-height: 230px;
     }
 }
 
 @media (max-width: 1023px) {
     .products-hero-card {
-        min-width: 220px;
-        max-width: 250px;
-        min-height: 220px;
-        max-height: 220px;
+        min-width: 200px;
+        max-width: 225px;
+        min-height: 200px;
+        max-height: 200px;
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .products-hero-slider {
-        padding-bottom: 200px;
+        padding-bottom: var(--spacing-xl);
         padding-top: 24px;
         margin-bottom: 0;
         border-radius: 0 !important;
@@ -1870,10 +1886,21 @@ ul {
     }
 
     .products-hero-controls {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        transform: none;
         width: 100%;
+        margin-top: var(--spacing-lg);
         padding: 0 var(--spacing-sm);
         gap: var(--spacing-xs);
-        bottom: 16px;
+        /* Keep cards below text to prevent overlap */
+    }
+
+    .products-hero-arrow {
+        display: none;
+        /* Hide arrows on mobile */
     }
 
     .products-hero-arrow {
@@ -1883,34 +1910,49 @@ ul {
     }
 
     .products-hero-card {
-        min-width: 210px;
-        max-width: 230px;
-        min-height: 200px;
-        max-height: 200px;
+        min-width: 190px;
+        max-width: 210px;
+        min-height: 190px;
+        max-height: 190px;
         padding: 0.65rem;
         opacity: 1;
         transform: none;
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.18);
+        /* Lighter shadow on mobile */
     }
 
     .products-hero-card.is-active {
         transform: scale(1.02);
         border-color: rgba(255, 255, 255, 0.55);
-        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.3);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.24);
+        /* Reduce shadow intensity */
     }
 
     .products-hero-card-media {
-        height: 92px;
+        height: 84px;
     }
 
     .products-hero-card-title {
         font-size: 0.9rem;
-        min-height: 38px;
+        min-height: 36px;
     }
 
     .products-hero-card .product-detail-btn {
         padding: 0.4rem 0.85rem;
         font-size: 0.8rem;
         min-height: 34px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .products-hero-slider {
+        min-height: clamp(680px, 82vh, 980px);
+        padding-bottom: clamp(240px, 20vw, 340px);
+        /* Larger hero presence on wide screens */
+    }
+
+    .products-hero-controls {
+        width: min(100% - 4rem, 1200px);
     }
 }
 
@@ -2012,8 +2054,7 @@ ul {
     box-shadow:
         0 4px 12px rgba(59, 130, 246, 0.25),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    /* Glass look without blur for better scroll performance */
 }
 
 .product-detail-btn::before {
