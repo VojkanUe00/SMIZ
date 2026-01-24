@@ -514,6 +514,8 @@ function initBackgroundSlider({
     interval = 3000
 }) {
     if (!root || !Array.isArray(imagePaths) || imagePaths.length === 0) return;
+    if (root.dataset.sliderInitialized === 'true') return; // Guard against double init to avoid duplicate listeners
+    root.dataset.sliderInitialized = 'true'; // Mark slider as initialized for safety
 
     const layers = root.querySelectorAll('.hero-slide');
     if (!layers.length) return;
@@ -558,18 +560,35 @@ function initBackgroundSlider({
         if (preloaded.has(src)) return Promise.resolve();
         return new Promise((resolve) => {
             const img = new Image();
-            img.src = src;
-            if (img.complete) {
+            const finalize = () => {
                 preloaded.add(src);
                 resolve();
+            };
+            const decodeIfPossible = () => {
+                if (typeof img.decode === 'function') {
+                    img.decode().then(finalize).catch(finalize);
+                } else {
+                    finalize();
+                }
+            };
+            img.src = src;
+            if (img.complete) {
+                decodeIfPossible();
             } else {
-                img.onload = () => {
-                    preloaded.add(src);
-                    resolve();
-                };
-                img.onerror = () => resolve();
+                img.onload = decodeIfPossible;
+                img.onerror = finalize;
             }
         });
+    }
+
+    function preloadUpcoming(index) {
+        if (slides.length < 2) return;
+        for (let offset = 1; offset <= 2; offset += 1) {
+            const nextSlide = slides[(index + offset) % slides.length];
+            if (nextSlide) {
+                preloadImage(nextSlide.src); // Preload next images to keep transitions smooth
+            }
+        }
     }
 
     function updateDots() {
@@ -604,6 +623,7 @@ function initBackgroundSlider({
             announceSlide(slide.label);
         }
         updateDots();
+        preloadUpcoming(index); // Warm next images after each activation
     }
 
     function setActiveIndex(index, options = {}) {
@@ -715,24 +735,23 @@ function initBackgroundSlider({
 
     initDots();
     startAuto();
+    layers[0].style.backgroundImage = `url('${slides[0].src}')`; // Paint first slide ASAP to avoid blue-only hero
+    layers[0].classList.add('is-visible');
+    root.classList.add('is-ready'); // Allow first slide to show while preload finishes
+    announceSlide(slides[0].label);
+    updateDots();
     preloadImage(slides[0].src).finally(() => {
-        layers[0].style.backgroundImage = `url('${slides[0].src}')`;
-        layers[0].classList.add('is-visible');
-        root.classList.add('is-ready');
-        announceSlide(slides[0].label);
-        updateDots();
-
         slides.slice(1, 4).forEach((slide) => {
             preloadImage(slide.src);
         });
-
+        preloadUpcoming(0);
         startAuto();
     });
 }
 
 function initHeroSlider() {
-    const hero = document.querySelector('section.hero.hero-slider#home');
-    if (!hero) return;
+    const hero = document.getElementById('home');
+    if (!hero || !hero.classList.contains('hero-slider')) return; // Ensure home slider runs only on #home
 
     const imagePaths = [
         'images/door/AKV staklena.jpeg',
@@ -897,7 +916,7 @@ function initProductsHeroSlider() {
             .map((product, index) => `
                 <div class="products-hero-card" data-index="${index}" role="option" tabindex="0" aria-selected="false">
                     <div class="products-hero-card-media">
-                        <img src="${product.imageSrc}" alt="${product.title}" loading="lazy">
+                        <img src="${product.imageSrc}" alt="${product.title}" loading="lazy" decoding="async"> <!-- Lazy/decode card images for smoother scroll -->
                     </div>
                     <div class="products-hero-card-title">${product.title}</div>
                     <a href="${product.link}" class="product-detail-btn">Detaljnije</a>

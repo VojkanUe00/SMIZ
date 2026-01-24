@@ -15,6 +15,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="images/door/AKV staklena.jpeg">
+    <!-- Preload first hero image for faster LCP -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="images/logo-mini.png">
 </head>
@@ -28,7 +30,8 @@
         <div class="container">
             <nav class="nav">
                 <a href="#home" class="logo">
-                    <img src="images/smiz.png" alt="SMIŽ Logo" class="logo-img">
+                    <!-- Lazy-load non-hero images to reduce initial payload -->
+                    <img src="images/smiz.png" alt="SMIŽ Logo" class="logo-img" loading="lazy" decoding="async">
                 </a>
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#home" class="nav-link">Home</a></li>
@@ -165,28 +168,33 @@
         <div class="container">
             <h2 class="section-title">Naši partneri</h2>
             <div class="partners-grid">
+                <!-- Lazy-load partner logos to keep initial render light -->
                 <a href="https://www.hormann.rs/" target="_blank" rel="noopener noreferrer" class="partner-card">
                     <div class="partner-logo-wrapper">
-                        <img src="images/hormann.jpeg" alt="HÖRMANN Logo" class="partner-logo">
+                        <img src="images/hormann.jpeg" alt="HÖRMANN Logo" class="partner-logo" loading="lazy"
+                            decoding="async">
                     </div>
                     <h3 class="partner-name">HÖRMANN</h3>
                 </a>
                 <a href="https://www.geze.com/" target="_blank" rel="noopener noreferrer" class="partner-card">
                     <div class="partner-logo-wrapper">
-                        <img src="images/geze.jpeg" alt="GEZE Logo" class="partner-logo">
+                        <img src="images/geze.jpeg" alt="GEZE Logo" class="partner-logo" loading="lazy"
+                            decoding="async">
                     </div>
                     <h3 class="partner-name">GEZE</h3>
                 </a>
                 <a href="https://primax-berlin.de/en/produkt/radiation-shielding-glass/" target="_blank"
                     rel="noopener noreferrer" class="partner-card">
                     <div class="partner-logo-wrapper">
-                        <img src="images/primax-logo.svg" alt="PRIMAX Logo" class="partner-logo">
+                        <img src="images/primax-logo.svg" alt="PRIMAX Logo" class="partner-logo" loading="lazy"
+                            decoding="async">
                     </div>
                     <h3 class="partner-name">PRIMAX</h3>
                 </a>
                 <a href="https://www.vrata-derzic.si/" target="_blank" rel="noopener noreferrer" class="partner-card">
                     <div class="partner-logo-wrapper">
-                        <img src="images/derzic.png" alt="DERŽIČ Logo" class="partner-logo partner-logo-derzic">
+                        <img src="images/derzic.png" alt="DERŽIČ Logo" class="partner-logo partner-logo-derzic"
+                            loading="lazy" decoding="async">
                     </div>
                     <h3 class="partner-name">DERŽIČ</h3>
                 </a>
@@ -200,7 +208,8 @@
             <div class="footer-content">
                 <div class="footer-col">
                     <div class="footer-logo-wrapper">
-                        <img src="images/smiz.png" alt="SMIŽ Logo" class="footer-logo">
+                        <!-- Lazy-load footer logo to reduce above-the-fold bytes -->
+                        <img src="images/smiz.png" alt="SMIŽ Logo" class="footer-logo" loading="lazy" decoding="async">
                     </div>
                     <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.
                     </p>
@@ -242,7 +251,7 @@
         <span class="toast-message" id="toastMessage"></span>
     </div>
 
-    <script src="js/script.js"></script>
+    <script defer src="js/script.js"></script> <!-- Defer JS to avoid render blocking -->
 </body>
 
 </html>

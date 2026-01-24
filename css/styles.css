@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+/* display=swap prevents FOIT */
 
 /* ============================================
    CSS Promenljive (Design Tokens)
@@ -405,6 +406,8 @@ ul {
     opacity: 0;
     transition: opacity 1.2s ease;
     transform: scale(1.02);
+    will-change: opacity, transform;
+    /* Hint compositor for smoother hero fades */
 }
 
 .hero-slide.is-visible {
@@ -413,6 +416,11 @@ ul {
 
 .hero-slider:not(.is-ready) .hero-slide {
     opacity: 0;
+}
+
+.hero-slider:not(.is-ready) .hero-slide.is-visible {
+    opacity: 1;
+    /* Keep the first slide visible while preloading */
 }
 
 .hero-overlay {
