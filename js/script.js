@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicijalizuj hero slider
     initHeroSlider();
 
+    // Inicijalizuj hero slidere na internim stranicama
+    initPageHeroSliders();
+
     // Inicijalizuj hero slider za proizvode
     initProductsHeroSlider();
 });
@@ -503,26 +506,17 @@ window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
 // ============================================
 // Products Slider
 // ============================================
-function initHeroSlider() {
-    const hero = document.querySelector('.hero-slider');
-    if (!hero) return;
+function initBackgroundSlider({
+    root,
+    imagePaths,
+    dotsContainer = null,
+    announcementEl = null,
+    interval = 3000
+}) {
+    if (!root || !Array.isArray(imagePaths) || imagePaths.length === 0) return;
 
-    const layers = hero.querySelectorAll('.hero-slide');
-    const dotsContainer = document.getElementById('heroDots');
-    const announcementEl = document.getElementById('heroSlideAnnouncement');
-
-    if (layers.length < 2 || !dotsContainer) return;
-
-    const imagePaths = [
-        'images/door/AKV staklena.jpeg',
-        'images/door/harmonika.jpeg',
-        'images/door/Hermetik staklena.jpeg',
-        'images/door/klizna (zavesa).jpg',
-        'images/door/RKV hodnik.jpeg',
-        'images/door/rkv olovna.jpg',
-        'images/door/zaokretna automatska.jpg',
-        'images/door/Zaokretna staklena.jpeg'
-    ];
+    const layers = root.querySelectorAll('.hero-slide');
+    if (!layers.length) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const preloaded = new Set();
@@ -539,7 +533,6 @@ function initHeroSlider() {
     let isPaused = prefersReducedMotion.matches;
     let isTransitioning = false;
     let pendingIndex = null;
-    const interval = 3000;
 
     function formatLabel(path) {
         const filename = path.split('/').pop() || '';
@@ -580,6 +573,7 @@ function initHeroSlider() {
     }
 
     function updateDots() {
+        if (!dotsContainer) return;
         const dots = dotsContainer.querySelectorAll('.hero-dot');
         dots.forEach((dot, index) => {
             const isActive = index === activeIndex;
@@ -601,7 +595,9 @@ function initHeroSlider() {
 
         nextLayer.style.backgroundImage = `url('${slide.src}')`;
         nextLayer.classList.add('is-visible');
-        currentLayer.classList.remove('is-visible');
+        if (currentLayer && currentLayer !== nextLayer) {
+            currentLayer.classList.remove('is-visible');
+        }
         activeLayer = nextLayerIndex;
 
         if (shouldAnnounce) {
@@ -612,7 +608,7 @@ function initHeroSlider() {
 
     function setActiveIndex(index, options = {}) {
         const newIndex = (index + slides.length) % slides.length;
-        if (newIndex === activeIndex && hero.classList.contains('is-ready')) return;
+        if (newIndex === activeIndex && root.classList.contains('is-ready')) return;
 
         if (isTransitioning) {
             pendingIndex = newIndex;
@@ -656,6 +652,7 @@ function initHeroSlider() {
     }
 
     function initDots() {
+        if (!dotsContainer) return;
         dotsContainer.innerHTML = slides
             .map((slide, index) => `
                 <button class="hero-dot" type="button" data-index="${index}" aria-label="Prikaži ${slide.label}"></button>
@@ -663,20 +660,22 @@ function initHeroSlider() {
             .join('');
     }
 
-    dotsContainer.addEventListener('click', (event) => {
-        const dot = event.target.closest('.hero-dot');
-        if (!dot) return;
-        const index = Number(dot.dataset.index);
-        if (!Number.isNaN(index)) {
-            setActiveIndex(index);
-            stopAuto();
-            if (!prefersReducedMotion.matches) {
-                startAuto();
+    if (dotsContainer) {
+        dotsContainer.addEventListener('click', (event) => {
+            const dot = event.target.closest('.hero-dot');
+            if (!dot) return;
+            const index = Number(dot.dataset.index);
+            if (!Number.isNaN(index)) {
+                setActiveIndex(index);
+                stopAuto();
+                if (!prefersReducedMotion.matches) {
+                    startAuto();
+                }
             }
-        }
-    });
+        });
+    }
 
-    hero.addEventListener('keydown', (event) => {
+    root.addEventListener('keydown', (event) => {
         if (event.key === 'ArrowRight') {
             event.preventDefault();
             nextSlide();
@@ -689,12 +688,12 @@ function initHeroSlider() {
     let pointerStartX = 0;
     let pointerStartY = 0;
 
-    hero.addEventListener('pointerdown', (event) => {
+    root.addEventListener('pointerdown', (event) => {
         pointerStartX = event.clientX;
         pointerStartY = event.clientY;
     });
 
-    hero.addEventListener('pointerup', (event) => {
+    root.addEventListener('pointerup', (event) => {
         const diffX = pointerStartX - event.clientX;
         const diffY = pointerStartY - event.clientY;
         if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
@@ -719,7 +718,7 @@ function initHeroSlider() {
     preloadImage(slides[0].src).finally(() => {
         layers[0].style.backgroundImage = `url('${slides[0].src}')`;
         layers[0].classList.add('is-visible');
-        hero.classList.add('is-ready');
+        root.classList.add('is-ready');
         announceSlide(slides[0].label);
         updateDots();
 
@@ -728,6 +727,87 @@ function initHeroSlider() {
         });
 
         startAuto();
+    });
+}
+
+function initHeroSlider() {
+    const hero = document.querySelector('section.hero.hero-slider#home');
+    if (!hero) return;
+
+    const imagePaths = [
+        'images/door/AKV staklena.jpeg',
+        'images/door/harmonika.jpeg',
+        'images/door/Hermetik staklena.jpeg',
+        'images/door/klizna (zavesa).jpg',
+        'images/door/RKV hodnik.jpeg',
+        'images/door/rkv olovna.jpg',
+        'images/door/zaokretna automatska.jpg',
+        'images/door/Zaokretna staklena.jpeg'
+    ];
+
+    initBackgroundSlider({
+        root: hero,
+        imagePaths,
+        dotsContainer: document.getElementById('heroDots'),
+        announcementEl: document.getElementById('heroSlideAnnouncement'),
+        interval: 3000
+    });
+}
+
+function initPageHeroSliders() {
+    const pageHeroImages = {
+        about: [
+            '../images/door/AKV staklena.jpeg',
+            '../images/door/Hermetik staklena.jpeg',
+            '../images/door/RKV hodnik.jpeg'
+        ],
+        contact: [
+            '../images/door/zaokretna automatska.jpg',
+            '../images/door/harmonika.jpeg',
+            '../images/door/klizna (zavesa).jpg'
+        ],
+        'automatska-vrata': [
+            '../images/door/zaokretna automatska.jpg',
+            '../images/door/AKV.jpeg',
+            '../images/door/zaokretna.jpeg'
+        ],
+        'unutrasnja-vrata': [
+            '../images/door/klizna (zavesa).jpg',
+            '../images/door/harmonika(1).jpeg',
+            '../images/door/zaokretna .jpg'
+        ],
+        'industrijska-vrata': [
+            '../images/door/RKV.jpeg',
+            '../images/door/RKV(1).jpeg',
+            '../images/door/RKV hodnik(1).jpeg'
+        ],
+        'bolnicka-vrata': [
+            '../images/door/hermetik.jpeg',
+            '../images/door/Hermetik(1).jpeg',
+            '../images/door/hermetik i akv stakleni.jpeg'
+        ],
+        'zastita-od-radijacije': [
+            '../images/door/rkv olovna.jpg',
+            '../images/door/rkv olovna(2).jpg',
+            '../images/door/rkv olovna(3).jpg'
+        ],
+        primax: [
+            '../images/door/AKV staklena.jpeg',
+            '../images/door/AKV.jpeg',
+            '../images/door/Teleskop akv.jpeg'
+        ]
+    };
+
+    document.querySelectorAll('.page-hero.hero-slider[data-page-hero]').forEach((heroSection) => {
+        const key = heroSection.dataset.pageHero;
+        const images = pageHeroImages[key];
+        if (!images || images.length === 0) return;
+
+        initBackgroundSlider({
+            root: heroSection,
+            imagePaths: images,
+            interval: 3500
+        });
     });
 }
 

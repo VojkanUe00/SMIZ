@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="sr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SMIŽ - Kontakt i podrška. Stupite u kontakt sa našim timom za ponude, projektovanje i servis.">
+    <meta name="description"
+        content="SMIŽ - Kontakt i podrška. Stupite u kontakt sa našim timom za ponude, projektovanje i servis.">
     <meta property="og:title" content="SMIŽ - Kontakt">
-    <meta property="og:description" content="Pišite nam za ponude, servis ili partnerstva. Dostupni smo na više kanala i pokrivamo region.">
+    <meta property="og:description"
+        content="Pišite nam za ponude, servis ili partnerstva. Dostupni smo na više kanala i pokrivamo region.">
     <meta property="og:type" content="website">
     <title>SMIŽ - Kontakt</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" href="../images/logo-mini.png">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
+
 <body>
     <!-- Site Background -->
     <div class="site-background" aria-hidden="true"></div>
-    
+
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
@@ -33,9 +37,11 @@
                         <ul class="dropdown-menu" id="productsDropdownMenu">
                             <li><a href="automatska-vrata.html" class="dropdown-link">Automatska vrata</a></li>
                             <li><a href="unutrasnja-vrata.html" class="dropdown-link">Unutrašnja vrata</a></li>
-                            <li><a href="industrijska-vrata.html" class="dropdown-link">Industrijska i garažna vrata</a></li>
+                            <li><a href="industrijska-vrata.html" class="dropdown-link">Industrijska i garažna vrata</a>
+                            </li>
                             <li><a href="bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
-                            <li><a href="zastita-od-radijacije.html" class="dropdown-link">Olovna stakla i  olovni limovi</a></li>
+                            <li><a href="zastita-od-radijacije.html" class="dropdown-link">Olovna stakla i olovni
+                                    limovi</a></li>
                             <li><a href="primax.html" class="dropdown-link">PRIMAX zaštitna rešenja</a></li>
                         </ul>
                     </li>
@@ -51,8 +57,13 @@
     </header>
 
     <main>
-        <section class="page-hero" id="contact-hero">
-            <div class="page-hero-overlay"></div>
+        <section class="page-hero hero-slider" id="contact-hero" data-page-hero="contact" tabindex="0"
+            aria-roledescription="carousel" aria-label="Kontakt galerija vrata">
+            <div class="hero-slider-media" aria-hidden="true">
+                <div class="hero-slide is-visible"></div>
+                <div class="hero-slide"></div>
+            </div>
+            <div class="hero-overlay" aria-hidden="true"></div>
             <div class="page-hero-content container">
                 <h1>Kontakt</h1>
             </div>
@@ -101,13 +112,8 @@
                         </div>
                     </div>
                     <div class="map-wrapper">
-                        <iframe 
-                            src="https://www.google.com/maps?q=Miloša+Obrenovića+4a,+Užice,+Srbija&output=embed" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
+                        <iframe src="https://www.google.com/maps?cid=8924659455659425573&output=embed" width="100%"
+                            height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
                             title="SMIŽ lokacija - Miloša Obrenovića 4a, Užice"
                             aria-label="Mapa lokacije SMIŽ na adresi Miloša Obrenovića 4a, Užice">
@@ -123,11 +129,13 @@
                     <div class="contact-form-wrapper">
                         <p class="contact-intro">Pošaljite nam upit i odgovorićemo vam u najkraćem roku.</p>
                         <form class="contact-form" id="contactForm">
-                            <input type="text" name="_honey" class="honey" tabindex="-1" aria-hidden="true" autocomplete="off">
+                            <input type="text" name="_honey" class="honey" tabindex="-1" aria-hidden="true"
+                                autocomplete="off">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Ime i prezime *</label>
-                                    <input type="text" id="name" name="name" required aria-required="true" autocomplete="name">
+                                    <input type="text" id="name" name="name" required aria-required="true"
+                                        autocomplete="name">
                                 </div>
                                 <div class="form-group">
                                     <label for="company">Kompanija / ustanova</label>
@@ -137,7 +145,8 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email">Email *</label>
-                                    <input type="email" id="email" name="email" required aria-required="true" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" autocomplete="email">
+                                    <input type="email" id="email" name="email" required aria-required="true"
+                                        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" autocomplete="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Telefon</label>
@@ -155,7 +164,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="message">Poruka *</label>
-                                <textarea id="message" name="message" rows="6" required aria-required="true" autocomplete="off"></textarea>
+                                <textarea id="message" name="message" rows="6" required aria-required="true"
+                                    autocomplete="off"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Pošalji upit</button>
                         </form>
@@ -172,7 +182,8 @@
                     <div class="footer-logo-wrapper">
                         <img src="../images/smiz.png" alt="SMIŽ Logo" class="footer-logo">
                     </div>
-                    <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.</p>
+                    <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.
+                    </p>
                 </div>
                 <div class="footer-col">
                     <h4>Navigacija</h4>
@@ -212,5 +223,5 @@
 
     <script src="../js/script.js"></script>
 </body>
-</html>
 
+</html>
