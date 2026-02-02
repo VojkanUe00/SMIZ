@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicijalizuj hero slider za proizvode
     initProductsHeroSlider();
+
+    // Inicijalizuj mapu projekata (lazy)
+    initProjectsMap();
 });
 
 // ============================================
@@ -851,6 +854,12 @@ function initProductsHeroSlider() {
             link: 'pages/automatska-vrata.html'
         },
         {
+            title: 'Bolnička vrata',
+            description: 'Specijalizovana rešenja za zdravstvene ustanove, sa fokusom na higijenu, bezbednost i funkcionalnost. Više od 20 godina iskustva.',
+            image: 'images/door/hermetik.jpeg',
+            link: 'pages/bolnicka-vrata.html'
+        },
+        {
             title: 'Unutrašnja vrata',
             description: 'Širok asortiman unutrašnjih vrata za različite namene, od stambenih do javnih objekata. Proizvodnja po meri sa vrhunskim kvalitetom.',
             image: 'images/door/klizna (zavesa).jpg',
@@ -861,12 +870,6 @@ function initProductsHeroSlider() {
             description: 'Robusna i pouzdana rešenja za industrijske objekte, garaže i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.',
             image: 'images/door/RKV hodnik.jpeg',
             link: 'pages/industrijska-vrata.html'
-        },
-        {
-            title: 'Bolnička vrata',
-            description: 'Specijalizovana rešenja za zdravstvene ustanove, sa fokusom na higijenu, bezbednost i funkcionalnost. Više od 20 godina iskustva.',
-            image: 'images/door/hermetik.jpeg',
-            link: 'pages/bolnicka-vrata.html'
         },
         {
             title: 'Olovna stakla i  olovni limovi',
@@ -1086,4 +1089,180 @@ function initProductsHeroSlider() {
     });
 }
 
+
+// ============================================
+// Projekti mapa (Google Maps JS API)
+// ============================================
+function initProjectsMap() {
+    const mapSection = document.getElementById('instalirani-projekti');
+    const mapContainer = document.getElementById('projectsMap');
+    const mapFallback = document.getElementById('projectsMapFallback');
+    const mapWrapper = mapSection ? mapSection.querySelector('.map-embed') : null;
+
+    if (!mapSection || !mapContainer || !mapWrapper) return;
+
+    let hasInitialized = false;
+    const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry || !entry.isIntersecting || hasInitialized) return;
+        hasInitialized = true;
+        observer.disconnect();
+        initializeMap().catch(() => {
+            showMapFallback();
+        });
+    }, { rootMargin: '200px 0px', threshold: 0.1 });
+
+    observer.observe(mapSection);
+
+    async function initializeMap() {
+        const apiKey = window.SMIZ_MAPS_API_KEY;
+        if (!apiKey) {
+            showMapFallback();
+            return;
+        }
+
+        await loadGoogleMapsApi(apiKey);
+        await loadMarkerClusterer();
+
+        const locations = await fetchProjectLocations();
+        if (!Array.isArray(locations) || locations.length === 0) {
+            showMapFallback();
+            return;
+        }
+
+        const { Map } = await google.maps.importLibrary('maps');
+
+        const map = new Map(mapContainer, {
+            center: { lat: 44.0165, lng: 20.9073 },
+            zoom: 6,
+            disableDefaultUI: true,
+            zoomControl: true,
+            fullscreenControl: true,
+            streetViewControl: false,
+            mapTypeControl: false,
+            gestureHandling: 'cooperative'
+        });
+
+        const bounds = new google.maps.LatLngBounds();
+        const infoWindow = new google.maps.InfoWindow();
+
+        const markers = locations.map((location) => {
+            const lat = Number(location.lat);
+            const lng = Number(location.lng);
+            if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+
+            const position = { lat, lng };
+            bounds.extend(position);
+
+            const marker = new google.maps.Marker({
+                position,
+                map,
+                title: location.name || 'Project location'
+            });
+
+            marker.addListener('click', () => {
+                const name = location.name ? `<strong>${escapeHtml(location.name)}</strong>` : '<strong>Project</strong>';
+                const address = location.address ? `<div>${escapeHtml(location.address)}</div>` : '';
+                const link = `https://www.google.com/maps?q=${lat},${lng}`;
+
+                infoWindow.setContent(`
+                    <div class="map-info-window">
+                        ${name}
+                        ${address}
+                        <a href="${link}" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+                    </div>
+                `);
+                infoWindow.open({ anchor: marker, map });
+            });
+
+            return marker;
+        }).filter(Boolean);
+
+        if (markers.length === 0) {
+            showMapFallback();
+            return;
+        }
+
+        if (markers.length === 1) {
+            map.setCenter(markers[0].getPosition());
+            map.setZoom(12);
+        } else {
+            map.fitBounds(bounds, 60);
+        }
+
+        const MarkerClusterer =
+            (window.markerClusterer && window.markerClusterer.MarkerClusterer) || window.MarkerClusterer;
+        if (MarkerClusterer) {
+            new MarkerClusterer({ map, markers });
+        }
+    }
+
+    function showMapFallback() {
+        mapWrapper.classList.add('is-error');
+        if (mapFallback) {
+            mapFallback.style.display = 'flex';
+        }
+    }
+}
+
+function loadGoogleMapsApi(apiKey) {
+    if (window.google && window.google.maps && window.google.maps.importLibrary) {
+        return Promise.resolve();
+    }
+
+    if (window.__smizMapsApiPromise) {
+        return window.__smizMapsApiPromise;
+    }
+
+    window.__smizMapsApiPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&v=weekly`;
+        script.async = true;
+        script.defer = true;
+        script.onerror = () => reject(new Error('Maps API failed to load'));
+        script.onload = () => resolve();
+        document.head.appendChild(script);
+    });
+
+    return window.__smizMapsApiPromise;
+}
+
+function loadMarkerClusterer() {
+    if (window.markerClusterer || window.MarkerClusterer) {
+        return Promise.resolve();
+    }
+
+    if (window.__smizClustererPromise) {
+        return window.__smizClustererPromise;
+    }
+
+    window.__smizClustererPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js';
+        script.async = true;
+        script.defer = true;
+        script.onerror = () => reject(new Error('Marker clusterer failed to load'));
+        script.onload = () => resolve();
+        document.head.appendChild(script);
+    });
+
+    return window.__smizClustererPromise;
+}
+
+async function fetchProjectLocations() {
+    const response = await fetch('assets/data/project-locations.json', { cache: 'no-store' });
+    if (!response.ok) {
+        throw new Error('Failed to load locations');
+    }
+    return response.json();
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 

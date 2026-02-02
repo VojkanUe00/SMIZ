@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Clinical Center",
+    "lat": 44.8097,
+    "lng": 20.4673,
+    "address": "Belgrade, Serbia",
+    "type": "healthcare"
+  },
+  {
+    "name": "Logistics Hub",
+    "lat": 44.7866,
+    "lng": 20.4489,
+    "address": "New Belgrade, Serbia",
+    "type": "industrial"
+  },
+  {
+    "name": "Retail Complex",
+    "lat": 45.2671,
+    "lng": 19.8335,
+    "address": "Novi Sad, Serbia",
+    "type": "retail"
+  },
+  {
+    "name": "Manufacturing Facility",
+    "lat": 43.8585,
+    "lng": 19.8467,
+    "address": "Uzice, Serbia",
+    "type": "industrial"
+  },
+  {
+    "name": "Residential Tower",
+    "lat": 43.3209,
+    "lng": 21.8958,
+    "address": "Nis, Serbia",
+    "type": "residential"
+  }
+]

@@ -43,10 +43,10 @@
                         </a>
                         <ul class="dropdown-menu" id="productsDropdownMenu">
                             <li><a href="pages/automatska-vrata.html" class="dropdown-link">Automatska vrata</a></li>
+                            <li><a href="pages/bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
                             <li><a href="pages/unutrasnja-vrata.html" class="dropdown-link">Unutrašnja vrata</a></li>
                             <li><a href="pages/industrijska-vrata.html" class="dropdown-link">Industrijska i garažna
                                     vrata</a></li>
-                            <li><a href="pages/bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
                             <li><a href="pages/zastita-od-radijacije.html" class="dropdown-link">Olovna stakla i olovni
                                     limovi</a></li>
                             <li><a href="pages/primax.html" class="dropdown-link">PRIMAX zaštitna rešenja</a></li>
@@ -78,7 +78,7 @@
                         <span class="hero-eyebrow">SMIŽ</span>
                     </div>
                     <h1 class="hero-title">Prostor počinje vratima</h1>
-                    <p class="hero-subtitle">Projektovanje, proizvodnja, ugradnja i servis vrata sa fokusom na
+                    <p class="hero-subtitle">Projektovanje, proizvodnja, ugradnja i servis sa fokusom na
                         bezbednost, pouzdanost i dug vek trajanja.</p>
                     <div class="hero-cta">
                         <a href="#proizvodi" class="btn btn-outline">Naši proizvodi</a>
@@ -95,9 +95,8 @@
             <div class="section-break-inner">
                 <div class="section-break-content">
                     <span class="section-break-eyebrow">Zašto SMIŽ</span>
-                    <h2 class="section-break-title">Od ideje do ugradnje, bez zastoja</h2>
-                    <p class="section-break-text">Kombinujemo inženjering, proizvodnju i servis kako biste dobili vrata
-                        koja dugo traju i rade pouzdano svaki dan.</p>
+                    <h2 class="section-break-title">Od tehničkog rešenja do ugrađenog proizvoda</h2>
+                    <p class="section-break-text">Objedinjujemo projektovanje, proizvodnju, montazu i servis vrata kako bismo obezbedili dugotrajna, funkcionalna i tehnički pouzdana rešenja.</p>
                     <div class="section-break-actions">
                         <a href="pages/about.html" class="btn btn-outline-dark">O nama</a>
                         <a href="pages/contact.html" class="btn btn-primary">Kontakt</a>
@@ -107,17 +106,22 @@
                     <div class="section-break-card">
                         <span class="section-break-number">01</span>
                         <h3>Projektovanje</h3>
-                        <p>Precizno planiranje i prilagođena rešenja za svaki prostor.</p>
+                        <p>Razrada rešenja u skladu sa zahtevima prostora.</p>
                     </div>
                     <div class="section-break-card">
                         <span class="section-break-number">02</span>
                         <h3>Proizvodnja</h3>
-                        <p>Kontrola kvaliteta u svakoj fazi izrade i montaže.</p>
+                        <p>Fleksibilna izrada bez kompromisa u kvalitetu.</p>
                     </div>
                     <div class="section-break-card">
                         <span class="section-break-number">03</span>
+                        <h3>Montaža</h3>
+                        <p>Fleksibilna montaža prilagođena uslovima na terenu.</p>
+                    </div>
+                    <div class="section-break-card">
+                        <span class="section-break-number">04</span>
                         <h3>Servis</h3>
-                        <p>Brza podrška i održavanje kada vam je najpotrebnije.</p>
+                        <p>Servis, podrška i održavanje kao deo kontinuiranog procesa.</p>
                     </div>
                 </div>
             </div>
@@ -163,6 +167,24 @@
         </div>
     </section>
 
+    <!-- Projekti mapa sekcija -->
+    <section class="section map-section" id="instalirani-projekti">
+        <div class="container">
+            <h2 class="section-title">Lokacije projekata</h2>
+            <p class="map-section-subtitle">Lokacije gde su ugrađena naša vrata.</p>
+        </div>
+        <div class="map-section-media">
+            <div class="container map-section-container">
+                <div class="map-embed" role="region" aria-label="Mapa instaliranih projekata">
+                    <div id="projectsMap" class="map-canvas" aria-live="polite"></div>
+                    <p class="map-fallback" id="projectsMapFallback" role="status">
+                        Map temporarily unavailable. Please try again later.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Partneri sekcija -->
     <section class="section partners-section" id="partneri">
         <div class="container">
@@ -170,19 +192,19 @@
             <p class="partners-subtitle">Dugoročna saradnja sa liderima industrije za vrhunska rešenja.</p>
             <div class="partners-grid">
                 <!-- Lazy-load partner logos to keep initial render light -->
-                <a href="https://www.hormann.rs/" target="_blank" rel="noopener noreferrer" class="partner-card">
-                    <div class="partner-logo-wrapper">
-                        <img src="images/hormann.jpeg" alt="HÖRMANN Logo" class="partner-logo" loading="lazy"
-                            decoding="async">
-                    </div>
-                    <h3 class="partner-name">HÖRMANN</h3>
-                </a>
                 <a href="https://www.geze.com/" target="_blank" rel="noopener noreferrer" class="partner-card">
                     <div class="partner-logo-wrapper">
                         <img src="images/geze.jpeg" alt="GEZE Logo" class="partner-logo" loading="lazy"
                             decoding="async">
                     </div>
                     <h3 class="partner-name">GEZE</h3>
+                </a>
+                <a href="https://www.hormann.rs/" target="_blank" rel="noopener noreferrer" class="partner-card">
+                    <div class="partner-logo-wrapper">
+                        <img src="images/hormann.jpeg" alt="HÖRMANN Logo" class="partner-logo" loading="lazy"
+                            decoding="async">
+                    </div>
+                    <h3 class="partner-name">HÖRMANN</h3>
                 </a>
                 <a href="https://primax-berlin.de/en/produkt/radiation-shielding-glass/" target="_blank"
                     rel="noopener noreferrer" class="partner-card">
@@ -197,7 +219,7 @@
                         <img src="images/derzic.png" alt="DERŽIČ Logo" class="partner-logo partner-logo-derzic"
                             loading="lazy" decoding="async">
                     </div>
-                    <h3 class="partner-name">DERŽIČ</h3>
+                    <h3 class="partner-name">VRATA DERŽIČ</h3>
                 </a>
             </div>
         </div>
@@ -252,6 +274,7 @@
         <span class="toast-message" id="toastMessage"></span>
     </div>
 
+    <script defer src="config.js"></script>
     <script defer src="js/script.js"></script> <!-- Defer JS to avoid render blocking -->
 </body>
 
