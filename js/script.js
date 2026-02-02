@@ -949,7 +949,6 @@ function initProductsHeroSlider() {
                         <img src="${product.imageSrc}" alt="${product.title}" loading="eager" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''}> <!-- Eager + async decode for smooth drag -->
                     </div>
                     <div class="products-hero-card-title">${product.title}</div>
-                    <a href="${product.link}" class="product-detail-btn">Detaljnije</a>
                 </div>
             `)
             .join('');
