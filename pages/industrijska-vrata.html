@@ -31,9 +31,9 @@
                         </a>
                         <ul class="dropdown-menu" id="productsDropdownMenu">
                             <li><a href="automatska-vrata.html" class="dropdown-link">Automatska vrata</a></li>
+                            <li><a href="bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
                             <li><a href="unutrasnja-vrata.html" class="dropdown-link">Unutrašnja vrata</a></li>
                             <li><a href="industrijska-vrata.html" class="dropdown-link">Industrijska i garažna vrata</a></li>
-                            <li><a href="bolnicka-vrata.html" class="dropdown-link">Bolnička vrata</a></li>
                             <li><a href="zastita-od-radijacije.html" class="dropdown-link">Olovna stakla i  olovni limovi</a></li>
                             <li><a href="primax.html" class="dropdown-link">PRIMAX zaštitna rešenja</a></li>
                         </ul>
@@ -49,7 +49,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="product-page">
         <section class="page-hero hero-slider" id="product-hero" data-page-hero="industrijska-vrata" tabindex="0"
             aria-roledescription="carousel" aria-label="Industrijska i garažna vrata galerija">
             <div class="hero-slider-media" aria-hidden="true">
@@ -62,201 +62,180 @@
             </div>
         </section>
 
-        <section class="section" id="garazna-vrata">
+        <section class="section av-section av-intro" id="overview">
             <div class="container">
-                <h2 class="section-title">Garažna vrata</h2>
-                <p class="spec-intro">
-                    Hörmann garažna segmentna vrata - otvaranje vertikalno, segmenti se slažu ispod plafona. 
-                    Moguća ugradnja u bilo koji otvor garaže. Nude za 14 cm veću prolaznu širinu u odnosu na 
-                    kipujuća vrata. Optimalna zaptivenost - trajno elastične dihtung gume otporne na atmosferske uticaje.
-                </p>
-                <div class="intro-grid">
-                    <article class="intro-card">
-                        <span class="badge">Prednosti</span>
-                        <h3>Zašto Hörmann garažna vrata</h3>
-                        <ul class="highlight-list">
-                            <li>Skladan utisak - isti izgled rama i krila vrata</li>
-                            <li>Maska iznad vrata koja popunjava prazan prostor</li>
-                            <li>Decograin površine sa detaljima</li>
-                            <li>Rešenja u skladu sa praksom</li>
-                            <li>Podrazumevana veća bezbednost</li>
-                            <li>Optimalna dugotrajna zaštita</li>
-                            <li>Efikasna toplotna izolacija</li>
-                            <li>BiSecur bežični sistem sa sertifikovanom sigurnošću</li>
-                            <li>Komforna provera pozicije vrata</li>
-                            <li>Izuzetan dizajn</li>
-                        </ul>
+                <div class="av-intro-grid">
+                    <article class="av-intro-text">
+                        <span class="badge">O proizvodu</span>
+                        <h2>Industrijska i garažna vrata</h2>
+                        <p>
+                            Robusna rešenja za logistiku, industriju i privatne objekte, uz fokus na bezbednost,
+                            toplotnu izolaciju i pouzdan rad u zahtevnim uslovima.
+                        </p>
+                        <p>
+                            Program obuhvata segmentna, brza i rolo vrata uz mogućnost automatizacije i prilagođavanja dimenzija.
+                        </p>
+                    </article>
+                    <div class="av-media-card" role="presentation" aria-hidden="true">
+                        <div class="av-media-glow"></div>
+                        <div class="av-media-content">
+                            <span>Vizuelni prikaz</span>
+                            <p>Rezervisano za fotografiju industrijskih ili garažnih vrata u upotrebi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section av-section av-types" id="types">
+            <div class="container">
+                <div class="av-section-heading">
+                    <h2 class="section-title">Tipovi industrijskih i garažnih vrata</h2>
+                    <p class="section-subtitle">Optimizovana rešenja za energiju, bezbednost i brzinu protoka.</p>
+                </div>
+                <div class="av-type-grid">
+                    <article class="av-type-card" data-accordion-card>
+                        <header class="av-type-header">
+                            <h3>Garažna segmentna vrata</h3>
+                            <p>Vertikalno otvaranje i maksimalna iskoristivost prostora.</p>
+                        </header>
+                        <div class="av-subtype-list">
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-garazna-standard">
+                                    <span>Standardna segmentna</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-garazna-standard" role="region" aria-hidden="true">
+                                    <p>Ugradnja u gotovo svaki otvor garaže uz pouzdanu zaptivenost.</p>
+                                </div>
+                            </div>
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-garazna-termo">
+                                    <span>Termo izolovana</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-garazna-termo" role="region" aria-hidden="true">
+                                    <p>Efikasna toplotna izolacija i energetska ušteda.</p>
+                                </div>
+                            </div>
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-garazna-automatika">
+                                    <span>Automatski pogon</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-garazna-automatika" role="region" aria-hidden="true">
+                                    <p>Komforno upravljanje i dodatne sigurnosne funkcije.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="av-type-card" data-accordion-card>
+                        <header class="av-type-header">
+                            <h3>Industrijska segmentna vrata</h3>
+                            <p>Konfiguracije prilagođene halama i velikim otvorima.</p>
+                        </header>
+                        <div class="av-subtype-list">
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-segmentna-serija">
+                                    <span>Serija 50</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-segmentna-serija" role="region" aria-hidden="true">
+                                    <p>Čelik i aluminijum sa sertifikovanom bezbednošću.</p>
+                                </div>
+                            </div>
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-segmentna-compact">
+                                    <span>Compact sistem</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-segmentna-compact" role="region" aria-hidden="true">
+                                    <p>Vertikalno slaganje lamela odmah iza grede.</p>
+                                </div>
+                            </div>
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-segmentna-krov">
+                                    <span>Praćenje krova</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-segmentna-krov" role="region" aria-hidden="true">
+                                    <p>Ugradnja prilagođena nagibu krova i raspoloživom prostoru.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="av-type-card" data-accordion-card>
+                        <header class="av-type-header">
+                            <h3>Brza i rolo vrata</h3>
+                            <p>Ubrzan protok saobraćaja uz optimizaciju klime objekta.</p>
+                        </header>
+                        <div class="av-subtype-list">
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-brza-spiralna">
+                                    <span>Brza spiralna</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-brza-spiralna" role="region" aria-hidden="true">
+                                    <p>Visoka brzina rada i glatke AL površine.</p>
+                                </div>
+                            </div>
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-brza-transparentna">
+                                    <span>Transparentna brza</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-brza-transparentna" role="region" aria-hidden="true">
+                                    <p>Vidljivost i sigurnost uz fleksibilne šarke.</p>
+                                </div>
+                            </div>
+                            <div class="av-subtype">
+                                <button class="av-subtype-toggle" type="button" aria-expanded="false" aria-controls="industrijska-rolo-resetke">
+                                    <span>Rolo vrata i rešetke</span>
+                                    <span class="av-chevron" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class="av-subtype-panel" id="industrijska-rolo-resetke" role="region" aria-hidden="true">
+                                    <p>Kompaktno namotavanje i jednostavna konstrukcija.</p>
+                                </div>
+                            </div>
+                        </div>
                     </article>
                 </div>
-            </div>
-        </section>
-
-        <section class="section section-alt" id="industrijska-segmentna">
-            <div class="container">
-                <h2 class="section-title">Industrijska segmentna vrata</h2>
-                <p class="spec-intro">
-                    Otvaranje - vertikalno. Segmenti vrata se smeštaju ravno ispod plafona, vertikalno iznad otvora, 
-                    ili prateći nagib krova. Compact segmentna vrata vertikalno slažu pojedinačne lamele odmah iza grede.
-                </p>
-                <div class="product-variants-grid">
-                    <div class="variant-card">
-                        <h3>Proizvodna serija 50</h3>
-                        <p>Čelik, Aluminijum, Čelik/Aluminijum</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Jedinstveno širok spektar</h3>
-                        <p>Vrhunski dizajn vrata sa sertifikovanom bezbednošću</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Ušteda energije</h3>
-                        <p>Veliki potencijal za uštedu energije - informacije u Hörmann-ovom kompasu za uštedu energije</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="brza-vrata">
-            <div class="container">
-                <h2 class="section-title">Brza vrata Hörmann</h2>
-                <p class="spec-intro">
-                    Upotreba: unutrašnja i spoljna. Prostori koji zahtevaju efikasan protok saobraćaja, 
-                    optimizovanu klimu prostorije i mogućnost za uštedu energije.
-                </p>
-                <div class="product-variants-grid">
-                    <div class="variant-card">
-                        <h3>Transparentna vrata</h3>
-                        <p>Horizontalno i vertikalno otvaranje, fleksibilne šarke</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Kombinacije</h3>
-                        <p>Sa segmentnim i rolo vratima</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Snažna spiralna vrata</h3>
-                        <p>AL profili glatkih površina, lako servisiranje</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Prednosti</h3>
-                        <p>Optimalni tokovi rada, efikasna toplotna izolacija, standardna bezbednost, trajno jasna providnost</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section section-alt" id="rolo-vrata">
-            <div class="container">
-                <h2 class="section-title">Rolo vrata i rolo rešetke</h2>
-                <p class="spec-intro">
-                    Materijal izrade: Aluminijum, Čelik. Ekonomičnost, jednostavna konstrukcija, mali broj komponenata, 
-                    Hörmann kvalitet. Kompaktnost - namotavanje iznad grede, neophodna dubina ugradnje 335 mm. 
-                    Ne gubi se vredan prostor objekta - idealno rešenje za prodajna mesta sa malo raspoloživog prostora.
-                </p>
-            </div>
-        </section>
-
-        <section class="section" id="zajednicke-garaze">
-            <div class="container">
-                <h2 class="section-title">Vrata za zajedničke garaže</h2>
-                <p class="spec-intro">
-                    Hörmann vrata za zajedničke garaže odlikuje veliki broj varijanti i visok kvalitet. 
-                    Optimalna ekonomičnost, trajna sigurnost funkcionisanja i bezbednost osoba. 
-                    Ekstremno miran hod, čak i kod veće učestalosti upotrebe.
-                </p>
-                <div class="product-variants-grid">
-                    <div class="variant-card">
-                        <h3>N 500 Zaokretna kipujuća vrata</h3>
-                        <p>Dvostruka vrata za privatni sektor, zajedničke garaže do 25 mesta za parkiranje</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>ET 500 Kipujuća vrata</h3>
-                        <p>Zaokretanje do 40 mm pri otvaranju i zatvaranju, optimalno za zajedničke garaže i na stazama za pešake</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>ST 500 Klizna vrata</h3>
-                        <p>Mala dubina ugradnje u području grede</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Brza segmentna vrata</h3>
-                        <p>Mikro profilisana površina, poboljšano otvaranje vrata, velika brzina rada</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Berry kipujuća vrata</h3>
-                        <p>Robusna konstrukcija, jednostavno rukovanje, visoka bezbednost, optimalno provetravanje</p>
-                    </div>
-                    <div class="variant-card">
-                        <h3>Rolo vrata i rolo rešetke</h3>
-                        <p>Jednostavna i robusna konstrukcija, kompaktno namotavanje zahteva malo prostora iza grede</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section section-alt" id="trakaste-zavese">
-            <div class="container">
-                <h2 class="section-title">Trakaste zavese u industriji</h2>
-                <p class="spec-intro">
-                    Hörmann trakaste zavese su pogodne za zatvaranje otvora velikih dimenzija na halama po povoljnoj ceni. 
-                    Izdržljive PVC trake se otvaraju samo u širini vozila ili tovara. Zatvorene PVC trake zaptivaju veliki 
-                    deo otvora (Gubici temperature na niskom nivou i sa velikim prolaznim saobraćajem).
-                </p>
-                <div class="intro-grid">
-                    <article class="intro-card">
-                        <span class="badge">Prednosti</span>
-                        <ul class="highlight-list">
-                            <li>Prvoklasna transparentnost - poboljšava karakteristike i smanjuje troškove osvetljenja</li>
-                            <li>Pogodne za primenu u proizvodnji namirnica ili lekova</li>
-                            <li>Idealne za područje dubokog zamrzavanja</li>
-                        </ul>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="klatna-vrata">
-            <div class="container">
-                <h2 class="section-title">Klatna vrata</h2>
-                <p class="spec-intro">
-                    Fleksibilno rešenje. Primena u zgradama sa saobraćajem viljuškara normalne učestalosti. 
-                    Jednostavna montaža - isporučuju se kompletno fabrički montirana. Dimenzije vrata moraju biti 
-                    duplo šira i za 500 mm viša od transportovane robe.
-                </p>
-            </div>
-        </section>
-
-        <section class="section section-alt" id="kucna-ulazna">
-            <div class="container">
-                <h2 class="section-title">Kućna ulazna vrata</h2>
-                <div class="intro-grid">
-                    <article class="intro-card">
-                        <span class="badge">Prednosti</span>
-                        <ul class="highlight-list">
-                            <li>Izuzetna toplotna izolacija</li>
-                            <li>Protivprovalno zaključavanje</li>
-                            <li>Bezbedno ostakljenje</li>
-                            <li>Krila vrata bez vidljivog profila krila</li>
-                            <li>Komforni motori za vrata</li>
-                            <li>Kućna vrata u visini prostorije</li>
-                        </ul>
-                    </article>
-                    <article class="intro-card">
-                        <span class="badge">Modeli</span>
-                        <ul class="highlight-list">
-                            <li>Vrhunska klasa: ThermoCarbon</li>
-                            <li>Gornja klasa: ThermoSafe</li>
-                            <li>Srednja klasa: Thermo 65</li>
-                            <li>Staklena vrata: TopComfort</li>
-                        </ul>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="visenamenska">
-            <div class="container">
-                <h2 class="section-title">Višenamenska metalna vrata</h2>
-                <p class="spec-intro">
-                    Vrste: Protivpožarna i protivdimna vrata, Vrata za zaštitu od buke, Sigurnosna vrata, Višenamenska vrata.
-                </p>
             </div>
         </section>
 
@@ -319,6 +298,39 @@
     </div>
 
     <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.product-page [data-accordion-card]');
+            cards.forEach(card => {
+                const toggles = card.querySelectorAll('.av-subtype-toggle');
+                toggles.forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        const targetId = toggle.getAttribute('aria-controls');
+                        const targetPanel = card.querySelector(`#${CSS.escape(targetId)}`);
+
+                        if (!targetPanel) return;
+
+                        toggles.forEach(otherToggle => {
+                            const panelId = otherToggle.getAttribute('aria-controls');
+                            const panel = card.querySelector(`#${CSS.escape(panelId)}`);
+                            const shouldClose = otherToggle !== toggle;
+
+                            if (shouldClose && panel) {
+                                otherToggle.setAttribute('aria-expanded', 'false');
+                                panel.setAttribute('aria-hidden', 'true');
+                                panel.style.maxHeight = '0px';
+                            }
+                        });
+
+                        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+                        toggle.setAttribute('aria-expanded', String(!isExpanded));
+                        targetPanel.setAttribute('aria-hidden', String(isExpanded));
+                        targetPanel.style.maxHeight = isExpanded ? '0px' : `${targetPanel.scrollHeight}px`;
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 
