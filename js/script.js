@@ -1045,6 +1045,8 @@ function initProductsHeroSlider() {
         prevSlide();
     });
 
+    const isMobileViewport = () => window.innerWidth <= 1023;
+
     // Klik na karticu menja aktivni proizvod
     cardsContainer.addEventListener('click', (event) => {
         const card = event.target.closest('.products-hero-card');
@@ -1077,6 +1079,37 @@ function initProductsHeroSlider() {
             nextSlide();
         }
     });
+
+    // Mobile swipe: aktiviraj karticu najbližu centru kontejnera tokom skrola
+    let scrollRaf = null;
+    function updateActiveFromScroll() {
+        if (!isMobileViewport()) return;
+        if (scrollRaf) return;
+        scrollRaf = requestAnimationFrame(() => {
+            scrollRaf = null;
+            if (!cards.length) return;
+            const containerRect = cardsContainer.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+            let closestIndex = activeIndex;
+            let closestDistance = Infinity;
+
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const distance = Math.abs(cardCenter - containerCenter);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+
+            if (closestIndex !== activeIndex) {
+                setActiveIndex(closestIndex);
+            }
+        });
+    }
+
+    cardsContainer.addEventListener('scroll', updateActiveFromScroll, { passive: true });
 
     // Inicijalizacija
     renderCards();
