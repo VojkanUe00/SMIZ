@@ -803,6 +803,11 @@ function initPageHeroSliders() {
             '../images/door/RKV(1).jpeg',
             '../images/door/RKV hodnik(1).jpeg'
         ],
+        'garazna-vrata': [
+            '../images/door/zaokretna.jpeg',
+            '../images/door/zaokretna automatska.jpg',
+            '../images/door/AKV.jpeg'
+        ],
         'bolnicka-vrata': [
             '../images/door/hermetik.jpeg',
             '../images/door/Hermetik(1).jpeg',
@@ -866,10 +871,16 @@ function initProductsHeroSlider() {
             link: 'pages/unutrasnja-vrata.html'
         },
         {
-            title: 'Industrijska i garažna vrata',
-            description: 'Robusna i pouzdana rešenja za industrijske objekte, garaže i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.',
+            title: 'Industrijska vrata',
+            description: 'Robusna i pouzdana rešenja za industrijske objekte i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.',
             image: 'images/door/RKV hodnik.jpeg',
             link: 'pages/industrijska-vrata.html'
+        },
+        {
+            title: 'Garažna vrata',
+            description: 'Garažna segmentna, Berry kipujuća i RollMatic rolo vrata. Rešenja za privatne i zajedničke garaže.',
+            image: 'images/door/zaokretna.jpeg',
+            link: 'pages/garazna-vrata.html'
         },
         {
             title: 'Olovna stakla i  olovni limovi',
