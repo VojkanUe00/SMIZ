@@ -10,6 +10,8 @@ const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 const currentYear = document.getElementById('currentYear');
 
+let mobileMenuBackdrop = null;
+
 // ============================================
 // Inicijalizacija
 // ============================================
@@ -48,25 +50,52 @@ document.addEventListener('DOMContentLoaded', () => {
 // Hamburger Meni
 // ============================================
 if (hamburger && navMenu) {
+    const ensureMobileBackdrop = () => {
+        if (mobileMenuBackdrop) return;
+        mobileMenuBackdrop = document.createElement('div');
+        mobileMenuBackdrop.className = 'mobile-menu-backdrop';
+        mobileMenuBackdrop.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(mobileMenuBackdrop);
+
+        mobileMenuBackdrop.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+    };
+
+    const setMobileMenuState = (isOpen) => {
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        navMenu.classList.toggle('active', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+
+        if (mobileMenuBackdrop) {
+            mobileMenuBackdrop.classList.toggle('active', isOpen);
+        }
+    };
+
+    const closeMobileMenu = () => {
+        setMobileMenuState(false);
+
+        if (productsDropdown && navItemDropdown && window.innerWidth <= 1023) {
+            navItemDropdown.classList.remove('active');
+            productsDropdown.setAttribute('aria-expanded', 'false');
+        }
+    };
+
+    ensureMobileBackdrop();
+    hamburger.setAttribute('aria-controls', 'navMenu');
+
     hamburger.addEventListener('click', () => {
         const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-        hamburger.setAttribute('aria-expanded', !isExpanded);
-        navMenu.classList.toggle('active');
-
-        // Prevencija scroll-a kada je meni otvoren
-        if (!isExpanded) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
+        setMobileMenuState(!isExpanded);
     });
 
     // Zatvori meni kada se klikne na link
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            hamburger.setAttribute('aria-expanded', 'false');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
+            if (window.innerWidth <= 1023 && link.id === 'productsDropdown') {
+                return;
+            }
+            closeMobileMenu();
         });
     });
 
@@ -75,9 +104,19 @@ if (hamburger && navMenu) {
         if (navMenu.classList.contains('active') &&
             !navMenu.contains(e.target) &&
             !hamburger.contains(e.target)) {
-            hamburger.setAttribute('aria-expanded', 'false');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
+            closeMobileMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1023) {
+            closeMobileMenu();
         }
     });
 }
@@ -90,20 +129,30 @@ const productsDropdownMenu = document.getElementById('productsDropdownMenu');
 const navItemDropdown = document.querySelector('.nav-item-dropdown');
 
 if (productsDropdown && productsDropdownMenu && navItemDropdown) {
+    const setDropdownState = (isOpen) => {
+        navItemDropdown.classList.toggle('active', isOpen);
+        productsDropdown.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
     // Desktop: hover
     navItemDropdown.addEventListener('mouseenter', () => {
-        navItemDropdown.classList.add('active');
+        if (window.innerWidth > 1023) {
+            setDropdownState(true);
+        }
     });
 
     navItemDropdown.addEventListener('mouseleave', () => {
-        navItemDropdown.classList.remove('active');
+        if (window.innerWidth > 1023) {
+            setDropdownState(false);
+        }
     });
 
     // Mobile: click
     productsDropdown.addEventListener('click', (e) => {
         if (window.innerWidth <= 1023) {
             e.preventDefault();
-            navItemDropdown.classList.toggle('active');
+            const isOpen = navItemDropdown.classList.contains('active');
+            setDropdownState(!isOpen);
         }
     });
 
@@ -111,20 +160,29 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
     const dropdownLinks = productsDropdownMenu.querySelectorAll('.dropdown-link');
     dropdownLinks.forEach(link => {
         link.addEventListener('click', () => {
-            navItemDropdown.classList.remove('active');
+            setDropdownState(false);
             // Zatvori hamburger meni ako je otvoren
             if (hamburger && navMenu) {
                 hamburger.setAttribute('aria-expanded', 'false');
                 navMenu.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.classList.remove('menu-open');
+                if (mobileMenuBackdrop) {
+                    mobileMenuBackdrop.classList.remove('active');
+                }
             }
         });
     });
 
     // Zatvori dropdown kada se klikne van njega
     document.addEventListener('click', (e) => {
-        if (!navItemDropdown.contains(e.target) && window.innerWidth > 1023) {
-            navItemDropdown.classList.remove('active');
+        if (!navItemDropdown.contains(e.target)) {
+            setDropdownState(false);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1023) {
+            setDropdownState(false);
         }
     });
 }
@@ -133,7 +191,7 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
 // Smooth Scroll
 // ============================================
 function initSmoothScroll() {
-    // Smooth scroll za sve anchor linkove
+    // Smooth scroll samo za interne anchor linkove na istoj stranici
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
@@ -167,97 +225,28 @@ function initSmoothScroll() {
 // Aktivni Link Tracking (Scroll Spy)
 // ============================================
 function initActiveLinkTracking() {
-    // Proveri trenutnu stranicu i postavi active klasu
-    const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop() || 'index.html';
-    const currentHref = window.location.href;
-
-    // Ako smo na about.html ili contact.html, postavi active klasu
-    if (currentPage === 'about.html' || currentHref.includes('about.html') || currentHref.includes('pages/about.html')) {
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            // Proveri da li je link ka about stranici ili #about-hero
-            if (href === '#about-hero' || href === 'about.html' || href === 'pages/about.html' ||
-                (href.includes('about.html') && !href.includes('index.html'))) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    } else if (currentPage === 'contact.html' || currentHref.includes('contact.html') || currentHref.includes('pages/contact.html')) {
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            // Proveri da li je link ka contact stranici ili #contact-hero
-            if (href === '#contact-hero' || href === 'contact.html' || href === 'pages/contact.html' ||
-                (href.includes('contact.html') && !href.includes('index.html'))) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
-
-    const sections = document.querySelectorAll('section[id]');
-
-    if (sections.length === 0) return;
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '-20% 0px -70% 0px',
-        threshold: 0
+    const normalizePath = (value) => {
+        if (!value) return '/';
+        return value.endsWith('/') ? value : `${value}/`;
     };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    const href = link.getAttribute('href');
-                    // Ne menjaj active ako je link ka drugoj stranici (bez #)
-                    if (href && href.includes('.html') && !href.includes('#')) {
-                        return;
-                    }
-                    // Ne menjaj active ako je link ka trenutnoj stranici (about.html ili contact.html)
-                    const isAboutLink = (href === '#about-hero' || href === 'about.html' || href === 'pages/about.html' ||
-                        (href.includes('about.html') && !href.includes('index.html')));
-                    const isContactLink = (href === '#contact-hero' || href === 'contact.html' || href === 'pages/contact.html' ||
-                        (href.includes('contact.html') && !href.includes('index.html')));
-                    if ((currentPage === 'about.html' || currentHref.includes('about.html') || currentHref.includes('pages/about.html')) && isAboutLink) {
-                        return;
-                    }
-                    if ((currentPage === 'contact.html' || currentHref.includes('contact.html') || currentHref.includes('pages/contact.html')) && isContactLink) {
-                        return;
-                    }
-                    link.classList.remove('active');
-                    if (href === `#${id}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }, observerOptions);
+    const currentPath = normalizePath(window.location.pathname || '/');
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+    navLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
 
-    // Fallback za home sekciju
-    window.addEventListener('scroll', () => {
-        if (window.scrollY < 100 && (currentPage === 'index.html' || currentPage === '')) {
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                // Ne menjaj active ako je link ka drugoj stranici
-                if (href && (href.includes('.html') && !href.includes('#'))) {
-                    return;
-                }
-                if (href === '#home') {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
+        try {
+            const url = new URL(href, window.location.origin);
+            const linkPath = normalizePath(url.pathname);
+            const isHome = linkPath === '/' && currentPath === '/';
+            const isDirectMatch = linkPath === currentPath;
+            const isProductsParent = linkPath === '/proizvodi/' && currentPath.startsWith('/proizvodi/');
+            link.classList.toggle('active', isHome || isDirectMatch || isProductsParent);
+        } catch {
+            // noop
         }
-    }, { passive: true });
+    });
 }
 
 // ============================================
@@ -312,123 +301,60 @@ function initLazyLoading() {
 }
 
 // ============================================
-// Kontakt Forma Validacija i Toast
+// Kontakt Forma (statički mailto)
 // ============================================
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Validacija polja
         const name = document.getElementById('name');
         const email = document.getElementById('email');
         const message = document.getElementById('message');
-        const submitButton = contactForm.querySelector('button[type="submit"]');
 
         let isValid = true;
 
-        // Reset prethodnih grešaka
         [name, email, message].forEach(field => {
             if (field) {
                 field.setCustomValidity('');
             }
         });
 
-        // Validacija imena
         if (name && name.value.trim().length < 2) {
             name.setCustomValidity('Ime mora imati najmanje 2 karaktera');
             isValid = false;
         }
 
-        // Validacija email-a
         if (email && !email.validity.valid) {
             email.setCustomValidity('Unesite validnu email adresu');
             isValid = false;
         }
 
-        // Validacija poruke
         if (message && message.value.trim().length < 10) {
             message.setCustomValidity('Poruka mora imati najmanje 10 karaktera');
             isValid = false;
         }
 
-        // Proveri validnost forme
         if (!contactForm.checkValidity() || !isValid) {
             contactForm.reportValidity();
             return;
         }
 
-        // EmailJS konfiguracija
-        // ZAMENI OVE VREDNOSTI SA SVOJIM EmailJS PODACIMA:
-        // 1. Registruj se na https://www.emailjs.com/
-        // 2. Kreiraj Email Service (Gmail, Outlook, itd.)
-        // 3. Kreiraj Email Template
-        // 4. Uzmi Public Key, Service ID i Template ID
-        const EMAILJS_PUBLIC_KEY = 'qHuFg54udCsElnsNc'; // Zameni sa svojim Public Key
-        const EMAILJS_SERVICE_ID = 'service_af4uwr7'; // Zameni sa svojim Service ID
-        const EMAILJS_TEMPLATE_ID = 'template_a0ozy1d'; // Zameni sa svojim Template ID
-        const RECIPIENT_EMAIL = 'vojkan.panic@gmail.com'; // Email na koji se šalje
+        const company = document.getElementById('company')?.value.trim() || '-';
+        const phone = document.getElementById('phone')?.value.trim() || '-';
+        const topic = document.getElementById('topic')?.value || 'ostalo';
 
-        // Inicijalizuj EmailJS
-        if (typeof emailjs !== 'undefined') {
-            emailjs.init(EMAILJS_PUBLIC_KEY);
-        }
+        const subject = encodeURIComponent(`SMIŽ kontakt forma - ${topic}`);
+        const body = encodeURIComponent(
+            `Ime i prezime: ${name ? name.value.trim() : ''}\n` +
+            `Email: ${email ? email.value.trim() : ''}\n` +
+            `Kompanija: ${company}\n` +
+            `Telefon: ${phone}\n` +
+            `Vrsta upita: ${topic}\n\n` +
+            `Poruka:\n${message ? message.value.trim() : ''}`
+        );
 
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.textContent = 'Slanje...';
-        }
-
-        try {
-            // Proveri da li je EmailJS učitan
-            if (typeof emailjs === 'undefined') {
-                throw new Error('EmailJS nije učitan. Proveri da li je script tag dodat u HTML.');
-            }
-
-            // Pripremi podatke za EmailJS
-            const templateParams = {
-                to_email: RECIPIENT_EMAIL,
-                from_name: name ? name.value.trim() : 'Nepoznato',
-                from_email: email ? email.value.trim() : 'nepoznato@email.com',
-                company: document.getElementById('company')?.value.trim() || '',
-                phone: document.getElementById('phone')?.value.trim() || '',
-                topic: document.getElementById('topic')?.value || 'ostalo',
-                message: message ? message.value.trim() : '',
-                subject: 'SMIŽ kontakt forma'
-            };
-
-            // Pošalji email preko EmailJS
-            await emailjs.send(
-                EMAILJS_SERVICE_ID,
-                EMAILJS_TEMPLATE_ID,
-                templateParams
-            );
-
-            showToast('Poruka uspešno poslata. Hvala na poverenju!');
-            contactForm.reset();
-        } catch (error) {
-            console.error('Form submission error:', error);
-
-            // Ako EmailJS nije konfigurisan, prikaži uputstva
-            if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY' ||
-                EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' ||
-                EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
-                showToast('EmailJS nije konfigurisan. Proveri script.js za uputstva.', 6000);
-                console.log('📧 EmailJS Setup Instructions:');
-                console.log('1. Go to https://www.emailjs.com/ and create a free account');
-                console.log('2. Create an Email Service (Gmail, Outlook, etc.)');
-                console.log('3. Create an Email Template with these variables:');
-                console.log('   - {{to_email}}, {{from_name}}, {{from_email}}, {{company}}, {{phone}}, {{topic}}, {{message}}, {{subject}}');
-                console.log('4. Get your Public Key, Service ID, and Template ID');
-                console.log('5. Update the constants in script.js (lines ~250-253)');
-            } else {
-                showToast('Došlo je do greške. Molimo pokušajte ponovo.', 4000);
-            }
-        } finally {
-            if (submitButton) {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Pošalji upit';
-            }
-        }
+        window.location.href = `mailto:office@smiz.rs?subject=${subject}&body=${body}`;
+        showToast('Otvoren je email klijent. Hvala na upitu!', 4000);
     });
 
     // Ukloni custom validaciju na input
@@ -856,43 +782,43 @@ function initProductsHeroSlider() {
             title: 'Automatska vrata',
             description: 'Moderna i elegantna rešenja koja štede prostor, pružajući bezbednost i udobnost. Idealna za javne objekte, bolnice, poslovne zgrade i trgovine.',
             image: 'images/door/zaokretna automatska.jpg',
-            link: 'pages/automatska-vrata.html'
+            link: '/proizvodi/automatska-vrata/'
         },
         {
             title: 'Bolnička vrata',
             description: 'Specijalizovana rešenja za zdravstvene ustanove, sa fokusom na higijenu, bezbednost i funkcionalnost. Više od 20 godina iskustva.',
             image: 'images/door/hermetik.jpeg',
-            link: 'pages/bolnicka-vrata.html'
+            link: '/proizvodi/bolnicka-vrata/'
         },
         {
             title: 'Unutrašnja vrata',
             description: 'Širok asortiman unutrašnjih vrata za različite namene, od stambenih do javnih objekata. Proizvodnja po meri sa vrhunskim kvalitetom.',
             image: 'images/door/klizna (zavesa).jpg',
-            link: 'pages/unutrasnja-vrata.html'
+            link: '/proizvodi/unutrasnja-vrata/'
         },
         {
             title: 'Industrijska vrata',
             description: 'Robusna i pouzdana rešenja za industrijske objekte i logističke centre. Hörmann kvalitet i sertifikovana bezbednost.',
             image: 'images/door/RKV hodnik.jpeg',
-            link: 'pages/industrijska-vrata.html'
+            link: '/proizvodi/industrijska-vrata/'
         },
         {
             title: 'Garažna vrata',
             description: 'Garažna segmentna, Berry kipujuća i RollMatic rolo vrata. Rešenja za privatne i zajedničke garaže.',
             image: 'images/door/zaokretna.jpeg',
-            link: 'pages/garazna-vrata.html'
+            link: '/proizvodi/garazna-vrata/'
         },
         {
-            title: 'Olovna stakla i  olovni limovi',
+            title: 'Olovna stakla i olovni limovi',
             description: 'Olovna stakla, olovni limovi, ploče i prizme za zaštitu od jonizujućeg zračenja. Za zdravstvene ustanove, laboratorije i industrijske objekte.',
             image: 'images/door/rkv olovna.jpg',
-            link: 'pages/zastita-od-radijacije.html'
+            link: '/proizvodi/zastita-od-radijacije/'
         },
         {
             title: 'PRIMAX zaštitna rešenja',
             description: 'Kompletan program zaštitne opreme i sredstava od jonizujućeg zračenja za zdravstvene ustanove, laboratorije i industrijske objekte.',
             image: 'images/door/AKV staklena.jpeg',
-            link: 'pages/primax.html'
+            link: '/proizvodi/primax/'
         }
     ];
 
@@ -1135,7 +1061,7 @@ function initProductsHeroSlider() {
 
 
 // ============================================
-// Projekti mapa (Google Maps JS API)
+// Projekti mapa (Leaflet + OSM)
 // ============================================
 function initProjectsMap() {
     const mapSection = document.getElementById('instalirani-projekti');
@@ -1159,14 +1085,10 @@ function initProjectsMap() {
     observer.observe(mapSection);
 
     async function initializeMap() {
-        const apiKey = window.SMIZ_MAPS_API_KEY;
-        if (!apiKey) {
+        if (typeof window.L === 'undefined') {
             showMapFallback();
             return;
         }
-
-        await loadGoogleMapsApi(apiKey);
-        await loadMarkerClusterer();
 
         const locations = await fetchProjectLocations();
         if (!Array.isArray(locations) || locations.length === 0) {
@@ -1174,71 +1096,47 @@ function initProjectsMap() {
             return;
         }
 
-        const { Map } = await google.maps.importLibrary('maps');
-
-        const map = new Map(mapContainer, {
-            center: { lat: 44.0165, lng: 20.9073 },
-            zoom: 6,
-            disableDefaultUI: true,
+        const map = L.map(mapContainer, {
             zoomControl: true,
-            fullscreenControl: true,
-            streetViewControl: false,
-            mapTypeControl: false,
-            gestureHandling: 'cooperative'
-        });
+            scrollWheelZoom: false
+        }).setView([44.0165, 20.9073], 7);
 
-        const bounds = new google.maps.LatLngBounds();
-        const infoWindow = new google.maps.InfoWindow();
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-        const markers = locations.map((location) => {
+        const validPoints = [];
+
+        locations.forEach((location) => {
             const lat = Number(location.lat);
             const lng = Number(location.lng);
-            if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+            if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
 
-            const position = { lat, lng };
-            bounds.extend(position);
+            validPoints.push([lat, lng]);
 
-            const marker = new google.maps.Marker({
-                position,
-                map,
-                title: location.name || 'Project location'
-            });
+            const name = location.name ? `<strong>${escapeHtml(location.name)}</strong>` : '<strong>Project</strong>';
+            const address = location.address ? `<div>${escapeHtml(location.address)}</div>` : '';
+            const link = `https://www.google.com/maps?q=${lat},${lng}`;
 
-            marker.addListener('click', () => {
-                const name = location.name ? `<strong>${escapeHtml(location.name)}</strong>` : '<strong>Project</strong>';
-                const address = location.address ? `<div>${escapeHtml(location.address)}</div>` : '';
-                const link = `https://www.google.com/maps?q=${lat},${lng}`;
-
-                infoWindow.setContent(`
+            L.marker([lat, lng])
+                .addTo(map)
+                .bindPopup(`
                     <div class="map-info-window">
                         ${name}
                         ${address}
                         <a href="${link}" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
                     </div>
                 `);
-                infoWindow.open({ anchor: marker, map });
-            });
+        });
 
-            return marker;
-        }).filter(Boolean);
-
-        if (markers.length === 0) {
+        if (!validPoints.length) {
             showMapFallback();
             return;
         }
 
-        if (markers.length === 1) {
-            map.setCenter(markers[0].getPosition());
-            map.setZoom(12);
-        } else {
-            map.fitBounds(bounds, 60);
-        }
-
-        const MarkerClusterer =
-            (window.markerClusterer && window.markerClusterer.MarkerClusterer) || window.MarkerClusterer;
-        if (MarkerClusterer) {
-            new MarkerClusterer({ map, markers });
-        }
+        const bounds = L.latLngBounds(validPoints);
+        map.fitBounds(bounds, { padding: [40, 40] });
     }
 
     function showMapFallback() {
@@ -1249,52 +1147,8 @@ function initProjectsMap() {
     }
 }
 
-function loadGoogleMapsApi(apiKey) {
-    if (window.google && window.google.maps && window.google.maps.importLibrary) {
-        return Promise.resolve();
-    }
-
-    if (window.__smizMapsApiPromise) {
-        return window.__smizMapsApiPromise;
-    }
-
-    window.__smizMapsApiPromise = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&v=weekly`;
-        script.async = true;
-        script.defer = true;
-        script.onerror = () => reject(new Error('Maps API failed to load'));
-        script.onload = () => resolve();
-        document.head.appendChild(script);
-    });
-
-    return window.__smizMapsApiPromise;
-}
-
-function loadMarkerClusterer() {
-    if (window.markerClusterer || window.MarkerClusterer) {
-        return Promise.resolve();
-    }
-
-    if (window.__smizClustererPromise) {
-        return window.__smizClustererPromise;
-    }
-
-    window.__smizClustererPromise = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js';
-        script.async = true;
-        script.defer = true;
-        script.onerror = () => reject(new Error('Marker clusterer failed to load'));
-        script.onload = () => resolve();
-        document.head.appendChild(script);
-    });
-
-    return window.__smizClustererPromise;
-}
-
 async function fetchProjectLocations() {
-    const response = await fetch('assets/data/project-locations.json', { cache: 'no-store' });
+    const response = await fetch('/assets/data/project-locations.json', { cache: 'no-store' });
     if (!response.ok) {
         throw new Error('Failed to load locations');
     }

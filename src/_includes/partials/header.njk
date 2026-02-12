@@ -1,0 +1,30 @@
+<header class="header" id="header">
+  <div class="container">
+    <nav class="nav">
+      <a href="/" class="logo" aria-label="SMIŽ početna stranica">
+        <img src="/images/smiz.png" alt="SMIŽ Logo" class="logo-img" loading="lazy" decoding="async">
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="/" class="nav-link {{ 'active' if pageType == 'home' else '' }}">Početna</a></li>
+        <li><a href="/o-nama/" class="nav-link {{ 'active' if pageType == 'about' else '' }}">O nama</a></li>
+        <li class="nav-item-dropdown">
+          <a href="/proizvodi/" class="nav-link nav-link-dropdown {{ 'active' if isProductPage or pageType == 'products' else '' }}" id="productsDropdown" aria-haspopup="true" aria-expanded="false">
+            Proizvodi
+            <span class="dropdown-arrow">▼</span>
+          </a>
+          <ul class="dropdown-menu" id="productsDropdownMenu">
+            {% for product in site.navProducts %}
+              <li><a href="{{ product.href }}" class="dropdown-link">{{ product.label }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li><a href="/kontakt/" class="nav-link {{ 'active' if pageType == 'contact' else '' }}">Kontakt</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </div>
+</header>

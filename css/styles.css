@@ -80,6 +80,10 @@ body {
     background-color: var(--white);
 }
 
+body.menu-open {
+    overflow: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -237,6 +241,7 @@ ul {
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    justify-content: space-between;
 }
 
 .dropdown-arrow {
@@ -329,6 +334,21 @@ ul {
     border-radius: 2px;
 }
 
+.mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 990;
+}
+
+.mobile-menu-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* Mobilni meni */
 @media (max-width: 1023px) {
     .hamburger {
@@ -338,50 +358,96 @@ ul {
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -100%;
-        width: 280px;
+        right: -110%;
+        width: min(88vw, 340px);
         height: 100vh;
-        background-color: var(--white);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
         flex-direction: column;
-        padding: var(--spacing-2xl) var(--spacing-lg);
+        padding: calc(var(--spacing-2xl) + 0.5rem + env(safe-area-inset-top, 0px)) var(--spacing-lg) calc(var(--spacing-xl) + env(safe-area-inset-bottom, 0px));
         box-shadow: var(--shadow-lg);
-        transition: var(--transition);
+        transition: right 0.28s ease, opacity 0.25s ease;
         gap: var(--spacing-md);
         align-items: flex-start;
+        border-left: 1px solid rgba(15, 23, 42, 0.08);
+        opacity: 0;
+        z-index: 1000;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .nav-menu.active {
         right: 0;
+        opacity: 1;
     }
 
     .nav-link {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
+        width: 100%;
+        padding: 0.75rem 0.85rem;
+        border-radius: 0.65rem;
+        background: rgba(148, 163, 184, 0.08);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(0, 94, 131, 0.1);
+        border-color: rgba(0, 94, 131, 0.2);
+    }
+
+    .nav-item-dropdown {
+        width: 100%;
+    }
+
+    .nav-link-dropdown {
+        width: 100%;
+    }
+
+    .dropdown-arrow {
+        margin-left: auto;
     }
 
     .dropdown-menu {
         position: static;
         transform: none;
-        opacity: 1;
-        visibility: visible;
+        opacity: 0;
+        visibility: hidden;
         box-shadow: none;
         background-color: transparent;
-        padding: var(--spacing-sm) 0;
+        padding: 0;
         margin-top: 0;
         margin-left: var(--spacing-md);
+        width: calc(100% - var(--spacing-md));
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.28s ease, opacity 0.2s ease;
+        border-left: 2px solid rgba(0, 94, 131, 0.2);
     }
 
     .nav-item-dropdown:hover .dropdown-menu,
     .nav-item-dropdown.active .dropdown-menu {
         transform: none;
+        opacity: 1;
+        visibility: visible;
+        max-height: 520px;
+        padding: 0.25rem 0;
     }
 
     .dropdown-link {
-        padding: var(--spacing-xs) var(--spacing-md);
+        padding: 0.6rem var(--spacing-md);
         font-size: 0.95rem;
+        border-radius: 0.45rem;
+        background: rgba(241, 245, 249, 0.75);
+        margin-bottom: 0.25rem;
     }
 
     .dropdown-link:hover {
         padding-left: var(--spacing-md);
+        background: rgba(0, 94, 131, 0.08);
     }
 }
 
@@ -1203,6 +1269,14 @@ ul {
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-subtle);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.intro-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+    border-color: rgba(0, 94, 131, 0.22);
 }
 
 .intro-card h2 {
@@ -2272,12 +2346,6 @@ ul {
         /* Hide arrows on mobile */
     }
 
-    .products-hero-arrow {
-        width: 40px;
-        height: 40px;
-        font-size: 1.4rem;
-    }
-
     .products-hero-card {
         min-width: 190px;
         max-width: 210px;
@@ -2330,6 +2398,7 @@ ul {
     background-color: var(--white);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-subtle);
     overflow: hidden;
     transition: var(--transition);
     height: 100%;

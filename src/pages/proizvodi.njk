@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+permalink: /proizvodi/
+title: "SMIŽ - Proizvodi"
+description: "SMIŽ - Program proizvoda: automatska, bolnička, unutrašnja, industrijska i garažna vrata, kao i zaštitna rešenja od jonizujućeg zračenja."
+ogTitle: "SMIŽ - Proizvodi"
+ogDescription: "Pregled kompletnog SMIŽ programa proizvoda i specijalizovanih rešenja za različite tipove objekata i namena."
+ogImage: "/images/logo-mini.png"
+pageType: products
+isProductPage: false
+---
+
+<main class="section" id="proizvodi-katalog">
+  <div class="container">
+    <h1 class="section-title">Naši proizvodi</h1>
+    <p class="spec-intro">
+      Izaberite kategoriju koja odgovara vašem objektu. Sva rešenja prilagođavamo tehničkim zahtevima prostora,
+      uz podršku kroz projektovanje, ugradnju i servis.
+    </p>
+
+    <div class="product-variants-grid">
+      {% for product in site.navProducts %}
+        <article class="variant-card">
+          <h3>{{ product.label }}</h3>
+          <p>Detaljne tehničke informacije, varijante i preporuke za primenu.</p>
+          <a href="{{ product.href }}" class="product-detail-btn">Pogledaj detalje</a>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</main>
