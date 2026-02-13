@@ -13,15 +13,15 @@ isProductPage: true
 {# --- HERO SEKCIJA --- #}
 <section class="product-hero primax-hero">
     <div class="hero-bg">
-        <img src="/images/smiz.png" alt="PRIMAX Zaštita" class="hero-img" style="filter: brightness(0.4) grayscale(1);">
+        <img src="/images/smiz.png" alt="PRIMAX Zaštita" class="hero-img">
         <div class="hero-overlay"></div>
     </div>
-    <div class="container">
+    <div class="container relative z-10">
         <div class="hero-content">
             <nav class="breadcrumb">
-                <a href="/">Početna</a> / <a href="/#proizvodi">Proizvodi</a>
+                <a href="/">Početna</a> <span class="sep">/</span> <a href="/#proizvodi">Proizvodi</a>
             </nav>
-            <h1>PRIMAX <span class="text-accent">Zaštitna oprema</span></h1>
+            <h1>PRIMAX <span class="text-accent-light">Zaštitna oprema</span></h1>
             <p class="hero-lead">Profesionalna garderoba i pribor za potpunu zaštitu od jonizujućeg zračenja u medicini i industriji.</p>
         </div>
     </div>
@@ -34,16 +34,19 @@ isProductPage: true
             <div class="intro-main">
                 <span class="badge">Sertifikovana bezbednost</span>
                 <h2>Pouzdan partner u radiologiji</h2>
-                <p>PRIMAX program obuhvata vrhunska rešenja za zaštitu medicinskog osoblja i pacijenata. Naša oprema je projektovana za **svakodnevnu upotrebu**, sa fokusom na lagane materijale i maksimalnu ergonomiju, ne žrtvujući nivo zaštite.</p>
-                <p>Bilo da je reč o dugotrajnim hirurškim zahvatima ili rutinskoj dijagnostici, PRIMAX nudi sertifikovane ekvivalente olova (Pb) prilagođene svim standardima bezbednosti.</p>
+                <div class="content-text">
+                    <p>PRIMAX program obuhvata vrhunska rešenja za zaštitu medicinskog osoblja i pacijenata. Naša oprema je projektovana za <strong>svakodnevnu upotrebu</strong>, sa fokusom na lagane materijale i maksimalnu ergonomiju, ne žrtvujući nivo zaštite.</p>
+                    <p>Bilo da je reč o dugotrajnim hirurškim zahvatima ili rutinskoj dijagnostici, PRIMAX nudi sertifikovane ekvivalente olova (Pb) prilagođene svim standardima bezbednosti.</p>
+                </div>
             </div>
             <div class="intro-info">
                 <div class="info-box">
                     <h4>Nivoi zaštite (Pb):</h4>
+                    <p class="small-desc">Dostupne debljine olovnog ekvivalenta:</p>
                     <div class="pb-levels">
-                        <span>0.25 mm</span>
-                        <span>0.35 mm</span>
-                        <span>0.50 mm</span>
+                        <span class="pb-tag">0.25 mm</span>
+                        <span class="pb-tag">0.35 mm</span>
+                        <span class="pb-tag">0.50 mm</span>
                     </div>
                 </div>
             </div>
@@ -60,31 +63,38 @@ isProductPage: true
         </div>
         <div class="product-grid">
             <div class="p-card">
-                <h3>Standard Style</h3>
-                <p>Jednostrana zaštita prednje strane tela i ramena. Model bez rukava sa džepom na grudima. Idealan za standardnu dijagnostiku.</p>
-                <ul class="p-list">
-                    <li>Soft line materijal</li>
-                    <li>Lako kopčanje</li>
-                    <li>Ergonomski kroj</li>
-                </ul>
+                <div class="card-body">
+                    <h3>Standard Style</h3>
+                    <p>Jednostrana zaštita prednje strane tela i ramena. Model bez rukava sa džepom na grudima. Idealan za standardnu dijagnostiku.</p>
+                    <ul class="p-list">
+                        <li>Soft line materijal</li>
+                        <li>Lako kopčanje</li>
+                        <li>Ergonomski kroj</li>
+                    </ul>
+                </div>
             </div>
             <div class="p-card">
-                <h3>Surgeon Style</h3>
-                <p>Specijalizovana kecelja za operacione sale. Omogućava lako skidanje ispod sterilne odeće bez narušavanja sterilnosti zahvata.</p>
-                <ul class="p-list">
-                    <li>Specijalne trake</li>
-                    <li>Brzo otpuštanje</li>
-                    <li>Lagana konstrukcija</li>
-                </ul>
+                <div class="card-body">
+                    <h3>Surgeon Style</h3>
+                    <p>Specijalizovana kecelja za operacione sale. Omogućava lako skidanje ispod sterilne odeće bez narušavanja sterilnosti zahvata.</p>
+                    <ul class="p-list">
+                        <li>Specijalne trake</li>
+                        <li>Brzo otpuštanje</li>
+                        <li>Lagana konstrukcija</li>
+                    </ul>
+                </div>
             </div>
             <div class="p-card highlight">
-                <h3>PRIMAX Double</h3>
-                <p>Dvostrana zaštita za rad u uslovima pojačanog raspršenog zračenja. Štiti i prednju i zadnju stranu tela (leđa).</p>
-                <ul class="p-list">
-                    <li>Pb: 0.25 - 0.5 mm</li>
-                    <li>Potpuna pokrivenost</li>
-                    <li>Maksimalna sigurnost</li>
-                </ul>
+                <div class="card-body">
+                    <div class="card-badge">Preporuka</div>
+                    <h3>PRIMAX Double</h3>
+                    <p>Dvostrana zaštita za rad u uslovima pojačanog raspršenog zračenja. Štiti i prednju i zadnju stranu tela (leđa).</p>
+                    <ul class="p-list dark-mode-list">
+                        <li>Pb: 0.25 - 0.5 mm</li>
+                        <li>Potpuna pokrivenost</li>
+                        <li>Maksimalna sigurnost</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -94,21 +104,33 @@ isProductPage: true
 <section class="section">
     <div class="container">
         <div class="split-row">
-            <div class="split-content">
-                <h2>Prsluci, suknje i pribor</h2>
-                <p>Za procedure koje dugo traju, preporučujemo dvodelna odela (prsluk + suknja) koja ravnomerno raspoređuju težinu olovne zaštite između ramena i kukova.</p>
+            <div class="split-content full-width">
+                <div class="section-header text-left-md">
+                    <h2>Prsluci, suknje i pribor</h2>
+                    <p>Za procedure koje dugo traju, preporučujemo dvodelna odela (prsluk + suknja) koja ravnomerno raspoređuju težinu olovne zaštite između ramena i kukova.</p>
+                </div>
+                
                 <div class="accessory-grid">
                     <div class="acc-item">
-                        <strong>Rukavice (X-PG)</strong>
-                        <p>Zatvoreni i otvoreni modeli za precizne zahvate i palpaciju.</p>
+                        <div class="acc-icon">🧤</div>
+                        <div class="acc-text">
+                            <strong>Rukavice (X-PG)</strong>
+                            <p>Zatvoreni i otvoreni modeli za precizne zahvate i palpaciju.</p>
+                        </div>
                     </div>
                     <div class="acc-item">
-                        <strong>Zaštita tirode</strong>
-                        <p>Neophodan dodatak za zaštitu vratne žlezde i grudne kosti.</p>
+                        <div class="acc-icon">🧣</div>
+                        <div class="acc-text">
+                            <strong>Zaštita tirode</strong>
+                            <p>Neophodan dodatak za zaštitu vratne žlezde i grudne kosti.</p>
+                        </div>
                     </div>
                     <div class="acc-item">
-                        <strong>Naočare (FG line)</strong>
-                        <p>Zaštita očiju sa staklima od 0.5 do 0.75 mmPb.</p>
+                        <div class="acc-icon">👓</div>
+                        <div class="acc-text">
+                            <strong>Naočare (FG line)</strong>
+                            <p>Zaštita očiju sa staklima od 0.5 do 0.75 mmPb.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,11 +139,11 @@ isProductPage: true
 </section>
 
 {# --- ZAŠTITA ZA PACIJENTE --- #}
-<section class="section-alt dark-med">
+<section class="section-dark">
     <div class="container">
         <div class="section-header">
             <h2 class="text-white">Zaštita za pacijente</h2>
-            <p>Bezbednost pacijenata tokom dijagnostičkih procedura.</p>
+            <p class="text-muted-light">Bezbednost pacijenata tokom dijagnostičkih procedura.</p>
         </div>
         <div class="patient-grid">
             <div class="patient-card">
@@ -143,86 +165,242 @@ isProductPage: true
 {# --- CTA --- #}
 <section class="section cta-minimal">
     <div class="container">
-        <div class="cta-flex">
-            <h2>Potrebna vam je specifikacija opreme?</h2>
-            <a href="/kontakt/" class="btn btn-primary">Kontaktirajte naš tim</a>
+        <div class="cta-box">
+            <div class="cta-text">
+                <h2>Potrebna vam je specifikacija opreme?</h2>
+                <p>Javite nam se za detaljnu ponudu i savete oko odabira nivoa zaštite.</p>
+            </div>
+            <div class="cta-action">
+                <a href="/kontakt/" class="btn btn-primary">Kontaktirajte naš tim</a>
+            </div>
         </div>
     </div>
 </section>
 
 <style>
+    /* --- MODERN VARIABLES --- */
     :root {
-        --accent: #005e83;
-        --dark: #1a1a1a;
-        --light: #f8fafc;
-        --med-blue: #2c3e50;
-        --transition: all 0.3s ease;
+        --color-primary: #005e83; /* SMIZ Blue */
+        --color-primary-dark: #00425c;
+        --color-accent: #00a8e8; /* Brighter blue for highlights */
+        --color-dark: #111827;
+        --color-text: #374151;
+        --color-text-light: #6b7280;
+        --color-bg-light: #f3f4f6;
+        --color-bg-white: #ffffff;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        --shadow-hover: 0 10px 15px -3px rgba(0, 94, 131, 0.15), 0 4px 6px -2px rgba(0, 94, 131, 0.1);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .text-accent { color: var(--accent); }
-    .text-white { color: white; }
+    /* --- RESET & TYPOGRAPHY --- */
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    body {
+        color: var(--color-text);
+        line-height: 1.6;
+        font-family: system-ui, -apple-system, sans-serif; /* Fallback ako nemas definisan font */
+    }
 
-    /* Hero */
+    h1, h2, h3, h4 { color: var(--color-dark); margin-top: 0; line-height: 1.2; }
+    p { margin-bottom: 1rem; }
+    
+    .text-accent { color: var(--color-primary); }
+    .text-accent-light { color: #5bcbf5; }
+    .text-white { color: white; }
+    .text-muted-light { color: rgba(255,255,255, 0.8); }
+
+    /* --- UTILITIES --- */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; }
+    .section { padding: 80px 0; }
+    .section-alt { padding: 80px 0; background: var(--color-bg-light); }
+    .section-dark { padding: 80px 0; background: #1e293b; color: white; }
+    .section-header { text-align: center; margin-bottom: 3.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+    .section-header h2 { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 0.75rem; font-weight: 800; }
+    .section-header p { font-size: 1.125rem; color: var(--color-text-light); }
+    .section-dark .section-header p { color: #cbd5e1; }
+
+    /* --- HERO --- */
     .primax-hero {
-        height: 50vh;
-        min-height: 400px;
+        min-height: 60vh; /* Veca visina za bolji utisak */
         position: relative;
         display: flex;
         align-items: center;
         color: white;
+        overflow: hidden;
     }
-    .hero-bg { position: absolute; inset: 0; z-index: -1; }
-    .hero-img { width: 100%; height: 100%; object-fit: cover; }
-    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-img { 
+        width: 100%; height: 100%; object-fit: cover; 
+        /* Uklonjen stari filter, koristimo overlay gradijent dole */
+    }
+    .hero-overlay { 
+        position: absolute; inset: 0; 
+        background: linear-gradient(to right, rgba(0, 30, 45, 0.95) 0%, rgba(0, 50, 75, 0.7) 100%); 
+    }
     
-    .breadcrumb { font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.6; }
-    .breadcrumb a { color: white; text-decoration: none; font-weight: 700; }
-    .primax-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+    .breadcrumb { 
+        font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; 
+        margin-bottom: 1.5rem; opacity: 0.8; font-weight: 600; 
+    }
+    .breadcrumb a { color: white; text-decoration: none; transition: opacity 0.2s; }
+    .breadcrumb a:hover { opacity: 1; }
+    .breadcrumb .sep { margin: 0 8px; opacity: 0.5; }
 
-    /* Intro Section */
-    .intro-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: center; }
-    .intro-main h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; }
-    .intro-main p { font-size: 1.15rem; line-height: 1.7; color: #444; }
+    .primax-hero h1 { 
+        font-size: clamp(2.5rem, 6vw, 4rem); 
+        font-weight: 800; color: white; margin-bottom: 1rem; 
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .hero-lead { font-size: 1.25rem; opacity: 0.95; max-width: 600px; line-height: 1.6; }
+
+    /* --- INTRO SECTION --- */
+    .intro-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: start; }
+    .badge { 
+        display: inline-block; padding: 6px 14px; 
+        background: rgba(0, 94, 131, 0.1); color: var(--color-primary); 
+        border-radius: 50px; font-weight: 700; font-size: 0.75rem; 
+        text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 0.5px;
+    }
+    .content-text p { font-size: 1.1rem; color: #4b5563; }
+    .content-text strong { color: var(--color-primary); }
+
+    .info-box { 
+        background: white; padding: 2.5rem; 
+        border-radius: var(--radius-lg); 
+        box-shadow: var(--shadow-md); 
+        border-top: 4px solid var(--color-primary); 
+    }
+    .info-box h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .small-desc { font-size: 0.9rem; color: #888; margin-bottom: 1rem; }
+    .pb-levels { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pb-tag { 
+        background: var(--color-dark); color: white; 
+        padding: 6px 16px; border-radius: 6px; 
+        font-weight: 600; font-size: 0.9rem; 
+    }
+
+    /* --- PRODUCT CARDS --- */
+    .product-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+        gap: 2rem; 
+    }
+    .p-card { 
+        background: white; 
+        border-radius: var(--radius-lg); 
+        overflow: hidden; 
+        box-shadow: var(--shadow-sm); 
+        transition: var(--transition); 
+        display: flex; flex-direction: column;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .card-body { padding: 2.5rem; flex-grow: 1; display: flex; flex-direction: column; }
     
-    .info-box { background: var(--light); padding: 2.5rem; border-left: 5px solid var(--accent); }
-    .pb-levels { display: flex; gap: 10px; margin-top: 1rem; }
-    .pb-levels span { background: var(--dark); color: white; padding: 5px 15px; font-weight: 700; font-size: 0.85rem; }
-
-    /* Product Cards */
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
-    .p-card { background: white; padding: 2.5rem; border: 1px solid #eee; transition: var(--transition); }
-    .p-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-    .p-card.highlight { background: var(--dark); color: white; }
-    .p-card h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 800; }
-    .p-list { padding-left: 1.2rem; margin-top: 1.5rem; color: #666; font-size: 0.95rem; }
-    .p-card.highlight .p-list { color: #aaa; }
-
-    /* Accessory Grid */
-    .accessory-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem; }
-    .acc-item { border-top: 1px solid #eee; padding-top: 1.5rem; }
-    .acc-item strong { display: block; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.5rem; }
-    .acc-item p { font-size: 0.9rem; color: #555; }
-
-    /* Patient Section */
-    .dark-med { background: var(--med-blue); padding: 100px 0; }
-    .patient-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
-    .patient-card { background: rgba(255,255,255,0.05); padding: 2.5rem; border: 1px solid rgba(255,255,255,0.1); }
-    .patient-card h4 { color: white; font-size: 1.2rem; margin-bottom: 1rem; }
-    .patient-card p { color: #adb5bd; font-size: 0.95rem; line-height: 1.6; }
-
-    /* Utilities */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    .section { padding: 100px 0; }
-    .section-alt { padding: 100px 0; background: #fafafa; }
-    .section-header { text-align: center; margin-bottom: 3rem; }
-    .badge { display: inline-block; padding: 4px 12px; background: rgba(0, 94, 131, 0.12); color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 1rem; }
+    .p-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: transparent; }
     
-    .btn { display: inline-block; padding: 1.2rem 2.5rem; background: var(--accent); color: white; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: var(--transition); }
-    .btn:hover { background: var(--dark); transform: scale(1.05); }
-    .cta-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
+    .p-card h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
+    .p-list { 
+        padding-left: 1.2rem; margin-top: auto; /* Push to bottom if needed */
+        color: var(--color-text-light); font-size: 0.95rem; 
+    }
+    .p-list li { margin-bottom: 0.5rem; }
 
+    /* Highlight Card Styling */
+    .p-card.highlight { 
+        background: var(--color-dark); 
+        color: white; 
+        position: relative; 
+        border: none;
+    }
+    .p-card.highlight h3 { color: white; }
+    .p-card.highlight p { color: #d1d5db; }
+    .p-card.highlight .p-list { color: #e5e7eb; } /* Mnogo bolji kontrast */
+    .card-badge {
+        position: absolute; top: 20px; right: 20px;
+        background: var(--color-accent); color: white;
+        font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
+        padding: 4px 10px; border-radius: 4px;
+    }
+
+    /* --- ACCESSORIES --- */
+    .accessory-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+        gap: 2rem; margin-top: 3rem; 
+    }
+    .acc-item { 
+        display: flex; align-items: flex-start; gap: 1rem; 
+        padding: 1.5rem; background: white; border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm); border: 1px solid #eee;
+    }
+    .acc-icon { font-size: 2rem; line-height: 1; }
+    .acc-item strong { display: block; font-size: 1.1rem; color: var(--color-primary); margin-bottom: 0.25rem; }
+    .acc-item p { font-size: 0.9rem; color: #666; margin: 0; line-height: 1.4; }
+
+    /* --- PATIENT SECTION (Dark) --- */
+    .patient-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+        gap: 2rem; 
+    }
+    .patient-card { 
+        background: rgba(255,255,255,0.05); 
+        padding: 2.5rem; 
+        border-radius: var(--radius-md); 
+        border: 1px solid rgba(255,255,255,0.1); 
+        transition: var(--transition);
+    }
+    .patient-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+    .patient-card h4 { color: white; font-size: 1.25rem; margin-bottom: 1rem; }
+    .patient-card p { color: #94a3b8; font-size: 1rem; line-height: 1.6; margin: 0; } /* Svetlija siva za citljivost */
+
+    /* --- CTA --- */
+    .cta-minimal { background: white; }
+    .cta-box { 
+        background: var(--color-primary); 
+        border-radius: var(--radius-lg); 
+        padding: 3rem 4rem; 
+        display: flex; justify-content: space-between; align-items: center; 
+        color: white; 
+        box-shadow: var(--shadow-hover);
+        background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    }
+    .cta-text h2 { color: white; margin-bottom: 0.5rem; font-size: 1.8rem; }
+    .cta-text p { color: rgba(255,255,255,0.9); margin: 0; font-size: 1.1rem; }
+    
+    .btn { 
+        display: inline-block; padding: 1rem 2rem; 
+        background: white; color: var(--color-primary); 
+        text-decoration: none; font-weight: 700; 
+        border-radius: 8px; transition: var(--transition); 
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); color: var(--color-dark); }
+
+    /* --- RESPONSIVE / MOBILE --- */
     @media (max-width: 992px) {
-        .intro-grid { grid-template-columns: 1fr; gap: 2rem; }
-        .cta-flex { justify-content: center; text-align: center; }
+        .intro-grid { grid-template-columns: 1fr; gap: 3rem; }
+        .cta-box { flex-direction: column; text-align: center; gap: 2rem; padding: 3rem 2rem; }
+    }
+
+    @media (max-width: 768px) {
+        .section, .section-alt, .section-dark { padding: 50px 0; } /* Smanjen padding */
+        .primax-hero { min-height: 500px; }
+        .primax-hero h1 { font-size: 2.5rem; }
+        
+        /* Popravka za grid na mobilnom */
+        .product-grid, .patient-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+        
+        .cta-text h2 { font-size: 1.5rem; }
+        .btn { width: 100%; text-align: center; }
+        
+        .info-box { padding: 1.5rem; }
+        .pb-levels { justify-content: flex-start; }
     }
 </style>

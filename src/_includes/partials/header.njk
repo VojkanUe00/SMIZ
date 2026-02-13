@@ -1,290 +1,420 @@
 <style>
-    /* Reset za header da ne zavisi od globalnog CSS-a */
-    .site-header * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    .site-header {
+    /* --- 1. IZOLACIJA & PROMENLJIVE --- */
+    /* Resetujemo sve unutar hedera da globalni CSS ne smeta */
+    #sh-wrapper * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        list-style: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+        --sh-primary: #005e83;       /* Glavna plava */
+        --sh-primary-dark: #00445f;  /* Tamnija plava za hover */
+        --sh-text: #1e293b;          /* Tamno siva za tekst */
+        --sh-text-light: #64748b;    /* Svetlija siva */
+        --sh-bg-glass: rgba(255, 255, 255, 0.95);
+        --sh-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --sh-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --sh-radius: 12px;
+        --sh-font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    /* --- 2. GLAVNI HEADER KONTEJNER --- */
+    #sh-header {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 9999;
-        background: rgba(255, 255, 255, 0.95);
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        height: 80px;
+        z-index: 99999;
+        background: transparent;
         transition: all 0.3s ease;
-        padding: 0 20px;
-        font-family: sans-serif; /* Fallback font */
+        font-family: var(--sh-font);
     }
 
-    /* Glass efekat na skrol */
-    .site-header.scrolled {
-        background: rgba(255, 255, 255, 0.8);
+    /* Efekat kad se skroluje */
+    #sh-header.is-scrolled {
+        background: var(--sh-bg-glass);
+        height: 70px; /* Malo se smanji */
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--sh-shadow);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
-    .header-inner {
+    .sh-container {
         max-width: 1200px;
         margin: 0 auto;
-        height: 80px;
+        padding: 0 24px;
+        height: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: height 0.3s ease;
     }
 
-    .site-header.scrolled .header-inner { height: 60px; }
-
-    /* Logo */
-    .header-logo img {
-        height: 40px;
+    /* --- 3. LOGO --- */
+    .sh-logo img {
+        height: 42px;
         width: auto;
         display: block;
         transition: transform 0.3s;
     }
+    .sh-logo:hover img { transform: scale(1.05); }
 
-    /* Navigacija */
-    .header-nav { display: flex; align-items: center; }
-    .nav-list {
+    /* --- 4. DESKTOP NAVIGACIJA --- */
+    .sh-nav-desktop {
         display: flex;
-        list-style: none;
-        gap: 30px;
         align-items: center;
+        gap: 32px;
     }
 
-    .nav-link {
-        text-decoration: none;
-        color: #333;
-        font-weight: 600;
+    .sh-nav-link {
+        color: var(--sh-text);
+        font-weight: 500;
         font-size: 15px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        padding: 8px 0;
         position: relative;
-        padding: 5px 0;
-        transition: color 0.3s;
+        transition: color 0.2s;
     }
 
-    .nav-link:hover, .nav-link.active { color: #005e83; }
+    .sh-nav-link:hover { color: var(--sh-primary); }
 
-    .nav-link::after {
+    /* Animacija linije ispod linka */
+    .sh-nav-link::after {
         content: '';
         position: absolute;
         bottom: 0;
         left: 0;
         width: 0;
         height: 2px;
-        background: #005e83;
-        transition: width 0.3s;
+        background: var(--sh-primary);
+        transition: width 0.3s ease;
+        border-radius: 2px;
+    }
+    .sh-nav-link:hover::after { width: 100%; }
+
+    /* CTA Dugme (Kontakt) */
+    .sh-btn-cta {
+        background: var(--sh-primary);
+        color: white !important;
+        padding: 10px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        box-shadow: 0 4px 6px rgba(0, 94, 131, 0.2);
+        transition: all 0.2s;
+    }
+    .sh-btn-cta:hover {
+        background: var(--sh-primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 94, 131, 0.3);
+    }
+    .sh-btn-cta::after { display: none; }
+
+    /* --- 5. DROPDOWN (DESKTOP) --- */
+    .sh-dropdown-wrapper {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
     }
 
-    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .sh-dropdown-arrow {
+        font-size: 10px;
+        margin-left: 6px;
+        transition: transform 0.3s;
+        opacity: 0.6;
+    }
+    
+    .sh-dropdown-wrapper:hover .sh-dropdown-arrow { transform: rotate(180deg); }
+    .sh-dropdown-wrapper:hover .sh-nav-link { color: var(--sh-primary); }
 
-    /* Dropdown */
-    .nav-item-has-dropdown { position: relative; }
-    .dropdown-trigger { display: flex; align-items: center; gap: 5px; cursor: pointer; }
-    .dropdown-arrow { transition: transform 0.3s; font-size: 10px; }
-    .nav-item-has-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
-
-    .dropdown-menu {
+    .sh-dropdown-menu {
         position: absolute;
         top: 100%;
-        left: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
         background: white;
-        min-width: 220px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        border-top: 3px solid #005e83;
+        min-width: 280px;
+        border-radius: var(--sh-radius);
+        box-shadow: var(--sh-shadow-lg);
+        padding: 8px;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(10px);
-        transition: all 0.3s ease;
-        list-style: none;
-        padding: 10px 0;
-        border-radius: 0 0 4px 4px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0,0,0,0.04);
     }
 
-    .nav-item-has-dropdown:hover .dropdown-menu {
+    /* Mostić da kursor ne pobegne */
+    .sh-dropdown-menu::before {
+        content: '';
+        position: absolute;
+        top: -15px; left: 0; width: 100%; height: 15px;
+    }
+
+    .sh-dropdown-wrapper:hover .sh-dropdown-menu {
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
+        transform: translateX(-50%) translateY(15px);
     }
 
-    .dropdown-link {
+    .sh-dropdown-item {
         display: block;
-        padding: 10px 20px;
-        color: #444;
-        text-decoration: none;
+        padding: 10px 16px;
+        color: var(--sh-text);
         font-size: 14px;
-        transition: background 0.2s, color 0.2s;
+        border-radius: 8px;
+        transition: all 0.2s;
+        margin-bottom: 2px;
     }
 
-    .dropdown-link:hover {
-        background: #f4f4f4;
-        color: #005e83;
-        padding-left: 25px;
+    .sh-dropdown-item:hover {
+        background: #f1f5f9;
+        color: var(--sh-primary);
+        padding-left: 20px; /* Mala animacija pomeranja */
     }
 
-    /* Hamburger */
-    .hamburger-btn {
+    /* --- 6. HAMBURGER (MOBILE) --- */
+    #sh-hamburger {
         display: none;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 20px;
-        background: transparent;
+        background: none;
         border: none;
         cursor: pointer;
-        z-index: 10001;
+        width: 32px;
+        height: 32px;
+        position: relative;
+        z-index: 100001;
     }
-
-    .hamburger-line {
-        width: 100%;
+    
+    .sh-bar {
+        position: absolute;
+        left: 15%; /* Centriranje */
+        width: 70%;
         height: 2px;
-        background: #333;
-        transition: all 0.3s;
+        background: var(--sh-text);
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sh-bar:nth-child(1) { top: 9px; }
+    .sh-bar:nth-child(2) { top: 15px; }
+    .sh-bar:nth-child(3) { top: 21px; }
+
+    /* Animacija u X */
+    #sh-hamburger.is-active .sh-bar:nth-child(1) { top: 15px; transform: rotate(45deg); }
+    #sh-hamburger.is-active .sh-bar:nth-child(2) { opacity: 0; transform: translateX(10px); }
+    #sh-hamburger.is-active .sh-bar:nth-child(3) { top: 15px; transform: rotate(-45deg); }
+
+    /* --- 7. MOBILE MENU (OFF-CANVAS) --- */
+    #sh-mobile-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px; /* Širina menija */
+        height: 100vh;
+        background: white;
+        z-index: 100000;
+        padding: 90px 24px 40px;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        transform: translateX(100%); /* Sakriveno desno */
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
     }
 
-    /* Mobile Responsive */
+    #sh-mobile-menu.is-open { transform: translateX(0); }
+
+    .sh-mobile-link {
+        display: block;
+        padding: 16px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--sh-text);
+        border-bottom: 1px solid #f1f5f9;
+        transition: color 0.2s;
+    }
+
+    .sh-mobile-link:hover { color: var(--sh-primary); }
+
+    /* Mobile Accordion */
+    .sh-accordion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+    .sh-accordion-arrow { transition: transform 0.3s; }
+    .sh-accordion-header.is-active .sh-accordion-arrow { transform: rotate(180deg); color: var(--sh-primary); }
+
+    .sh-mobile-submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        padding-left: 10px;
+    }
+    
+    .sh-mobile-submenu.is-visible {
+        max-height: 600px; /* Dovoljno da stane sve */
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+
+    .sh-mobile-sublink {
+        display: block;
+        padding: 12px 10px;
+        font-size: 15px;
+        color: var(--sh-text-light);
+        border-left: 2px solid #e2e8f0;
+        margin-bottom: 4px;
+    }
+
+    .sh-mobile-sublink:hover {
+        color: var(--sh-primary);
+        border-left-color: var(--sh-primary);
+        background: #f8fafc;
+    }
+
+    /* Overlay */
+    #sh-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(4px);
+        z-index: 99990;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s;
+    }
+    #sh-overlay.is-active { opacity: 1; visibility: visible; }
+
+    /* --- 8. MEDIA QUERIES --- */
     @media (max-width: 992px) {
-        .hamburger-btn { display: flex; }
-
-        .header-nav {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 300px;
-            background: white;
-            padding: 100px 30px;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .header-nav.active { transform: translateX(0); }
-
-        .nav-list {
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-            gap: 0;
-        }
-
-        .nav-list li { width: 100%; border-bottom: 1px solid #eee; }
-
-        .nav-link {
-            display: block;
-            padding: 15px 0;
-            font-size: 1.1rem;
-            width: 100%;
-        }
-        
-        .nav-link::after { display: none; }
-
-        /* Mobile Dropdown */
-        .dropdown-menu {
-            position: static;
-            box-shadow: none;
-            border: none;
-            opacity: 1;
-            visibility: visible;
-            transform: none;
-            display: none; /* Sakriveno po defaultu */
-            padding-left: 20px;
-            background: #f9f9f9;
-        }
-
-        .nav-item-has-dropdown.open .dropdown-menu { display: block; }
-        .nav-item-has-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
-        .dropdown-arrow { margin-left: auto; display: inline-block; float: right; }
+        .sh-nav-desktop { display: none !important; }
+        #sh-hamburger { display: block; }
     }
-
-    /* Hamburger Animation */
-    .hamburger-btn.active .hamburger-line:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-    .hamburger-btn.active .hamburger-line:nth-child(2) { opacity: 0; }
-    .hamburger-btn.active .hamburger-line:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 </style>
 
-<header class="site-header" id="siteHeader">
-    <div class="header-inner">
-        <a href="/" class="header-logo" aria-label="Početna">
-            <img src="/images/smiz.png" alt="SMIŽ Logo">
-        </a>
+<div id="sh-wrapper">
+    
+    <div id="sh-overlay"></div>
 
-        <nav class="header-nav" id="headerNav">
-            <ul class="nav-list">
-                <li><a href="/" class="nav-link {{ 'active' if pageType == 'home' else '' }}">Početna</a></li>
-                <li><a href="/o-nama/" class="nav-link {{ 'active' if pageType == 'about' else '' }}">O nama</a></li>
+    <header id="sh-header">
+        <div class="sh-container">
+            <a href="/" class="sh-logo">
+                <img src="/images/smiz.png" alt="SMIŽ Logo">
+            </a>
+
+            <nav class="sh-nav-desktop">
+                <a href="/" class="sh-nav-link">Početna</a>
+                <a href="/o-nama/" class="sh-nav-link">O nama</a>
                 
-                <li class="nav-item-has-dropdown">
-                    <a href="#" class="nav-link dropdown-trigger" id="mobileDropdownTrigger">
-                        Proizvodi <span class="dropdown-arrow">▼</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% for product in site.navProducts %}
-                        <li><a href="{{ product.href }}" class="dropdown-link">{{ product.label }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                <div class="sh-dropdown-wrapper">
+                    <span class="sh-nav-link">Proizvodi</span>
+                    <span class="sh-dropdown-arrow">▼</span>
+                    
+                    <div class="sh-dropdown-menu">
+                        <a href="/proizvodi/automatska-vrata/" class="sh-dropdown-item">Automatska vrata</a>
+                        <a href="/proizvodi/bolnicka-vrata/" class="sh-dropdown-item">Bolnička vrata</a>
+                        <a href="/proizvodi/unutrasnja-vrata/" class="sh-dropdown-item">Unutrašnja vrata</a>
+                        <a href="/proizvodi/industrijska-vrata/" class="sh-dropdown-item">Industrijska vrata</a>
+                        <a href="/proizvodi/garazna-vrata/" class="sh-dropdown-item">Garažna vrata</a>
+                        <a href="/proizvodi/zastita-od-radijacije/" class="sh-dropdown-item">Zaštita od radijacije</a>
+                        <a href="/proizvodi/primax/" class="sh-dropdown-item">PRIMAX program</a>
+                    </div>
+                </div>
 
-                <li><a href="/kontakt/" class="nav-link {{ 'active' if pageType == 'contact' else '' }}">Kontakt</a></li>
-            </ul>
-        </nav>
+                <a href="/kontakt/" class="sh-nav-link sh-btn-cta">Kontakt</a>
+            </nav>
 
-        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Meni">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
+            <button id="sh-hamburger" aria-label="Meni">
+                <span class="sh-bar"></span>
+                <span class="sh-bar"></span>
+                <span class="sh-bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="sh-mobile-menu">
+        <a href="/" class="sh-mobile-link">Početna</a>
+        <a href="/o-nama/" class="sh-mobile-link">O nama</a>
+        
+        <div class="sh-mobile-dropdown-group">
+            <div class="sh-mobile-link sh-accordion-header" id="sh-accordion-trigger">
+                <span>Proizvodi</span>
+                <span class="sh-accordion-arrow">▼</span>
+            </div>
+            
+            <div class="sh-mobile-submenu" id="sh-mobile-submenu">
+                <a href="/proizvodi/automatska-vrata/" class="sh-mobile-sublink">Automatska vrata</a>
+                <a href="/proizvodi/bolnicka-vrata/" class="sh-mobile-sublink">Bolnička vrata</a>
+                <a href="/proizvodi/unutrasnja-vrata/" class="sh-mobile-sublink">Unutrašnja vrata</a>
+                <a href="/proizvodi/industrijska-vrata/" class="sh-mobile-sublink">Industrijska vrata</a>
+                <a href="/proizvodi/garazna-vrata/" class="sh-mobile-sublink">Garažna vrata</a>
+                <a href="/proizvodi/zastita-od-radijacije/" class="sh-mobile-sublink">Zaštita od radijacije</a>
+                <a href="/proizvodi/primax/" class="sh-mobile-sublink">PRIMAX program</a>
+            </div>
+        </div>
+
+        <a href="/kontakt/" class="sh-mobile-link" style="color: var(--sh-primary);">Kontakt</a>
     </div>
-</header>
 
-<script>
-    (function() {
-        const header = document.getElementById('siteHeader');
-        const hamburger = document.getElementById('hamburgerBtn');
-        const nav = document.getElementById('headerNav');
-        const dropdownTrigger = document.getElementById('mobileDropdownTrigger');
-        const dropdownParent = document.querySelector('.nav-item-has-dropdown');
+</div> <script>
+    (function(){
+        // Elementi
+        const hamburger = document.getElementById('sh-hamburger');
+        const mobileMenu = document.getElementById('sh-mobile-menu');
+        const overlay = document.getElementById('sh-overlay');
+        const header = document.getElementById('sh-header');
+        const accordionTrigger = document.getElementById('sh-accordion-trigger');
+        const submenu = document.getElementById('sh-mobile-submenu');
 
-        // Sticky Header Logic
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                header.classList.add('scrolled');
+        // 1. Toggle Meni Funkcija
+        function toggleMenu() {
+            const isOpen = mobileMenu.classList.contains('is-open');
+            
+            if (isOpen) {
+                // Zatvori
+                hamburger.classList.remove('is-active');
+                mobileMenu.classList.remove('is-open');
+                overlay.classList.remove('is-active');
+                document.body.style.overflow = '';
             } else {
-                header.classList.remove('scrolled');
+                // Otvori
+                hamburger.classList.add('is-active');
+                mobileMenu.classList.add('is-open');
+                overlay.classList.add('is-active');
+                document.body.style.overflow = 'hidden'; // Zabrani scroll
+            }
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // 2. Mobile Accordion Logic
+        if(accordionTrigger) {
+            accordionTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                submenu.classList.toggle('is-visible');
+                accordionTrigger.classList.toggle('is-active');
+            });
+        }
+
+        // 3. Sticky Header Logic
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 20) {
+                header.classList.add('is-scrolled');
+            } else {
+                header.classList.remove('is-scrolled');
             }
         });
 
-        // Mobile Menu Toggle
-        if (hamburger) {
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                nav.classList.toggle('active');
-                // Prevent scroll when menu is open
-                document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-            });
-        }
-
-        // Mobile Dropdown Toggle
-        if (dropdownTrigger) {
-            dropdownTrigger.addEventListener('click', (e) => {
-                if (window.innerWidth <= 992) {
-                    e.preventDefault();
-                    dropdownParent.classList.toggle('open');
-                }
-            });
-        }
-
-        // Close menu on click outside
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 992 && nav.classList.contains('active')) {
-                if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-                    hamburger.classList.remove('active');
-                    nav.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
+        // 4. Zatvori meni ako se poveca ekran
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992 && mobileMenu.classList.contains('is-open')) {
+                toggleMenu();
             }
         });
     })();

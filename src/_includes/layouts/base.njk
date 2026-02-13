@@ -40,5 +40,255 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   {% endif %}
 
+  <style id="global-responsive-contrast-overrides">
+    :root {
+      --brand-primary: #005e83;
+      --brand-primary-dark: #00445f;
+      --text-strong-global: #0f172a;
+      --text-muted-global: #475569;
+      --surface-soft-global: #f8fafc;
+      --border-soft-global: #e2e8f0;
+    }
+
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: clip;
+    }
+
+    body {
+      color: var(--text-strong-global);
+      background: #fff;
+    }
+
+    p,
+    li,
+    .hero-lead,
+    .lead-text,
+    .intro-content p,
+    .intro-main p,
+    .variant-block p,
+    .product-card p,
+    .value-card p,
+    .step-card p,
+    .help-text p,
+    .cta-text p,
+    .prod-desc {
+      color: var(--text-muted-global);
+    }
+
+    .text-accent,
+    .badge,
+    .card-category,
+    .spec-item h4 {
+      color: var(--brand-primary) !important;
+    }
+
+    .badge {
+      background: rgba(0, 94, 131, 0.12) !important;
+    }
+
+    .about-hero .text-accent,
+    .product-hero .text-accent,
+    .hero-section .text-accent {
+      color: #7dd3fc !important;
+    }
+
+    .btn,
+    .btn-primary,
+    .btn-dark,
+    .btn-glass,
+    .btn-outline-dark,
+    .btn-link,
+    .product-detail-btn {
+      min-height: 44px;
+    }
+
+    .btn-primary,
+    .btn-dark,
+    .product-detail-btn {
+      background: linear-gradient(135deg, #0b84b3, #005e83) !important;
+      border-color: #005e83 !important;
+      color: #fff !important;
+    }
+
+    .btn-primary:hover,
+    .btn-dark:hover,
+    .product-detail-btn:hover {
+      background: linear-gradient(135deg, #0a6b91, #00445f) !important;
+    }
+
+    .map-frame,
+    .map-wrapper,
+    .help-box,
+    .cta-box,
+    .cta-flex,
+    .variant-block,
+    .value-card,
+    .product-card,
+    .step-card,
+    .usage-box {
+      border-radius: 12px;
+    }
+
+    .catalog-grid,
+    .values-grid,
+    .variants-layout,
+    .products-container,
+    .why-us-layout,
+    .product-intro-grid,
+    .intro-grid,
+    .contact-layout,
+    .contact-wrapper,
+    .contact-page-wrapper,
+    .help-box,
+    .cta-box,
+    .cta-flex {
+      gap: clamp(1rem, 3vw, 2rem);
+    }
+
+    @media (max-width: 1024px) {
+      .products-container,
+      .why-us-layout,
+      .product-intro-grid,
+      .intro-grid,
+      .variants-layout,
+      .contact-layout,
+      .contact-wrapper,
+      .contact-page-wrapper {
+        grid-template-columns: 1fr !important;
+      }
+
+      .prod-list-col {
+        display: none !important;
+      }
+
+      .cta-box,
+      .help-box,
+      .cta-flex {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+
+      .section,
+      .section-alt,
+      .why-us-section,
+      .products-header {
+        padding-top: 56px !important;
+        padding-bottom: 56px !important;
+      }
+
+      .hero-section,
+      .about-hero,
+      .product-hero {
+        min-height: 480px !important;
+        height: auto !important;
+      }
+
+      .hero-content,
+      .hero-text {
+        max-width: 100%;
+      }
+
+      .hero-title,
+      .hero-text h1,
+      .product-hero h1,
+      .products-header h1,
+      .why-us-text h2,
+      .intro-content h2,
+      .intro-main h2,
+      .cta-text h2,
+      .help-text h2,
+      .prod-title {
+        font-size: clamp(1.7rem, 8vw, 2.3rem) !important;
+        line-height: 1.2;
+      }
+
+      .hero-subtitle,
+      .hero-lead,
+      .lead-text,
+      .prod-desc,
+      .help-text p,
+      .cta-text p,
+      .intro-content p,
+      .intro-main p,
+      .variant-block p,
+      .product-card p,
+      .value-card p,
+      .step-card p {
+        font-size: 1rem !important;
+      }
+
+      .products-section,
+      .section-dark {
+        padding-top: 56px !important;
+        padding-bottom: 56px !important;
+      }
+
+      .prod-actions,
+      .hero-actions,
+      .why-us-buttons {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .btn,
+      .btn-primary,
+      .btn-dark,
+      .btn-glass,
+      .btn-outline-dark {
+        width: 100%;
+        text-align: center;
+      }
+
+      .prod-nav-btns {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .catalog-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .card-content,
+      .value-card,
+      .variant-block,
+      .usage-box,
+      .cta-box,
+      .help-box,
+      .cta-flex {
+        padding: 1.25rem !important;
+      }
+
+      .map-frame,
+      .map-wrapper {
+        height: 320px !important;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero-dots {
+        gap: 8px;
+      }
+
+      .stat-item {
+        padding: 1rem !important;
+      }
+
+      .stat-num {
+        font-size: 2rem !important;
+      }
+    }
+  </style>
+
 </body>
 </html>
