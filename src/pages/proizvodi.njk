@@ -10,22 +10,178 @@ pageType: products
 isProductPage: false
 ---
 
-<main class="section" id="proizvodi-katalog">
-  <div class="container">
-    <h1 class="section-title">Naši proizvodi</h1>
-    <p class="spec-intro">
-      Izaberite kategoriju koja odgovara vašem objektu. Sva rešenja prilagođavamo tehničkim zahtevima prostora,
-      uz podršku kroz projektovanje, ugradnju i servis.
-    </p>
-
-    <div class="product-variants-grid">
-      {% for product in site.navProducts %}
-        <article class="variant-card">
-          <h3>{{ product.label }}</h3>
-          <p>Detaljne tehničke informacije, varijante i preporuke za primenu.</p>
-          <a href="{{ product.href }}" class="product-detail-btn">Pogledaj detalje</a>
-        </article>
-      {% endfor %}
+{# --- HERO SEKCIJA --- #}
+<section class="products-header">
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Početna</a> / <span>Proizvodi</span>
+        </nav>
+        <h1>Naša <span class="text-accent">rešenja</span></h1>
+        <p class="hero-lead">Sveobuhvatan program vrata i zaštitnih sistema za medicinske, industrijske i rezidencijalne objekte.</p>
     </div>
-  </div>
-</main>
+</section>
+
+{# --- KATALOG GRID --- #}
+<section class="section catalog-section">
+    <div class="container">
+        <div class="catalog-grid">
+            {% for product in site.navProducts %}
+            <article class="product-item">
+                <div class="product-card">
+                    <div class="card-content">
+                        <span class="card-category">Kategorija {{ loop.index }}</span>
+                        <h3>{{ product.label }}</h3>
+                        <p>Profesionalna rešenja, tehnička dokumentacija i stručna ugradnja za {{ product.label | lower }}.</p>
+                        <div class="card-footer">
+                            <a href="{{ product.href }}" class="btn-link">
+                                Detalji proizvoda 
+                                <span class="arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# --- GLOBALNI CTA --- #}
+<section class="section-alt help-cta">
+    <div class="container">
+        <div class="help-box">
+            <div class="help-text">
+                <h2>Niste sigurni šta vam je potrebno?</h2>
+                <p>Naš tim inženjera će vam pomoći da odaberete vrata koja najbolje odgovaraju vašem projektu i budžetu.</p>
+            </div>
+            <a href="/kontakt/" class="btn btn-dark">Konsultujte se sa nama</a>
+        </div>
+    </div>
+</section>
+
+<script id="productsData" type="application/json">
+[
+{% for product in site.products %}
+  {
+    "title": {{ product.label | dump | safe }},
+    "description": {{ product.description | dump | safe }},
+    "image": {{ product.image | dump | safe }},
+    "link": {{ product.href | dump | safe }}
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]
+</script>
+
+<style>
+    :root {
+        --accent: #005e83;
+        --dark: #1a1a1a;
+        --light: #f8fafc;
+        --border: #e2e8f0;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .text-accent { color: var(--accent); }
+
+    /* Header */
+    .products-header { padding: 80px 0 40px; background: white; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--dark); text-decoration: none; font-weight: 700; }
+    .products-header h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1; }
+    .hero-lead { font-size: 1.25rem; color: #555; max-width: 600px; margin-top: 1rem; }
+
+    /* Catalog Grid */
+    .catalog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .product-card {
+        height: 100%;
+        background: white;
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    .card-content { padding: 3rem 2.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    
+    .card-category { 
+        font-size: 0.75rem; 
+        font-weight: 800; 
+        text-transform: uppercase; 
+        color: var(--accent); 
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .product-card h3 { 
+        font-size: 1.8rem; 
+        font-weight: 800; 
+        margin-bottom: 1rem; 
+        color: var(--dark);
+        line-height: 1.2;
+    }
+
+    .product-card p { color: #666; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1; }
+
+    .btn-link {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: var(--transition);
+    }
+
+    .product-card:hover .btn-link { color: var(--accent); }
+    .arrow { transition: var(--transition); }
+    .product-card:hover .arrow { transform: translateX(5px); }
+
+    /* Help CTA */
+    .help-box {
+        background: var(--dark);
+        color: white;
+        padding: 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+    }
+    .help-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .help-text p { opacity: 0.7; font-size: 1.1rem; }
+
+    .btn-dark {
+        background: var(--accent);
+        color: white;
+        padding: 1.2rem 2.5rem;
+        text-decoration: none;
+        font-weight: 800;
+        text-transform: uppercase;
+        transition: var(--transition);
+        white-space: nowrap;
+    }
+    .btn-dark:hover { background: var(--dark); transform: translateY(-3px); }
+
+    @media (max-width: 768px) {
+        .catalog-grid { grid-template-columns: 1fr; }
+        .help-box { flex-direction: column; text-align: center; padding: 3rem 2rem; }
+        .card-content { padding: 2rem; }
+    }
+</style>

@@ -2,12 +2,488 @@
 layout: layouts/base.njk
 permalink: /
 title: "SMIŽ - Vrata, rešenja i zaštita"
-description: "SMIŽ - projektovanje, proizvodnja, ugradnja i servis vrata i zaštitnih sistema. Automatska, bolnička, industrijska i specijalna vrata po meri."
-ogTitle: "SMIŽ - Vrata, rešenja i zaštita"
-ogDescription: "Porodična firma iz Užica, osnovana 1996. Pouzdana rešenja za vrata i zaštitne sisteme, sa kompletnom podrškom od ideje do servisa."
-ogImage: "/images/logo-mini.png"
-pageType: home
-isProductPage: false
+description: "SMIŽ - Od tehničkog rešenja do ugrađenog proizvoda. Projektovanje, proizvodnja, montaža i servis."
+needsMap: true
+
+# --- LOKACIJE ZA MAPU ---
+map_locations:
+  - name: "Klinički Centar"
+    lat: 44.8097
+    lng: 20.4673
+    address: "Beograd, Srbija"
+    type: "healthcare"
+  - name: "Logistički Centar"
+    lat: 44.7866
+    lng: 20.4489
+    address: "Novi Beograd, Srbija"
+    type: "industrial"
+  - name: "SMIŽ Proizvodnja"
+    lat: 43.8585
+    lng: 19.8467
+    address: "Užice, Srbija"
+    type: "industrial"
+  - name: "Residential Tower"
+    lat: 43.3157
+    lng: 21.91255
+    address: "Niš, Srbija"
+    type: "residential" 
+  - name: "Retail Complex"
+    lat: 45.2671
+    lng: 19.8335
+    address: "Novi Sad, Srbija"
+    type: "retail"
+
+# --- HERO SLAJDER SLIKE ---
+hero_slides:
+  - image: "/images/door/AKV staklena.jpeg"
+  - image: "/images/door/harmonika.jpeg"
+  - image: "/images/door/Hermetik staklena.jpeg"
+  - image: "/images/door/RKV hodnik.jpeg"
+
+# --- ISTAKNUTI PROIZVODI ---
+featured_products:
+  - title: "Automatska vrata"
+    description: "Moderna i elegantna rešenja koja štede prostor."
+    image: "/images/door/zaokretna automatska.jpg"
+    link: "/proizvodi/automatska-vrata/"
+  - title: "Bolnička vrata"
+    description: "Specijalizovana hermetik vrata za operacione sale."
+    image: "/images/door/hermetik.jpeg"
+    link: "/proizvodi/bolnicka-vrata/"
+  - title: "Industrijska vrata"
+    description: "Robusna RKV vrata za hale i magacine."
+    image: "/images/door/RKV hodnik.jpeg"
+    link: "/proizvodi/industrijska-vrata/"
+  - title: "Zaštita od zračenja"
+    description: "Olovna vrata i stakla za rendgen sale."
+    image: "/images/door/rkv olovna.jpg"
+    link: "/proizvodi/zastita-od-radijacije/"
 ---
 
-{% extractMain "index.html" %}
+{# --- HERO SEKCIJA --- #}
+<section class="hero-section" id="hero">
+    <div class="hero-bg-wrapper">
+        {% for slide in hero_slides %}
+        <div class="hero-slide {% if loop.first %}active initial{% endif %}" 
+             style="background-image: url('{{ slide.image }}');">
+        </div>
+        {% endfor %}
+        <div class="hero-overlay"></div>
+    </div>
+
+    <div class="container hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in-up">Prostor počinje vratima</h1>
+            <p class="hero-subtitle fade-in-up delay-1">
+                Projektovanje, proizvodnja, ugradnja i servis sa fokusom na bezbednost, pouzdanost i dug vek trajanja.
+            </p>
+            
+            <div class="hero-actions fade-in-up delay-2">
+                <a href="#zasto-smiz" class="btn btn-primary">Saznajte više</a>
+                <a href="/kontakt/" class="btn btn-glass">Kontakt</a>
+            </div>
+
+            <div class="hero-dots fade-in-up delay-3">
+                {% for slide in hero_slides %}
+                <button class="hero-dot {% if loop.first %}active{% endif %}" 
+                        data-index="{{ loop.index0 }}" 
+                        aria-label="Slika {{ loop.index }}"></button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- SEKCIJA: ZAŠTO SMIŽ --- #}
+<section class="section why-us-section" id="zasto-smiz">
+    <div class="container">
+        <div class="why-us-layout">
+            <div class="why-us-text">
+                <span class="eyebrow">Zašto SMIŽ</span>
+                <h2>Od tehničkog rešenja do ugrađenog proizvoda</h2>
+                <p class="lead-text">
+                    Objedinjujemo projektovanje, proizvodnju, montažu i servis vrata kako bismo obezbedili dugotrajna, funkcionalna i tehnički pouzdana rešenja.
+                </p>
+                <div class="why-us-buttons">
+                    <a href="/o-nama/" class="btn btn-primary">O nama</a>
+                    <a href="/kontakt/" class="btn btn-outline-dark">Kontakt</a>
+                </div>
+            </div>
+
+            <div class="why-us-steps">
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">01</span><h3>Projektovanje</h3></div>
+                    <p>Razrada rešenja u skladu sa zahtevima prostora.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">02</span><h3>Proizvodnja</h3></div>
+                    <p>Fleksibilna izrada bez kompromisa u kvalitetu.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">03</span><h3>Montaža</h3></div>
+                    <p>Fleksibilna montaža prilagođena uslovima na terenu.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">04</span><h3>Servis</h3></div>
+                    <p>Servis, podrška i održavanje kao deo kontinuiranog procesa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- PROIZVODI PREGLED --- #}
+<section class="section-dark products-section" id="proizvodi-pregled">
+    <div class="prod-bg-container">
+        <div class="prod-bg-layer active" style="background-image: url('{{ featured_products[0].image }}');"></div>
+        <div class="prod-bg-layer"></div>
+        <div class="prod-overlay"></div>
+    </div>
+
+    <div class="container products-container">
+        <div class="prod-info-col">
+            <span class="eyebrow">Izdvajamo iz ponude</span>
+            <h2 id="p-title" class="prod-title">{{ featured_products[0].title }}</h2>
+            <p id="p-desc" class="prod-desc">{{ featured_products[0].description }}</p>
+            
+            <div class="prod-actions">
+                <a id="p-link" href="{{ featured_products[0].link }}" class="btn btn-primary">Saznaj više</a>
+                <div class="prod-nav-btns">
+                    <button id="prev-btn" class="nav-btn" aria-label="Prethodni">←</button>
+                    <button id="next-btn" class="nav-btn" aria-label="Sledeći">→</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="prod-list-col">
+            <div class="prod-thumbnails">
+                {% for prod in featured_products %}
+                <div class="prod-card {% if loop.first %}active{% endif %}" 
+                     data-index="{{ loop.index0 }}">
+                    <div class="card-img" style="background-image: url('{{ prod.image }}');"></div>
+                    <span class="card-title">{{ prod.title }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- MAPA --- #}
+<section class="section map-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Gde smo radili</h2>
+            <p>Poverenje nam ukazuju klijenti širom regiona.</p>
+        </div>
+        <div class="map-frame">
+            <div id="project-map"></div>
+            <div id="map-placeholder">Učitavanje mape...</div>
+        </div>
+    </div>
+</section>
+
+{# --- PARTNERI --- #}
+<section class="section partners-section">
+    <div class="container">
+        <div class="partners-grid">
+            <img src="/images/geze.jpeg" alt="GEZE">
+            <img src="/images/hormann.jpeg" alt="Hormann">
+            <img src="/images/primax-logo.svg" alt="Primax">
+            <img src="/images/derzic.png" alt="Derzic">
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- BOJE I PROMENLJIVE --- */
+    :root {
+        --primary: #0f3460;
+        --accent: #00a8cc;
+        --dark: #16213e;
+        --light: #f4f7f6;
+        --white: #ffffff;
+        --text-muted: #666;
+    }
+
+    /* --- HERO SEKCIJA I SLAJDER --- */
+    .hero-section {
+        height: 100vh;
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        color: var(--white);
+    }
+    
+    .hero-bg-wrapper { position: absolute; inset: 0; z-index: 0; background: #111; }
+    
+    .hero-slide {
+        position: absolute; inset: 0;
+        background-size: cover; background-position: center;
+        opacity: 0; 
+        transition: opacity 1.5s ease-in-out, transform 10s ease;
+        transform: scale(1);
+        z-index: 1;
+    }
+    
+    /* FALLBACK: Prva slika je uvek vidljiva inicijalno */
+    .hero-slide.initial { opacity: 1; z-index: 2; }
+
+    /* Aktivna slika (animacija) */
+    .hero-slide.active {
+        opacity: 1;
+        transform: scale(1.1); /* Ken Burns efekat */
+        z-index: 3;
+    }
+
+    .hero-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.3));
+        z-index: 4;
+    }
+
+    .hero-content { position: relative; z-index: 10; padding-top: 60px; max-width: 700px; }
+    .hero-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+    .hero-subtitle { font-size: 1.25rem; line-height: 1.6; opacity: 0.9; margin-bottom: 40px; }
+
+    .hero-dots { display: flex; gap: 12px; margin-top: 50px; }
+    .hero-dot { width: 12px; height: 12px; border: 1px solid rgba(255,255,255,0.5); background: transparent; border-radius: 50%; cursor: pointer; padding: 0; transition: 0.3s; }
+    .hero-dot.active { background: var(--accent); border-color: var(--accent); transform: scale(1.3); }
+
+    /* --- ZAŠTO SMIŽ SEKCIJA --- */
+    .why-us-section { padding: 100px 0; background: #fff; }
+    .why-us-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    
+    .why-us-text h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; font-weight: 800; }
+    .lead-text { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
+    .why-us-buttons { display: flex; gap: 15px; }
+
+    .why-us-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .step-card {
+        background: #f9f9f9; padding: 25px; border-radius: 8px;
+        transition: 0.3s; border-left: 3px solid transparent;
+    }
+    .step-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left-color: var(--accent); background: white; }
+    
+    .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .step-num { font-size: 1.5rem; font-weight: 900; color: #e0e0e0; }
+    .step-card h3 { font-size: 1.1rem; color: var(--primary); margin: 0; font-weight: 700; }
+    .step-card p { font-size: 0.9rem; color: #666; margin: 0; }
+
+    /* --- GLOBAL HELPERS --- */
+    .section { padding: 80px 0; position: relative; }
+    .section-dark { background-color: var(--dark); color: var(--white); padding: 100px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+    
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border-radius: 4px; transition: 0.3s; font-size: 0.9rem; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: var(--white); border: 1px solid var(--accent); }
+    .btn-primary:hover { background: #008cb3; }
+    .btn-glass { background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); margin-left: 15px; }
+    .btn-glass:hover { background: var(--white); color: var(--dark); }
+    .btn-outline-dark { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
+    .btn-outline-dark:hover { background: var(--primary); color: var(--white); }
+    
+    .eyebrow { display: block; text-transform: uppercase; color: var(--accent); font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 10px; }
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-header h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
+
+    /* --- PROIZVODI SEKCIJA --- */
+    .products-section { position: relative; min-height: 600px; display: flex; align-items: center; overflow: hidden; }
+    .prod-bg-container { position: absolute; inset: 0; z-index: 0; }
+    .prod-bg-layer { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.6s ease; }
+    .prod-bg-layer.active { opacity: 1; }
+    .prod-overlay { position: absolute; inset: 0; background: rgba(22, 33, 62, 0.92); backdrop-filter: blur(5px); }
+
+    .products-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .prod-title { font-size: 3rem; margin-bottom: 20px; line-height: 1.1; }
+    .prod-desc { font-size: 1.1rem; color: #ccc; margin-bottom: 40px; min-height: 3.2em; }
+    .prod-actions { display: flex; align-items: center; justify-content: space-between; }
+    .prod-nav-btns { display: flex; gap: 10px; }
+    .nav-btn { width: 45px; height: 45px; border-radius: 50%; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+    .nav-btn:hover { background: var(--accent); }
+
+    .prod-thumbnails { display: grid; gap: 15px; }
+    .prod-card { display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
+    .prod-card:hover, .prod-card.active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateX(-10px); }
+    .prod-card.active { border-color: var(--accent); }
+    .card-img { width: 60px; height: 60px; border-radius: 4px; background-size: cover; background-position: center; flex-shrink: 0; }
+
+    /* --- PARTNERI --- */
+    .partners-section { background: #fafafa; padding: 60px 0; border-top: 1px solid #eee; }
+    .partners-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 40px; opacity: 0.6; filter: grayscale(100%); transition: 0.3s; }
+    .partners-grid:hover { opacity: 1; filter: grayscale(0); }
+    .partners-grid img { height: 45px; width: auto; object-fit: contain; }
+
+    /* --- MAPA --- */
+    .map-frame { height: 450px; background: #eee; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    #project-map { width: 100%; height: 100%; z-index: 1; }
+    #map-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #999; z-index: 0; }
+
+    /* --- ANIMACIJE --- */
+    .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .why-us-layout { grid-template-columns: 1fr; }
+        .why-us-steps { grid-template-columns: 1fr; }
+        .products-container { grid-template-columns: 1fr; }
+        .prod-list-col { display: none; }
+        .hero-title { font-size: 2.5rem; }
+        .why-us-buttons { flex-direction: column; }
+        .btn-glass, .btn-outline-dark { margin-left: 0; margin-top: 10px; width: 100%; text-align: center; }
+        .prod-actions { flex-direction: column; gap: 20px; }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. HERO SLIDER (Sigurna verzija)
+    // ----------------------------------------------------
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    let heroIndex = 0;
+    let heroInterval;
+
+    function showHeroSlide(index) {
+        if (heroSlides.length === 0) return;
+
+        // Ukloni active sa svih
+        heroSlides.forEach(s => {
+            s.classList.remove('active');
+            // Uklanjamo i initial klasu da ne smeta animaciji kad JS preuzme
+            s.classList.remove('initial'); 
+        });
+        heroDots.forEach(d => d.classList.remove('active'));
+
+        // Aktiviraj novi
+        if (heroSlides[index]) heroSlides[index].classList.add('active');
+        if (heroDots[index]) heroDots[index].classList.add('active');
+        
+        heroIndex = index;
+    }
+
+    function startHeroTimer() {
+        if (heroSlides.length < 2) return; // Ne vrti ako ima samo 1 slika
+        clearInterval(heroInterval);
+        heroInterval = setInterval(() => {
+            let nextIndex = (heroIndex + 1) % heroSlides.length;
+            showHeroSlide(nextIndex);
+        }, 5000);
+    }
+
+    // Klik na tačkice
+    heroDots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const idx = parseInt(e.target.dataset.index);
+            showHeroSlide(idx);
+            startHeroTimer();
+        });
+    });
+
+    // Pokreni odmah
+    startHeroTimer();
+
+
+    // 2. PRODUCT SLIDER
+    // ----------------------------------------------------
+    // Učitavamo podatke bezbedno
+    const productsData = {{ featured_products | dump | safe }};
+    const pTitle = document.getElementById('p-title');
+    const pDesc = document.getElementById('p-desc');
+    const pLink = document.getElementById('p-link');
+    const bgLayers = document.querySelectorAll('.prod-bg-layer');
+    const prodCards = document.querySelectorAll('.prod-card');
+    let prodIndex = 0;
+
+    function updateProduct(index) {
+        if (!productsData || !productsData[index]) return;
+        const prod = productsData[index];
+
+        // Update teksta
+        if(pTitle) pTitle.textContent = prod.title;
+        if(pDesc) pDesc.textContent = prod.description;
+        if(pLink) pLink.href = prod.link;
+
+        // Update pozadine (Crossfade)
+        if (bgLayers.length >= 2) {
+            bgLayers[1].style.backgroundImage = bgLayers[0].style.backgroundImage;
+            bgLayers[1].classList.add('active');
+            bgLayers[0].classList.remove('active');
+
+            setTimeout(() => {
+                bgLayers[0].style.backgroundImage = `url('${prod.image}')`;
+                bgLayers[0].classList.add('active');
+                bgLayers[1].classList.remove('active');
+            }, 50);
+        }
+
+        // Update kartica
+        prodCards.forEach(c => c.classList.remove('active'));
+        if(prodCards[index]) prodCards[index].classList.add('active');
+
+        prodIndex = index;
+    }
+
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+
+    if(nextBtn) nextBtn.addEventListener('click', () => {
+        let next = (prodIndex + 1) % productsData.length;
+        updateProduct(next);
+    });
+
+    if(prevBtn) prevBtn.addEventListener('click', () => {
+        let prev = (prodIndex - 1 + productsData.length) % productsData.length;
+        updateProduct(prev);
+    });
+
+    prodCards.forEach(card => {
+        card.addEventListener('click', () => {
+            updateProduct(parseInt(card.dataset.index));
+        });
+    });
+
+
+    // 3. MAPA (Lazy Load)
+    // ----------------------------------------------------
+    const mapLocations = {{ map_locations | dump | safe }};
+    const mapContainer = document.getElementById('project-map');
+    let mapLoaded = false;
+
+    function initMap() {
+        if (typeof L === 'undefined' || !mapContainer) return;
+
+        const map = L.map('project-map', { scrollWheelZoom: false }).setView([44.2, 20.9], 7);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+        mapLocations.forEach(loc => {
+            if(loc.lat && loc.lng) {
+                L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(`<b>${loc.name}</b><br>${loc.address}`);
+            }
+        });
+
+        const loader = document.getElementById('map-placeholder');
+        if(loader) loader.style.display = 'none';
+    }
+
+    if (mapContainer && window.IntersectionObserver) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !mapLoaded) {
+                initMap();
+                mapLoaded = true;
+                observer.disconnect();
+            }
+        }, { threshold: 0.1 });
+        observer.observe(document.querySelector('.map-section'));
+    } else {
+        initMap();
+    }
+});
+</script>

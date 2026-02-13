@@ -2,12 +2,350 @@
 layout: layouts/base.njk
 permalink: /kontakt/
 title: "SMIŽ - Kontakt"
-description: "SMIŽ - Kontakt i podrška. Pišite nam za ponude, projektovanje, ugradnju i servis vrata i zaštitnih sistema."
-ogTitle: "SMIŽ - Kontakt"
-ogDescription: "Kontaktirajte SMIŽ tim za ponude, tehničke konsultacije i servis. Dostupni smo telefonom i email-om."
-ogImage: "/images/logo-mini.png"
+description: "Kontaktirajte SMIŽ tim za ponude, tehničke konsultacije i servis. Dostupni smo telefonom i email-om."
 pageType: contact
-isProductPage: false
 ---
 
-{% extractMain "pages/contact.html" %}
+{# --- HERO SEKCIJA --- #}
+<section class="contact-hero">
+    <div class="container">
+        <div class="hero-content">
+            <span class="eyebrow">Stupimo u kontakt</span>
+            <h1>Tu smo za <span class="text-highlight">vas</span></h1>
+            <p class="hero-lead">
+                Imate pitanje o našim proizvodima ili vam je potreban servis? 
+                Naš tim je spreman da odgovori na sve vaše zahteve i pruži najbolje tehničko rešenje.
+            </p>
+        </div>
+    </div>
+</section>
+
+{# --- KONTAKT INFORMACIJE & MAPA --- #}
+<section class="section info-section">
+    <div class="container">
+        <div class="contact-layout">
+            
+            <div class="info-grid">
+                
+                <div class="info-card">
+                    <div class="icon-box">📍</div>
+                    <div class="info-content">
+                        <h3>Posetite nas</h3>
+                        <p class="info-main">Miloša Obrenovića 4a</p>
+                        <p class="info-sub">31000 Užice, Srbija</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="icon-box">📞</div>
+                    <div class="info-content">
+                        <h3>Pozovite nas</h3>
+                        <div class="links-stack">
+                            <a href="tel:+381605430266" class="phone-link">+381 60 5430 266</a>
+                            <a href="tel:+381641353283" class="phone-link">+381 64 1353 283</a>
+                        </div>
+                        <p class="info-sub">Ponedeljak - Petak: 07:00 - 15:00</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="icon-box">✉️</div>
+                    <div class="info-content">
+                        <h3>Pišite nam</h3>
+                        <div class="links-stack">
+                            <a href="mailto:office@smiz.rs" class="email-link">office@smiz.rs</a>
+                            <a href="mailto:smiz@smiz.rs" class="email-link">smiz@smiz.rs</a>
+                            <a href="mailto:servis@smiz.rs" class="email-link">servis@smiz.rs</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2869.467362939638!2d19.84036631550974!3d43.85854697911467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4759d2a09506692d%3A0x6291587595513904!2sMilo%C5%A1a%20Obrenovi%C4%87a%204a%2C%20U%C5%BEice!5e0!3m2!1sen!2srs!4v1646234567890!5m2!1sen!2srs" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    title="SMIŽ Lokacija">
+                </iframe>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{# --- FORMA ZA UPIT --- #}
+<section class="section form-section">
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-intro">
+                <h2>Pošaljite nam upit</h2>
+                <p>Popunite formular ispod i naš tim će vas kontaktirati u najkraćem roku sa konkretnim predlogom.</p>
+            </div>
+
+            <form id="contactForm" class="contact-form" action="#" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Ime i prezime</label>
+                        <input type="text" id="name" name="name" placeholder="Vaše ime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Kompanija (opciono)</label>
+                        <input type="text" id="company" name="company" placeholder="Naziv firme">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="email">Email adresa</label>
+                        <input type="email" id="email" name="email" placeholder="vas@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+381 6...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="topic">Vrsta upita</label>
+                    <div class="select-wrapper">
+                        <select id="topic" name="topic">
+                            <option value="ponuda">Zahtev za ponudu</option>
+                            <option value="servis">Prijava kvara / Servis</option>
+                            <option value="konsultacije">Tehničke konsultacije</option>
+                            <option value="ostalo">Ostalo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Poruka</label>
+                    <textarea id="message" name="message" rows="6" placeholder="Opišite detalje vašeg zahteva..." required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Pošalji poruku</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- VARIABLES --- */
+    :root {
+        --primary: #005e83;
+        --primary-dark: #004560;
+        --secondary: #f0f4f8;
+        --text-dark: #1a202c;
+        --text-gray: #4a5568;
+        --text-light: #a0aec0;
+        --border-color: #e2e8f0;
+        --card-bg: #ffffff;
+        --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    }
+
+    /* --- GLOBAL LAYOUT --- */
+    .section { padding: 80px 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    
+    /* --- HERO SECTION --- */
+    .contact-hero {
+        background: linear-gradient(to bottom, #f7fafc, #edf2f7);
+        padding: 120px 0 80px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .eyebrow {
+        display: block;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    .contact-hero h1 {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 800;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        line-height: 1.1;
+    }
+    
+    .text-highlight { color: var(--primary); }
+
+    .hero-lead {
+        font-size: 1.15rem;
+        color: var(--text-gray);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* --- INFO SECTION --- */
+    .info-section { background: #fff; }
+    
+    .contact-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: stretch;
+    }
+
+    /* Cards */
+    .info-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .info-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 30px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow);
+        border-color: var(--primary);
+    }
+
+    .icon-box {
+        font-size: 1.5rem;
+        width: 50px;
+        height: 50px;
+        background: var(--secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .info-content h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+    }
+
+    .info-main { font-size: 1.1rem; color: var(--text-dark); font-weight: 500; }
+    .info-sub { font-size: 0.9rem; color: var(--text-light); margin-top: 5px; }
+
+    .links-stack { display: flex; flex-direction: column; gap: 5px; }
+    .phone-link, .email-link {
+        font-size: 1.1rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+    .phone-link:hover, .email-link:hover { color: var(--primary-dark); text-decoration: underline; }
+
+    /* Map */
+    .map-container {
+        border-radius: 12px;
+        overflow: hidden;
+        min-height: 400px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+    }
+
+    /* --- FORM SECTION --- */
+    .form-section { background: var(--secondary); }
+    
+    .form-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-intro { text-align: center; margin-bottom: 40px; }
+    .form-intro h2 { font-size: 2rem; color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
+    .form-intro p { color: var(--text-gray); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px; 
+    }
+
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid var(--border-color);
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 1rem;
+        color: var(--text-dark);
+        background: #fff;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus, 
+    .form-group select:focus, 
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 94, 131, 0.1);
+    }
+
+    /* Select arrow custom style hack can be added here if needed, but simple is better */
+    
+    .form-actions { margin-top: 10px; }
+    
+    .btn {
+        display: inline-block;
+        width: 100%;
+        padding: 15px;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+        .map-container { min-height: 300px; order: -1; } /* Mapa ide gore na mobilnom */
+        .form-grid { grid-template-columns: 1fr; }
+        .form-wrapper { padding: 30px 20px; }
+        .hero-lead { font-size: 1rem; }
+    }
+</style>

@@ -10,4 +10,207 @@ pageType: product
 isProductPage: true
 ---
 
-{% extractMain "pages/garazna-vrata.html" %}
+{# --- HERO SEKCIJA --- #}
+<section class="product-hero">
+    <div class="hero-bg">
+        <img src="/images/door/garazna.jpeg" alt="Garažna vrata Hörmann" class="hero-img">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <nav class="breadcrumb">
+                <a href="/">Početna</a> / <a href="/#proizvodi">Proizvodi</a>
+            </nav>
+            <h1>Garažna <span class="text-accent">vrata</span></h1>
+            <p class="hero-lead">Elegancija i sigurnost za vaš dom uz vrhunsku nemačku tehnologiju Hörmann sistema.</p>
+        </div>
+    </div>
+</section>
+
+{# --- HÖRMANN PARTNER SEKCIJA --- #}
+<section class="section">
+    <div class="container">
+        <div class="partner-intro">
+            <div class="partner-text">
+                <span class="badge">Zvanični partner</span>
+                <h2>Sve prednosti Hörmann kvaliteta</h2>
+                <p>Kada birate garažna vrata, birate mirnu glavu. Hörmann sistemi su plod pedesetogodišnjeg iskustva, testirani u skladu sa najstrožim evropskim standardima (EN 13241-1).</p>
+                <div class="benefits-mini-grid">
+                    <div class="b-item"><span>🛡️</span> BiSecur sigurnost</div>
+                    <div class="b-item"><span>🌡️</span> Toplotna izolacija</div>
+                    <div class="b-item"><span>🎨</span> Decograin završna obrada</div>
+                    <div class="b-item"><span>🤫</span> Tihi rad pogona</div>
+                </div>
+            </div>
+            <div class="partner-image">
+                 
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- KATEGORIJE PROIZVODA --- #}
+<section class="section-alt">
+    <div class="container">
+        
+        {# 01. SEGMENTNA VRATA #}
+        <div class="product-feature">
+            <div class="feature-info">
+                <span class="f-num">01</span>
+                <h2>Segmentna garažna vrata</h2>
+                <p>Najprodavaniji model koji štedi prostor. Otvaraju se vertikalno i ostaju ispod plafona, ostavljajući slobodan prostor ispred i unutar garaže.</p>
+                <ul class="spec-list">
+                    <li><strong>LPU 67 Thermo:</strong> Vrhunska izolacija za energetski efikasne kuće.</li>
+                    <li><strong>LPU 42:</strong> Optimalna stabilnost i miran hod.</li>
+                    <li><strong>LTH 42:</strong> Ekskluzivna izvedba od punog drveta.</li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                
+            </div>
+        </div>
+
+        {# 02. BERRY KIPUJUĆA #}
+        <div class="product-feature reverse">
+            <div class="feature-info">
+                <span class="f-num">02</span>
+                <h2>Berry kipujuća vrata</h2>
+                <p>Klasik koji nikada ne izlazi iz mode. Spoj decenijskog iskustva i modernog dizajna. Dostupna u preko 200 boja RAL palete i varijantama od nordijske jele.</p>
+                <div class="variant-tag">Mogućnost izrade bočnih vrata u identičnom motivu.</div>
+            </div>
+            <div class="feature-visual">
+                </div>
+        </div>
+
+        {# 03. ROLLMATIC #}
+        <div class="product-feature">
+            <div class="feature-info">
+                <span class="f-num">03</span>
+                <h2>RollMatic rolo vrata</h2>
+                <p>Idealno rešenje za garaže sa malo prostora ispod plafona. Vertikalno namotavanje omogućava maksimalno iskorišćenje unutrašnjosti.</p>
+                <ul class="spec-list">
+                    <li><strong>DuraBelt:</strong> Zaštita od ogrebotina pri namotavanju.</li>
+                    <li><strong>Bluetooth:</strong> Upravljanje putem pametnog telefona.</li>
+                    <li><strong>Kompaktnost:</strong> Ne zahteva bočni prostor.</li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                 
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{# --- ZAJEDNIČKE GARAŽE --- #}
+<section class="section dark-section">
+    <div class="container">
+        <div class="section-header white-text">
+            <h2>Vrata za zajedničke garaže</h2>
+            <p>Robusna rešenja za stambene zgrade i kolektivne parkinge sa visokom frekvencijom upotrebe.</p>
+        </div>
+        <div class="commercial-grid">
+            <div class="comm-card">
+                <h4>N 500 / ET 500</h4>
+                <p>Zaokretno-kipujuća vrata sa ekstremno mirnim hodom, testirana na minimalno 250.000 ciklusa.</p>
+            </div>
+            <div class="comm-card">
+                <h4>ST 500</h4>
+                <p>Klizna vrata koja zahtevaju minimalnu dubinu ugradnje u predelu grede.</p>
+            </div>
+            <div class="comm-card">
+                <h4>Brza segmentna</h4>
+                <p>Mikro-profilisana površina i velika brzina rada za efikasan protok saobraćaja.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- CTA --- #}
+<section class="section cta-minimal">
+    <div class="container">
+        <div class="cta-flex">
+            <h2>Vaša garaža zaslužuje najbolje.</h2>
+            <a href="/kontakt/" class="btn btn-primary">Besplatna procena</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    :root {
+        --accent: #005e83;
+        --dark: #1a1a1a;
+        --light: #f8fafc;
+        --white: #ffffff;
+        --transition: all 0.3s ease;
+    }
+
+    /* Hero */
+    .product-hero {
+        height: 50vh;
+        min-height: 400px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        color: var(--white);
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: -1; }
+    .hero-img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+    
+    .breadcrumb { font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.7; }
+    .breadcrumb a { color: var(--white); text-decoration: none; font-weight: 700; }
+    .product-hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; }
+    .hero-lead { font-size: 1.2rem; max-width: 600px; }
+
+    /* Partner Intro */
+    .partner-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .partner-text h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+    .partner-text p { font-size: 1.1rem; line-height: 1.7; color: #555; margin-bottom: 2rem; }
+    
+    .benefits-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .b-item { background: var(--light); padding: 1rem; font-weight: 700; font-size: 0.9rem; border-left: 3px solid var(--accent); }
+
+    /* Product Feature Blocks */
+    .product-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; padding: 100px 0; }
+    .product-feature.reverse { direction: rtl; }
+    .product-feature.reverse .feature-info { direction: ltr; }
+    
+    .f-num { font-size: 4rem; font-weight: 900; color: #f0f0f0; display: block; line-height: 1; margin-bottom: 1rem; }
+    .feature-info h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1.5rem; }
+    .feature-info p { font-size: 1.1rem; color: #444; line-height: 1.7; margin-bottom: 1.5rem; }
+    
+    .spec-list { list-style: none; padding: 0; }
+    .spec-list li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; }
+    .spec-list li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: 900; }
+    .variant-tag { background: var(--dark); color: white; padding: 1rem; font-size: 0.9rem; display: inline-block; }
+
+    /* Dark Section (Shared Garages) */
+    .dark-section { background: var(--dark); padding: 100px 0; }
+    .white-text h2 { color: white; font-size: 2.5rem; }
+    .white-text p { color: #aaa; }
+    
+    .commercial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .comm-card { background: #222; padding: 3rem; border: 1px solid #333; transition: var(--transition); }
+    .comm-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .comm-card h4 { color: white; font-size: 1.3rem; margin-bottom: 1rem; }
+    .comm-card p { color: #888; font-size: 0.95rem; line-height: 1.6; }
+
+    /* Utilities */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 100px 0; }
+    .section-alt { background: #fafafa; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .badge { display: inline-block; padding: 5px 12px; background: rgba(0, 94, 131, 0.12); color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 1rem; }
+    
+    .btn { display: inline-block; padding: 1.2rem 2.5rem; background: var(--accent); color: white; text-decoration: none; font-weight: 800; text-transform: uppercase; transition: var(--transition); }
+    .btn:hover { background: var(--dark); transform: scale(1.05); }
+    .cta-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
+
+    @media (max-width: 992px) {
+        .partner-intro, .product-feature { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+        .product-feature.reverse { direction: ltr; }
+        .benefits-mini-grid { text-align: left; }
+        .cta-flex { justify-content: center; text-align: center; }
+    }
+</style>

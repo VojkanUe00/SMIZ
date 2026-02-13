@@ -10,4 +10,209 @@ pageType: about
 isProductPage: false
 ---
 
-{% extractMain "pages/about.html" %}
+{# --- HERO SEKCIJA --- #}
+<section class="about-hero">
+    <div class="hero-bg">
+        <img src="/images/door/AKV staklena.jpeg" alt="SMIŽ proizvodnja" class="hero-img">
+        <div class="hero-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="hero-text">
+            <span class="eyebrow">Tradicija i Inovacija</span>
+            <h1>Više od vrata. <br><span class="text-accent">Inženjerska rešenja.</span></h1>
+        </div>
+    </div>
+</section>
+
+{# --- INTRO / PRIČA --- #}
+<section class="section intro">
+    <div class="container">
+        <div class="intro-grid">
+            <div class="intro-content">
+                <span class="badge">Ko smo mi</span>
+                <h2>Porodična priča koja raste kroz projekte</h2>
+                <p>
+                    SMIŽ je nastao kao vizija porodične radionice u Užicu, a danas smo prepoznatljiv regionalni partner za najkompleksnije sisteme vrata. 
+                    Od automatike i bolničkih sistema do industrijskih postrojenja — naša snaga je u **spoju zanatske preciznosti i moderne tehnologije**.
+                </p>
+                <p>
+                    Prisutni smo na tržištima Srbije, Crne Gore, BiH, Makedonije i Slovenije, gde svakodnevno dokazujemo da domaći proizvod može parirati svetskim standardima.
+                </p>
+            </div>
+            <div class="intro-stats">
+                <div class="stat-item">
+                    <span class="stat-num">30+</span>
+                    <span class="stat-label">Godina iskustva</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">5</span>
+                    <span class="stat-label">Tržišta u regionu</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">100%</span>
+                    <span class="stat-label">Fokus na servis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- POSLOVNA POLITIKA (Vrednosti) --- #}
+<section class="section-alt values">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge">Standardi</span>
+            <h2>Kompletan ciklus na jednom mestu</h2>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🛠️</div>
+                <h3>Tehnička podrška</h3>
+                <p>Ne prodajemo samo proizvod, već razvijamo rešenja prema nameni vašeg objekta.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🏗️</div>
+                <h3>Precizna ugradnja</h3>
+                <p>Naši timovi koordinišu montažu tako da se procesi na gradilištu ne prekidaju.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔧</div>
+                <h3>Doživotni servis</h3>
+                <p>Obezbeđujemo originalne rezervne delove i podršku tokom celog veka trajanja vrata.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h3>Partnerstva</h3>
+                <p>Zastupnici smo vodećih svetskih brendova poput GEZE, HÖRMANN i PRIMAX.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- CTA PANEL --- #}
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-box">
+            <div class="cta-text">
+                <h2>Spremni za vaš sledeći projekat?</h2>
+                <p>Pošaljite nam projektni zadatak i naši inženjeri će vam predložiti najbolje rešenje.</p>
+            </div>
+            <a href="/kontakt/" class="btn btn-primary">Pošaljite upit</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* CSS specifičan za O nama stranicu */
+    :root {
+        --accent: #9cbaf3;
+        --dark: #1a1a1a;
+        --light: #f8f8f8;
+        --transition: all 0.3s ease;
+    }
+
+    .text-accent { color: var(--accent); }
+    .badge { 
+        display: inline-block; 
+        padding: 5px 15px; 
+        background: rgba(211, 47, 47, 0.1); 
+        color: var(--accent); 
+        font-weight: 700; 
+        font-size: 0.8rem; 
+        text-transform: uppercase; 
+        margin-bottom: 1rem;
+        border-radius: 2px;
+    }
+
+    /* Hero */
+    .about-hero {
+        height: 60vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: -1; }
+    .hero-img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+    .hero-text h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.1; }
+
+    /* Intro Grid */
+    .intro-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+    .intro-content h2 { font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 800; line-height: 1.2; }
+    .intro-content p { font-size: 1.1rem; color: #555; line-height: 1.7; margin-bottom: 1.5rem; }
+
+    .intro-stats {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .stat-item {
+        background: var(--light);
+        padding: 2rem;
+        text-align: center;
+        border-left: 5px solid var(--accent);
+    }
+    .stat-num { font-size: 3rem; font-weight: 900; color: var(--dark); display: block; }
+    .stat-label { font-weight: 600; color: #777; text-transform: uppercase; font-size: 0.8rem; }
+
+    /* Values Grid */
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2rem;
+    }
+    .value-card {
+        background: white;
+        padding: 3rem 2rem;
+        transition: var(--transition);
+        border: 1px solid #eee;
+    }
+    .value-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+    .value-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+    .value-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 1rem; }
+    .value-card p { color: #666; line-height: 1.6; }
+
+    /* CTA Section */
+    .cta-box {
+        background: var(--dark);
+        color: white;
+        padding: 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+    }
+    .cta-text h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .cta-text p { opacity: 0.8; font-size: 1.1rem; }
+
+    /* Utilities */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 100px 0; }
+    .section-alt { padding: 100px 0; background: var(--light); }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header h2 { font-size: 2.5rem; font-weight: 800; }
+
+    .btn {
+        display: inline-block;
+        padding: 1.2rem 2.5rem;
+        background: var(--accent);
+        color: white;
+        text-decoration: none;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: var(--transition);
+    }
+    .btn:hover { background: #b71c1c; transform: scale(1.05); }
+
+    @media (max-width: 992px) {
+        .intro-grid { grid-template-columns: 1fr; gap: 3rem; }
+        .cta-box { flex-direction: column; text-align: center; padding: 3rem 2rem; }
+    }
+</style>

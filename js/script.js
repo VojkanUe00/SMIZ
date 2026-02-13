@@ -10,8 +10,6 @@ const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 const currentYear = document.getElementById('currentYear');
 
-let mobileMenuBackdrop = null;
-
 // ============================================
 // Inicijalizacija
 // ============================================
@@ -50,51 +48,28 @@ document.addEventListener('DOMContentLoaded', () => {
 // Hamburger Meni
 // ============================================
 if (hamburger && navMenu) {
-    const ensureMobileBackdrop = () => {
-        if (mobileMenuBackdrop) return;
-        mobileMenuBackdrop = document.createElement('div');
-        mobileMenuBackdrop.className = 'mobile-menu-backdrop';
-        mobileMenuBackdrop.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(mobileMenuBackdrop);
-
-        mobileMenuBackdrop.addEventListener('click', () => {
-            closeMobileMenu();
-        });
-    };
-
-    const setMobileMenuState = (isOpen) => {
-        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        navMenu.classList.toggle('active', isOpen);
-        document.body.classList.toggle('menu-open', isOpen);
-
-        if (mobileMenuBackdrop) {
-            mobileMenuBackdrop.classList.toggle('active', isOpen);
-        }
-    };
-
     const closeMobileMenu = () => {
-        setMobileMenuState(false);
-
-        if (productsDropdown && navItemDropdown && window.innerWidth <= 1023) {
-            navItemDropdown.classList.remove('active');
-            productsDropdown.setAttribute('aria-expanded', 'false');
-        }
+        hamburger.setAttribute('aria-expanded', 'false');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = '';
     };
-
-    ensureMobileBackdrop();
-    hamburger.setAttribute('aria-controls', 'navMenu');
 
     hamburger.addEventListener('click', () => {
         const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-        setMobileMenuState(!isExpanded);
+        hamburger.setAttribute('aria-expanded', !isExpanded);
+        navMenu.classList.toggle('active');
+
+        // Prevencija scroll-a kada je meni otvoren
+        if (!isExpanded) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     });
 
     // Zatvori meni kada se klikne na link
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (window.innerWidth <= 1023 && link.id === 'productsDropdown') {
-                return;
-            }
             closeMobileMenu();
         });
     });
@@ -110,12 +85,6 @@ if (hamburger && navMenu) {
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeMobileMenu();
-        }
-    });
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1023) {
             closeMobileMenu();
         }
     });
@@ -150,9 +119,11 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
     // Mobile: click
     productsDropdown.addEventListener('click', (e) => {
         if (window.innerWidth <= 1023) {
-            e.preventDefault();
             const isOpen = navItemDropdown.classList.contains('active');
-            setDropdownState(!isOpen);
+            if (!isOpen) {
+                e.preventDefault();
+                setDropdownState(true);
+            }
         }
     });
 
@@ -165,10 +136,7 @@ if (productsDropdown && productsDropdownMenu && navItemDropdown) {
             if (hamburger && navMenu) {
                 hamburger.setAttribute('aria-expanded', 'false');
                 navMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
-                if (mobileMenuBackdrop) {
-                    mobileMenuBackdrop.classList.remove('active');
-                }
+                document.body.style.overflow = '';
             }
         });
     });
@@ -241,8 +209,7 @@ function initActiveLinkTracking() {
             const linkPath = normalizePath(url.pathname);
             const isHome = linkPath === '/' && currentPath === '/';
             const isDirectMatch = linkPath === currentPath;
-            const isProductsParent = linkPath === '/proizvodi/' && currentPath.startsWith('/proizvodi/');
-            link.classList.toggle('active', isHome || isDirectMatch || isProductsParent);
+            link.classList.toggle('active', isHome || isDirectMatch);
         } catch {
             // noop
         }
@@ -809,7 +776,7 @@ function initProductsHeroSlider() {
             link: '/proizvodi/garazna-vrata/'
         },
         {
-            title: 'Olovna stakla i olovni limovi',
+            title: 'Olovna stakla i  olovni limovi',
             description: 'Olovna stakla, olovni limovi, ploče i prizme za zaštitu od jonizujućeg zračenja. Za zdravstvene ustanove, laboratorije i industrijske objekte.',
             image: 'images/door/rkv olovna.jpg',
             link: '/proizvodi/zastita-od-radijacije/'

@@ -1,30 +1,291 @@
-<header class="header" id="header">
-  <div class="container">
-    <nav class="nav">
-      <a href="/" class="logo" aria-label="SMIŽ početna stranica">
-        <img src="/images/smiz.png" alt="SMIŽ Logo" class="logo-img" loading="lazy" decoding="async">
-      </a>
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="/" class="nav-link {{ 'active' if pageType == 'home' else '' }}">Početna</a></li>
-        <li><a href="/o-nama/" class="nav-link {{ 'active' if pageType == 'about' else '' }}">O nama</a></li>
-        <li class="nav-item-dropdown">
-          <a href="/proizvodi/" class="nav-link nav-link-dropdown {{ 'active' if isProductPage or pageType == 'products' else '' }}" id="productsDropdown" aria-haspopup="true" aria-expanded="false">
-            Proizvodi
-            <span class="dropdown-arrow">▼</span>
-          </a>
-          <ul class="dropdown-menu" id="productsDropdownMenu">
-            {% for product in site.navProducts %}
-              <li><a href="{{ product.href }}" class="dropdown-link">{{ product.label }}</a></li>
-            {% endfor %}
-          </ul>
-        </li>
-        <li><a href="/kontakt/" class="nav-link {{ 'active' if pageType == 'contact' else '' }}">Kontakt</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-  </div>
+<style>
+    /* Reset za header da ne zavisi od globalnog CSS-a */
+    .site-header * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        padding: 0 20px;
+        font-family: sans-serif; /* Fallback font */
+    }
+
+    /* Glass efekat na skrol */
+    .site-header.scrolled {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: height 0.3s ease;
+    }
+
+    .site-header.scrolled .header-inner { height: 60px; }
+
+    /* Logo */
+    .header-logo img {
+        height: 40px;
+        width: auto;
+        display: block;
+        transition: transform 0.3s;
+    }
+
+    /* Navigacija */
+    .header-nav { display: flex; align-items: center; }
+    .nav-list {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        padding: 5px 0;
+        transition: color 0.3s;
+    }
+
+    .nav-link:hover, .nav-link.active { color: #005e83; }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #005e83;
+        transition: width 0.3s;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+    /* Dropdown */
+    .nav-item-has-dropdown { position: relative; }
+    .dropdown-trigger { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+    .dropdown-arrow { transition: transform 0.3s; font-size: 10px; }
+    .nav-item-has-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        min-width: 220px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-top: 3px solid #005e83;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        list-style: none;
+        padding: 10px 0;
+        border-radius: 0 0 4px 4px;
+    }
+
+    .nav-item-has-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .dropdown-link {
+        display: block;
+        padding: 10px 20px;
+        color: #444;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background 0.2s, color 0.2s;
+    }
+
+    .dropdown-link:hover {
+        background: #f4f4f4;
+        color: #005e83;
+        padding-left: 25px;
+    }
+
+    /* Hamburger */
+    .hamburger-btn {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 10001;
+    }
+
+    .hamburger-line {
+        width: 100%;
+        height: 2px;
+        background: #333;
+        transition: all 0.3s;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 992px) {
+        .hamburger-btn { display: flex; }
+
+        .header-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 300px;
+            background: white;
+            padding: 100px 30px;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header-nav.active { transform: translateX(0); }
+
+        .nav-list {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            gap: 0;
+        }
+
+        .nav-list li { width: 100%; border-bottom: 1px solid #eee; }
+
+        .nav-link {
+            display: block;
+            padding: 15px 0;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+        
+        .nav-link::after { display: none; }
+
+        /* Mobile Dropdown */
+        .dropdown-menu {
+            position: static;
+            box-shadow: none;
+            border: none;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            display: none; /* Sakriveno po defaultu */
+            padding-left: 20px;
+            background: #f9f9f9;
+        }
+
+        .nav-item-has-dropdown.open .dropdown-menu { display: block; }
+        .nav-item-has-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
+        .dropdown-arrow { margin-left: auto; display: inline-block; float: right; }
+    }
+
+    /* Hamburger Animation */
+    .hamburger-btn.active .hamburger-line:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .hamburger-btn.active .hamburger-line:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active .hamburger-line:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+</style>
+
+<header class="site-header" id="siteHeader">
+    <div class="header-inner">
+        <a href="/" class="header-logo" aria-label="Početna">
+            <img src="/images/smiz.png" alt="SMIŽ Logo">
+        </a>
+
+        <nav class="header-nav" id="headerNav">
+            <ul class="nav-list">
+                <li><a href="/" class="nav-link {{ 'active' if pageType == 'home' else '' }}">Početna</a></li>
+                <li><a href="/o-nama/" class="nav-link {{ 'active' if pageType == 'about' else '' }}">O nama</a></li>
+                
+                <li class="nav-item-has-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" id="mobileDropdownTrigger">
+                        Proizvodi <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for product in site.navProducts %}
+                        <li><a href="{{ product.href }}" class="dropdown-link">{{ product.label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li><a href="/kontakt/" class="nav-link {{ 'active' if pageType == 'contact' else '' }}">Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Meni">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </div>
 </header>
+
+<script>
+    (function() {
+        const header = document.getElementById('siteHeader');
+        const hamburger = document.getElementById('hamburgerBtn');
+        const nav = document.getElementById('headerNav');
+        const dropdownTrigger = document.getElementById('mobileDropdownTrigger');
+        const dropdownParent = document.querySelector('.nav-item-has-dropdown');
+
+        // Sticky Header Logic
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
+                // Prevent scroll when menu is open
+                document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+            });
+        }
+
+        // Mobile Dropdown Toggle
+        if (dropdownTrigger) {
+            dropdownTrigger.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    dropdownParent.classList.toggle('open');
+                }
+            });
+        }
+
+        // Close menu on click outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992 && nav.classList.contains('active')) {
+                if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+    })();
+</script>

@@ -1,40 +1,170 @@
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-col">
-        <div class="footer-logo-wrapper">
-          <img src="/images/smiz.png" alt="SMIŽ Logo" class="footer-logo" loading="lazy" decoding="async">
+<style>
+    .site-footer {
+        background-color: #1a1a1a;
+        color: #b0b0b0;
+        padding: 80px 0 30px;
+        font-family: sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1.5fr;
+        gap: 50px;
+        margin-bottom: 60px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 60px;
+    }
+
+    /* Col 1: Brand */
+    .footer-logo img {
+        height: 50px;
+        margin-bottom: 25px;
+        filter: brightness(0) invert(1); /* Logo postaje beo */
+        opacity: 0.9;
+    }
+  
+    .footer-desc { max-width: 320px; color: #888; }
+
+    /* Col 2: Links */
+    .footer-title {
+        color: white;
+        font-size: 18px;
+        margin-bottom: 25px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 15px; }
+    .footer-links a {
+        color: #b0b0b0;
+        text-decoration: none;
+        transition: color 0.3s, padding-left 0.3s;
+        display: inline-block;
+    }
+    .footer-links a:hover {
+        color: #005e83; /* Accent boja */
+        padding-left: 10px;
+        color: white;
+    }
+
+    /* Col 3: Contact */
+    .contact-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    /* Jednostavne CSS ikonice umesto SVG-a da ne gušimo kod */
+    .c-icon {
+        width: 24px;
+        height: 24px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-style: normal;
+        color: white;
+        font-size: 12px;
+    }
+
+    .contact-info a {
+        color: #d0d0d0;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 5px;
+        transition: color 0.3s;
+    }
+    .contact-info a:hover { color: white; }
+    .contact-info span { display: block; color: #888; font-size: 13px; }
+
+    /* Bottom */
+    .footer-bottom { text-align: center; color: #666; font-size: 14px; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 40px;
+        }
+        
+        .footer-desc { margin: 0 auto; }
+        .contact-row { justify-content: center; }
+        .c-icon { margin-top: 2px; }
+        .footer-logo { margin-left: auto; margin-right: auto; display: block; }
+    }
+</style>
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            
+            <div class="footer-col">
+                <img src="/images/smiz.png" alt="SMIŽ" class="footer-logo">
+                <p class="footer-desc">
+                    Porodična tradicija od 1996. Specijalizovani za projektovanje, proizvodnju i ugradnju svih vrsta vrata. Vaš pouzdan partner.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-title">Brzi linkovi</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Početna</a></li>
+                    <li><a href="/o-nama/">O nama</a></li>
+                    <li><a href="/proizvodi/">Proizvodi</a></li>
+                    <li><a href="/kontakt/">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-title">Kontaktirajte nas</h4>
+                
+                <div class="contact-row">
+                    <i class="c-icon">📍</i>
+                    <div class="contact-info">
+                        <strong>Miloša Obrenovića 4a</strong>
+                        <span>31000 Užice, Srbija</span>
+                    </div>
+                </div>
+
+                <div class="contact-row">
+                    <i class="c-icon">📞</i>
+                    <div class="contact-info">
+                        <a href="tel:+381605430266">+381 60 5430 266</a>
+                        <a href="tel:+381641353283">+381 64 1353 283</a>
+                    </div>
+                </div>
+
+                <div class="contact-row">
+                    <i class="c-icon">✉️</i>
+                    <div class="contact-info">
+                        <a href="mailto:office@smiz.rs">office@smiz.rs</a>
+                        <a href="mailto:smiz@smiz.rs">smiz@smiz.rs</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <p>SMIŽ je porodična firma iz Užica specijalizovana za razvoj, proizvodnju, ugradnju i servis vrata.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navigacija</h4>
-        <ul class="footer-links">
-          <li><a href="/">Početna</a></li>
-          <li><a href="/o-nama/">O nama</a></li>
-          <li><a href="/proizvodi/">Proizvodi</a></li>
-          <li><a href="/kontakt/">Kontakt</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Kontakt</h4>
-        <p><strong>Adresa:</strong></p>
-        <p>Miloša Obrenovića 4a, Užice, Srbija</p>
-        <p><strong>Telefon:</strong></p>
-        <ul class="phone-list">
-          <li><a href="tel:+381605430266">+381 60 5430 266</a></li>
-          <li><a href="tel:+381641353283">+381 64 1353 283</a></li>
-        </ul>
-        <p><strong>Email:</strong></p>
-        <ul class="email-list">
-          <li><a href="mailto:office@smiz.rs">office@smiz.rs</a></li>
-          <li><a href="mailto:smiz@smiz.rs">smiz@smiz.rs</a></li>
-          <li><a href="mailto:servis@smiz.rs">servis@smiz.rs</a></li>
-        </ul>
-      </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <span id="yearSpan">2026</span> SMIŽ. Sva prava zadržana.</p>
+        </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; <span id="currentYear"></span> SMIŽ. Sva prava zadržana.</p>
-    </div>
-  </div>
 </footer>
+
+<script>
+    document.getElementById('yearSpan').textContent = new Date().getFullYear();
+</script>
