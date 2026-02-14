@@ -45,6 +45,7 @@ module.exports = {
       description: "Kompletan program zaštitne opreme i sredstava za zaštitu od jonizujućeg zračenja."
     }
   ],
+  
   navProducts: [
     { href: "/proizvodi/automatska-vrata/", label: "Automatska vrata" },
     { href: "/proizvodi/bolnicka-vrata/", label: "Bolnička vrata" },

@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css">
+  
 
   {% if needsMap %}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -41,253 +41,162 @@
   {% endif %}
 
   <style id="global-responsive-contrast-overrides">
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+    /* display=swap prevents FOIT */
+
+    /* ============================================
+      CSS Promenljive (Design Tokens)
+      ============================================ */
     :root {
-      --brand-primary: #005e83;
-      --brand-primary-dark: #00445f;
-      --text-strong-global: #0f172a;
-      --text-muted-global: #475569;
-      --surface-soft-global: #f8fafc;
-      --border-soft-global: #e2e8f0;
+        --blue-900: #005e83;
+        --blue-700: #005e83;
+        --blue-100: #e3f2fd;
+        --accent: #00bcd4;
+        --text: #0f172a;
+        --text-light: #64748b;
+        --white: #ffffff;
+        --gray-50: #f8fafc;
+        --gray-100: #f1f5f9;
+        --gray-200: #e2e8f0;
+        --surface: #ffffff;
+        --surface-muted: #f8fafc;
+        --surface-elevated: #ffffff;
+        --border-subtle: rgba(15, 23, 42, 0.08);
+        --border-strong: rgba(0, 94, 131, 0.25);
+
+        --font-body: 'Sora', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        --font-heading: 'Sora', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        --spacing-2xl: 4rem;
+
+        --border-radius: 0.5rem;
+        --border-radius-lg: 1rem;
+
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.08);
+        --shadow-lift: 0 20px 40px rgba(15, 23, 42, 0.12);
+
+        --transition: all 0.3s ease;
+        --transition-fast: all 0.15s ease;
+        --radius-xl: 1.25rem;
+        --radius-pill: 999px;
     }
 
-    html,
+    /* ============================================
+      Reset i Osnovni Stilovi
+      ============================================ */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
     body {
-      max-width: 100%;
-      overflow-x: clip;
+        font-family: var(--font-body);
+        color: var(--text);
+        line-height: 1.6;
+        background-color: var(--white);
     }
 
-    body {
-      color: var(--text-strong-global);
-      background: #fff;
+    body.menu-open {
+        overflow: hidden;
     }
 
-    p,
-    li,
-    .hero-lead,
-    .lead-text,
-    .intro-content p,
-    .intro-main p,
-    .variant-block p,
-    .product-card p,
-    .value-card p,
-    .step-card p,
-    .help-text p,
-    .cta-text p,
-    .prod-desc {
-      color: var(--text-muted-global);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .logo,
+    .section-title,
+    .section-subtitle,
+    .hero-title,
+    .products-hero-title,
+    .product-title,
+    .partner-name,
+    .page-hero-content h1 {
+        font-family: var(--font-heading);
+        letter-spacing: -0.01em;
     }
 
-    .text-accent,
-    .badge,
-    .card-category,
-    .spec-item h4 {
-      color: var(--brand-primary) !important;
-    }
-
-    .badge {
-      background: rgba(0, 94, 131, 0.12) !important;
-    }
-
-    .about-hero .text-accent,
-    .product-hero .text-accent,
-    .hero-section .text-accent {
-      color: #7dd3fc !important;
-    }
-
-    .btn,
-    .btn-primary,
-    .btn-dark,
-    .btn-glass,
-    .btn-outline-dark,
-    .btn-link,
-    .product-detail-btn {
-      min-height: 44px;
-    }
-
-    .btn-primary,
-    .btn-dark,
-    .product-detail-btn {
-      background: linear-gradient(135deg, #0b84b3, #005e83) !important;
-      border-color: #005e83 !important;
-      color: #fff !important;
-    }
-
-    .btn-primary:hover,
-    .btn-dark:hover,
-    .product-detail-btn:hover {
-      background: linear-gradient(135deg, #0a6b91, #00445f) !important;
-    }
-
-    .map-frame,
-    .map-wrapper,
-    .help-box,
-    .cta-box,
-    .cta-flex,
-    .variant-block,
-    .value-card,
-    .product-card,
-    .step-card,
-    .usage-box {
-      border-radius: 12px;
-    }
-
-    .catalog-grid,
-    .values-grid,
-    .variants-layout,
-    .products-container,
-    .why-us-layout,
-    .product-intro-grid,
-    .intro-grid,
-    .contact-layout,
-    .contact-wrapper,
-    .contact-page-wrapper,
-    .help-box,
-    .cta-box,
-    .cta-flex {
-      gap: clamp(1rem, 3vw, 2rem);
-    }
-
-    @media (max-width: 1024px) {
-      .products-container,
-      .why-us-layout,
-      .product-intro-grid,
-      .intro-grid,
-      .variants-layout,
-      .contact-layout,
-      .contact-wrapper,
-      .contact-page-wrapper {
-        grid-template-columns: 1fr !important;
-      }
-
-      .prod-list-col {
-        display: none !important;
-      }
-
-      .cta-box,
-      .help-box,
-      .cta-flex {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    .site-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background-image: url('../images/line.png'); */
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        opacity: 0.3;
+        z-index: -1;
+        pointer-events: none;
     }
 
     @media (max-width: 768px) {
-      .container {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
-      }
+        .site-background {
+            display: none;
+        }
+    }
 
-      .section,
-      .section-alt,
-      .why-us-section,
-      .products-header {
-        padding-top: 56px !important;
-        padding-bottom: 56px !important;
-      }
-
-      .hero-section,
-      .about-hero,
-      .product-hero {
-        min-height: 480px !important;
-        height: auto !important;
-      }
-
-      .hero-content,
-      .hero-text {
+    img {
         max-width: 100%;
-      }
-
-      .hero-title,
-      .hero-text h1,
-      .product-hero h1,
-      .products-header h1,
-      .why-us-text h2,
-      .intro-content h2,
-      .intro-main h2,
-      .cta-text h2,
-      .help-text h2,
-      .prod-title {
-        font-size: clamp(1.7rem, 8vw, 2.3rem) !important;
-        line-height: 1.2;
-      }
-
-      .hero-subtitle,
-      .hero-lead,
-      .lead-text,
-      .prod-desc,
-      .help-text p,
-      .cta-text p,
-      .intro-content p,
-      .intro-main p,
-      .variant-block p,
-      .product-card p,
-      .value-card p,
-      .step-card p {
-        font-size: 1rem !important;
-      }
-
-      .products-section,
-      .section-dark {
-        padding-top: 56px !important;
-        padding-bottom: 56px !important;
-      }
-
-      .prod-actions,
-      .hero-actions,
-      .why-us-buttons {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-
-      .btn,
-      .btn-primary,
-      .btn-dark,
-      .btn-glass,
-      .btn-outline-dark {
-        width: 100%;
-        text-align: center;
-      }
-
-      .prod-nav-btns {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .catalog-grid {
-        grid-template-columns: 1fr !important;
-      }
-
-      .card-content,
-      .value-card,
-      .variant-block,
-      .usage-box,
-      .cta-box,
-      .help-box,
-      .cta-flex {
-        padding: 1.25rem !important;
-      }
-
-      .map-frame,
-      .map-wrapper {
-        height: 320px !important;
-      }
+        height: auto;
+        display: block;
     }
 
-    @media (max-width: 420px) {
-      .hero-dots {
-        gap: 8px;
-      }
-
-      .stat-item {
-        padding: 1rem !important;
-      }
-
-      .stat-num {
-        font-size: 2rem !important;
-      }
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: var(--transition-fast);
     }
+
+    ul {
+        list-style: none;
+    }
+
+    /* ============================================
+      Container
+      ============================================ */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+    }
+
+    @media (min-width: 640px) {
+        .container {
+            padding: 0 var(--spacing-lg);
+        }
+    }
+
   </style>
 
 </body>

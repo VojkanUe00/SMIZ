@@ -1,421 +1,480 @@
 <style>
-    /* --- 1. IZOLACIJA & PROMENLJIVE --- */
-    /* Resetujemo sve unutar hedera da globalni CSS ne smeta */
-    #sh-wrapper * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        text-decoration: none;
-        list-style: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    :root {
-        --sh-primary: #005e83;       /* Glavna plava */
-        --sh-primary-dark: #00445f;  /* Tamnija plava za hover */
-        --sh-text: #1e293b;          /* Tamno siva za tekst */
-        --sh-text-light: #64748b;    /* Svetlija siva */
-        --sh-bg-glass: rgba(255, 255, 255, 0.95);
-        --sh-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        --sh-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        --sh-radius: 12px;
-        --sh-font: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-
-    /* --- 2. GLAVNI HEADER KONTEJNER --- */
-    #sh-header {
-        position: fixed;
+    .header {
+        position: sticky;
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        z-index: 99999;
-        background: transparent;
-        transition: all 0.3s ease;
-        font-family: var(--sh-font);
+        background-color: var(--white);
+        box-shadow: var(--shadow-sm);
+        z-index: 1000;
+        transition: var(--transition);
     }
 
-    /* Efekat kad se skroluje */
-    #sh-header.is-scrolled {
-        background: var(--sh-bg-glass);
-        height: 70px; /* Malo se smanji */
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow: var(--sh-shadow);
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+    .header.scrolled {
+        box-shadow: var(--shadow-md);
+        background-color: rgba(255, 255, 255, 0.98);
+        /* Avoid backdrop-filter for smoother vertical scroll */
     }
 
-    .sh-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-        height: 100%;
+    .nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: var(--spacing-sm) 0;
     }
 
-    /* --- 3. LOGO --- */
-    .sh-logo img {
-        height: 42px;
-        width: auto;
-        display: block;
-        transition: transform 0.3s;
-    }
-    .sh-logo:hover img { transform: scale(1.05); }
-
-    /* --- 4. DESKTOP NAVIGACIJA --- */
-    .sh-nav-desktop {
+    .logo {
         display: flex;
         align-items: center;
-        gap: 32px;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--blue-700);
     }
 
-    .sh-nav-link {
-        color: var(--sh-text);
+    .logo-img {
+        height: 40px;
+        width: auto;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: var(--spacing-lg);
+        align-items: center;
+    }
+
+    .nav-link {
+        color: var(--text);
         font-weight: 500;
-        font-size: 15px;
-        padding: 8px 0;
         position: relative;
-        transition: color 0.2s;
+        padding: var(--spacing-xs) 0;
     }
 
-    .sh-nav-link:hover { color: var(--sh-primary); }
-
-    /* Animacija linije ispod linka */
-    .sh-nav-link::after {
+    .nav-link::after {
         content: '';
         position: absolute;
         bottom: 0;
         left: 0;
         width: 0;
         height: 2px;
-        background: var(--sh-primary);
-        transition: width 0.3s ease;
+        background-color: var(--blue-700);
+        transition: var(--transition);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: var(--blue-700);
+    }
+
+    .nav-link:focus {
+        outline: 2px solid var(--blue-700);
+        outline-offset: 4px;
         border-radius: 2px;
     }
-    .sh-nav-link:hover::after { width: 100%; }
 
-    /* CTA Dugme (Kontakt) */
-    .sh-btn-cta {
-        background: var(--sh-primary);
-        color: white !important;
-        padding: 10px 24px;
-        border-radius: 50px;
-        font-weight: 600;
-        box-shadow: 0 4px 6px rgba(0, 94, 131, 0.2);
-        transition: all 0.2s;
-    }
-    .sh-btn-cta:hover {
-        background: var(--sh-primary-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 94, 131, 0.3);
-    }
-    .sh-btn-cta::after { display: none; }
-
-    /* --- 5. DROPDOWN (DESKTOP) --- */
-    .sh-dropdown-wrapper {
+    /* Dropdown meni */
+    .nav-item-dropdown {
         position: relative;
-        height: 100%;
+    }
+
+    .nav-link-dropdown {
         display: flex;
         align-items: center;
-        cursor: pointer;
+        gap: 0.25rem;
+        justify-content: space-between;
     }
 
-    .sh-dropdown-arrow {
-        font-size: 10px;
-        margin-left: 6px;
-        transition: transform 0.3s;
-        opacity: 0.6;
+    .dropdown-arrow {
+        font-size: 0.7rem;
+        transition: var(--transition-fast);
+        display: inline-block;
     }
-    
-    .sh-dropdown-wrapper:hover .sh-dropdown-arrow { transform: rotate(180deg); }
-    .sh-dropdown-wrapper:hover .sh-nav-link { color: var(--sh-primary); }
 
-    .sh-dropdown-menu {
+    .nav-item-dropdown:hover .dropdown-arrow,
+    .nav-item-dropdown.active .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
         position: absolute;
         top: 100%;
         left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        background: white;
-        min-width: 280px;
-        border-radius: var(--sh-radius);
-        box-shadow: var(--sh-shadow-lg);
-        padding: 8px;
+        transform: translateX(-50%);
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-lg);
+        min-width: 220px;
+        padding: var(--spacing-sm) 0;
+        margin-top: var(--spacing-xs);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid rgba(0,0,0,0.04);
+        transform: translateX(-50%) translateY(-10px);
+        transition: var(--transition);
+        z-index: 1000;
+        list-style: none;
     }
 
-    /* Mostić da kursor ne pobegne */
-    .sh-dropdown-menu::before {
-        content: '';
-        position: absolute;
-        top: -15px; left: 0; width: 100%; height: 15px;
-    }
-
-    .sh-dropdown-wrapper:hover .sh-dropdown-menu {
+    .nav-item-dropdown:hover .dropdown-menu,
+    .nav-item-dropdown.active .dropdown-menu {
         opacity: 1;
         visibility: visible;
-        transform: translateX(-50%) translateY(15px);
+        transform: translateX(-50%) translateY(0);
     }
 
-    .sh-dropdown-item {
+    .dropdown-link {
         display: block;
-        padding: 10px 16px;
-        color: var(--sh-text);
-        font-size: 14px;
-        border-radius: 8px;
-        transition: all 0.2s;
-        margin-bottom: 2px;
+        padding: var(--spacing-sm) var(--spacing-lg);
+        color: var(--text);
+        font-weight: 500;
+        transition: var(--transition-fast);
+        text-decoration: none;
     }
 
-    .sh-dropdown-item:hover {
-        background: #f1f5f9;
-        color: var(--sh-primary);
-        padding-left: 20px; /* Mala animacija pomeranja */
+    .dropdown-link:hover {
+        background-color: var(--gray-50);
+        color: var(--blue-700);
+        padding-left: calc(var(--spacing-lg) + 0.5rem);
     }
 
-    /* --- 6. HAMBURGER (MOBILE) --- */
-    #sh-hamburger {
+    /* Hamburger meni */
+    .hamburger {
         display: none;
+        flex-direction: column;
+        gap: 4px;
         background: none;
         border: none;
         cursor: pointer;
-        width: 32px;
-        height: 32px;
-        position: relative;
-        z-index: 100001;
+        padding: var(--spacing-xs);
+        z-index: 1001;
     }
-    
-    .sh-bar {
-        position: absolute;
-        left: 15%; /* Centriranje */
-        width: 70%;
-        height: 2px;
-        background: var(--sh-text);
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background-color: var(--text);
         border-radius: 2px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .sh-bar:nth-child(1) { top: 9px; }
-    .sh-bar:nth-child(2) { top: 15px; }
-    .sh-bar:nth-child(3) { top: 21px; }
-
-    /* Animacija u X */
-    #sh-hamburger.is-active .sh-bar:nth-child(1) { top: 15px; transform: rotate(45deg); }
-    #sh-hamburger.is-active .sh-bar:nth-child(2) { opacity: 0; transform: translateX(10px); }
-    #sh-hamburger.is-active .sh-bar:nth-child(3) { top: 15px; transform: rotate(-45deg); }
-
-    /* --- 7. MOBILE MENU (OFF-CANVAS) --- */
-    #sh-mobile-menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 300px; /* Širina menija */
-        height: 100vh;
-        background: white;
-        z-index: 100000;
-        padding: 90px 24px 40px;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-        transform: translateX(100%); /* Sakriveno desno */
-        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
+        transition: var(--transition);
     }
 
-    #sh-mobile-menu.is-open { transform: translateX(0); }
-
-    .sh-mobile-link {
-        display: block;
-        padding: 16px 0;
-        font-size: 18px;
-        font-weight: 600;
-        color: var(--sh-text);
-        border-bottom: 1px solid #f1f5f9;
-        transition: color 0.2s;
+    .hamburger[aria-expanded="true"] span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
     }
 
-    .sh-mobile-link:hover { color: var(--sh-primary); }
-
-    /* Mobile Accordion */
-    .sh-accordion-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-    }
-    .sh-accordion-arrow { transition: transform 0.3s; }
-    .sh-accordion-header.is-active .sh-accordion-arrow { transform: rotate(180deg); color: var(--sh-primary); }
-
-    .sh-mobile-submenu {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease;
-        padding-left: 10px;
-    }
-    
-    .sh-mobile-submenu.is-visible {
-        max-height: 600px; /* Dovoljno da stane sve */
-        margin-top: 5px;
-        margin-bottom: 15px;
+    .hamburger[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
     }
 
-    .sh-mobile-sublink {
-        display: block;
-        padding: 12px 10px;
-        font-size: 15px;
-        color: var(--sh-text-light);
-        border-left: 2px solid #e2e8f0;
-        margin-bottom: 4px;
+    .hamburger[aria-expanded="true"] span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    .sh-mobile-sublink:hover {
-        color: var(--sh-primary);
-        border-left-color: var(--sh-primary);
-        background: #f8fafc;
+    .hamburger:focus {
+        outline: 2px solid var(--blue-700);
+        outline-offset: 2px;
+        border-radius: 2px;
     }
 
-    /* Overlay */
-    #sh-overlay {
+    .mobile-menu-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.4);
-        backdrop-filter: blur(4px);
-        z-index: 99990;
+        background: rgba(2, 6, 23, 0.5);
         opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 990;
     }
-    #sh-overlay.is-active { opacity: 1; visibility: visible; }
 
-    /* --- 8. MEDIA QUERIES --- */
-    @media (max-width: 992px) {
-        .sh-nav-desktop { display: none !important; }
-        #sh-hamburger { display: block; }
+    .mobile-menu-backdrop.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Mobilni meni */
+    @media (max-width: 1023px) {
+        .hamburger {
+            display: flex;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -110%;
+            width: min(88vw, 340px);
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+            flex-direction: column;
+            padding: calc(var(--spacing-2xl) + 0.5rem + env(safe-area-inset-top, 0px)) var(--spacing-lg) calc(var(--spacing-xl) + env(safe-area-inset-bottom, 0px));
+            box-shadow: var(--shadow-lg);
+            transition: right 0.28s ease, opacity 0.25s ease;
+            gap: var(--spacing-md);
+            align-items: flex-start;
+            border-left: 1px solid rgba(15, 23, 42, 0.08);
+            opacity: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-menu.active {
+            right: 0;
+            opacity: 1;
+        }
+
+        .nav-link {
+            font-size: 1.05rem;
+            width: 100%;
+            padding: 0.75rem 0.85rem;           
+        }
+
+        .nav-link::after {
+            display: none;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(0, 94, 131, 0.1);
+            border-color: rgba(0, 94, 131, 0.2);
+        }
+
+        .nav-item-dropdown {
+            width: 100%;
+        }
+
+        .nav-link-dropdown {
+            width: 100%;
+        }
+
+        .dropdown-arrow {
+            margin-left: auto;
+        }
+
+        .dropdown-menu {
+            position: static;
+            transform: none;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: none;
+            background-color: transparent;
+            padding: 0;
+            margin-top: 0;
+            margin-left: var(--spacing-md);
+            width: calc(100% - var(--spacing-md));
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.28s ease, opacity 0.2s ease;
+            border-left: 2px solid rgba(0, 94, 131, 0.2);
+        }
+
+        .nav-item-dropdown:hover .dropdown-menu,
+        .nav-item-dropdown.active .dropdown-menu {
+            transform: none;
+            opacity: 1;
+            visibility: visible;
+            max-height: 520px;
+            padding: 0.25rem 0;
+        }
+
+        .dropdown-link {
+            padding: 0.6rem var(--spacing-md);
+            font-size: 0.95rem;
+            border-radius: 0.45rem;
+            background: rgba(241, 245, 249, 0.75);
+            margin-bottom: 0.25rem;
+        }
+
+        .dropdown-link:hover {
+            padding-left: var(--spacing-md);
+            background: rgba(0, 94, 131, 0.08);
+        }
     }
 </style>
 
-<div id="sh-wrapper">
-    
-    <div id="sh-overlay"></div>
-
-    <header id="sh-header">
-        <div class="sh-container">
-            <a href="/" class="sh-logo">
-                <img src="/images/smiz.png" alt="SMIŽ Logo">
+<header class="header" id="header">
+    <div class="container">
+        <nav class="nav">
+            <a href="#home" class="logo">
+                <!-- Lazy-load non-hero images to reduce initial payload -->
+                <img src="/images/smiz.png" alt="SMIŽ Logo" class="logo-img" loading="lazy" decoding="async">
             </a>
-
-            <nav class="sh-nav-desktop">
-                <a href="/" class="sh-nav-link">Početna</a>
-                <a href="/o-nama/" class="sh-nav-link">O nama</a>
-                
-                <div class="sh-dropdown-wrapper">
-                    <span class="sh-nav-link">Proizvodi</span>
-                    <span class="sh-dropdown-arrow">▼</span>
-                    
-                    <div class="sh-dropdown-menu">
-                        <a href="/proizvodi/automatska-vrata/" class="sh-dropdown-item">Automatska vrata</a>
-                        <a href="/proizvodi/bolnicka-vrata/" class="sh-dropdown-item">Bolnička vrata</a>
-                        <a href="/proizvodi/unutrasnja-vrata/" class="sh-dropdown-item">Unutrašnja vrata</a>
-                        <a href="/proizvodi/industrijska-vrata/" class="sh-dropdown-item">Industrijska vrata</a>
-                        <a href="/proizvodi/garazna-vrata/" class="sh-dropdown-item">Garažna vrata</a>
-                        <a href="/proizvodi/zastita-od-radijacije/" class="sh-dropdown-item">Zaštita od radijacije</a>
-                        <a href="/proizvodi/primax/" class="sh-dropdown-item">PRIMAX program</a>
-                    </div>
-                </div>
-
-                <a href="/kontakt/" class="sh-nav-link sh-btn-cta">Kontakt</a>
-            </nav>
-
-            <button id="sh-hamburger" aria-label="Meni">
-                <span class="sh-bar"></span>
-                <span class="sh-bar"></span>
-                <span class="sh-bar"></span>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/" class="nav-link">Početna</a></li>
+                <li><a href="/o-nama/" class="nav-link">O nama</a></li>
+                <li class="nav-item-dropdown">
+                    <a href="#proizvodi" class="nav-link nav-link-dropdown" id="productsDropdown">
+                        Proizvodi
+                        <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu" id="productsDropdownMenu">
+                        <li><a href="/proizvodi/automatska-vrata/" class="dropdown-link">Automatska vrata</a></li>
+                        <li><a href="/proizvodi/bolnicka-vrata/" class="dropdown-link">Bolnička vrata</a></li>
+                        <li><a href="/proizvodi/unutrasnja-vrata/" class="dropdown-link">Unutrašnja vrata</a></li>
+                        <li><a href="/proizvodi/industrijska-vrata/" class="dropdown-link">Industrijska vrata</a></li>
+                        <li><a href="/proizvodi/garazna-vrata/" class="dropdown-link">Garažna vrata</a></li>
+                        <li><a href="/proizvodi/zastita-od-radijacije/" class="dropdown-link">Olovna stakla i olovni limovi</a></li>
+                        <li><a href="/proizvodi/primax/" class="dropdown-link">PRIMAX zaštitna rešenja</a></li>
+                    </ul>
+                </li>
+                <li><a href="/kontakt/" class="nav-link">Kontakt</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
-        </div>
-    </header>
-
-    <div id="sh-mobile-menu">
-        <a href="/" class="sh-mobile-link">Početna</a>
-        <a href="/o-nama/" class="sh-mobile-link">O nama</a>
-        
-        <div class="sh-mobile-dropdown-group">
-            <div class="sh-mobile-link sh-accordion-header" id="sh-accordion-trigger">
-                <span>Proizvodi</span>
-                <span class="sh-accordion-arrow">▼</span>
-            </div>
-            
-            <div class="sh-mobile-submenu" id="sh-mobile-submenu">
-                <a href="/proizvodi/automatska-vrata/" class="sh-mobile-sublink">Automatska vrata</a>
-                <a href="/proizvodi/bolnicka-vrata/" class="sh-mobile-sublink">Bolnička vrata</a>
-                <a href="/proizvodi/unutrasnja-vrata/" class="sh-mobile-sublink">Unutrašnja vrata</a>
-                <a href="/proizvodi/industrijska-vrata/" class="sh-mobile-sublink">Industrijska vrata</a>
-                <a href="/proizvodi/garazna-vrata/" class="sh-mobile-sublink">Garažna vrata</a>
-                <a href="/proizvodi/zastita-od-radijacije/" class="sh-mobile-sublink">Zaštita od radijacije</a>
-                <a href="/proizvodi/primax/" class="sh-mobile-sublink">PRIMAX program</a>
-            </div>
-        </div>
-
-        <a href="/kontakt/" class="sh-mobile-link" style="color: var(--sh-primary);">Kontakt</a>
+        </nav>
     </div>
+</header>
 
 </div> <script>
-    (function(){
-        // Elementi
-        const hamburger = document.getElementById('sh-hamburger');
-        const mobileMenu = document.getElementById('sh-mobile-menu');
-        const overlay = document.getElementById('sh-overlay');
-        const header = document.getElementById('sh-header');
-        const accordionTrigger = document.getElementById('sh-accordion-trigger');
-        const submenu = document.getElementById('sh-mobile-submenu');
+    const header = document.getElementById('header');
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-        // 1. Toggle Meni Funkcija
-        function toggleMenu() {
-            const isOpen = mobileMenu.classList.contains('is-open');
-            
-            if (isOpen) {
-                // Zatvori
-                hamburger.classList.remove('is-active');
-                mobileMenu.classList.remove('is-open');
-                overlay.classList.remove('is-active');
+    // ============================================
+    // Hamburger Meni
+    // ============================================
+    if (hamburger && navMenu) {
+        const closeMobileMenu = () => {
+            hamburger.setAttribute('aria-expanded', 'false');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        hamburger.addEventListener('click', () => {
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('active');
+
+            // Prevencija scroll-a kada je meni otvoren
+            if (!isExpanded) {
+                document.body.style.overflow = 'hidden';
+            } else {
                 document.body.style.overflow = '';
-            } else {
-                // Otvori
-                hamburger.classList.add('is-active');
-                mobileMenu.classList.add('is-open');
-                overlay.classList.add('is-active');
-                document.body.style.overflow = 'hidden'; // Zabrani scroll
             }
-        }
+        });
 
-        hamburger.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
+        // Zatvori meni kada se klikne na link (ali ne zatvaraj kad je mobilni dropdown toggle)
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const isMobile = window.innerWidth <= 1023;
+                const isDropdownToggle = link.classList.contains('nav-link-dropdown') || link.id === 'productsDropdown';
 
-        // 2. Mobile Accordion Logic
-        if(accordionTrigger) {
-            accordionTrigger.addEventListener('click', function(e) {
-                e.preventDefault();
-                submenu.classList.toggle('is-visible');
-                accordionTrigger.classList.toggle('is-active');
+                // Na mobilnom: klik na "Proizvodi" treba da otvori dropdown, ne da zatvori hamburger
+                if (isMobile && isDropdownToggle) return;
+
+                closeMobileMenu();
             });
-        }
+        });
 
-        // 3. Sticky Header Logic
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 20) {
-                header.classList.add('is-scrolled');
-            } else {
-                header.classList.remove('is-scrolled');
+
+        // Zatvori meni kada se klikne van njega
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('active') &&
+                !navMenu.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                closeMobileMenu();
             }
         });
 
-        // 4. Zatvori meni ako se poveca ekran
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 992 && mobileMenu.classList.contains('is-open')) {
-                toggleMenu();
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
             }
         });
-    })();
+    }
+
+    // ============================================
+    // Dropdown Meni
+    // ============================================
+    const productsDropdown = document.getElementById('productsDropdown');
+    const productsDropdownMenu = document.getElementById('productsDropdownMenu');
+    const navItemDropdown = document.querySelector('.nav-item-dropdown');
+
+    if (productsDropdown && productsDropdownMenu && navItemDropdown) {
+        const setDropdownState = (isOpen) => {
+            navItemDropdown.classList.toggle('active', isOpen);
+            productsDropdown.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+
+        // Desktop: hover
+        navItemDropdown.addEventListener('mouseenter', () => {
+            if (window.innerWidth > 1023) {
+                setDropdownState(true);
+            }
+        });
+
+        navItemDropdown.addEventListener('mouseleave', () => {
+            if (window.innerWidth > 1023) {
+                setDropdownState(false);
+            }
+        });
+
+        const isMobileMenu = () => window.matchMedia('(max-width: 1023px)').matches;
+
+        // Mobile: tap/click (toggle open/close) - robustno
+        productsDropdown.addEventListener('pointerup', (e) => {
+            if (!isMobileMenu()) return;
+
+            e.preventDefault();     // da ne skroluje na #proizvodi
+            e.stopPropagation();    // da se ne meša sa drugim click handlerima
+
+            const isOpen = navItemDropdown.classList.contains('active');
+            setDropdownState(!isOpen); // toggle
+        });
+
+
+
+        // Zatvori dropdown kada se klikne na link
+        const dropdownLinks = productsDropdownMenu.querySelectorAll('.dropdown-link');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                setDropdownState(false);
+                // Zatvori hamburger meni ako je otvoren
+                if (hamburger && navMenu) {
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Zatvori dropdown kada se klikne van njega
+        document.addEventListener('click', (e) => {
+            if (!navItemDropdown.contains(e.target)) {
+                setDropdownState(false);
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1023) {
+                setDropdownState(false);
+            }
+        });
+    }
+
+    // ============================================
+    // Accessibility Improvements
+    // ============================================
+    // Dodaj keyboard navigation za hamburger meni
+    if (hamburger) {
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                hamburger.click();
+            }
+        });
+    }
+
+    // Dodaj keyboard navigation za nav linkove
+    navLinks.forEach(link => {
+        link.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                link.click();
+            }
+        });
+    });
 </script>
